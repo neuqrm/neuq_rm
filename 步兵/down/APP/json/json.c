@@ -21,17 +21,7 @@ float pwm_pulse2=1290;
 
 
 void send_infantry_info_by_json(void)
-{
-	Kinematics.wheel1.actual_speed.rpm=1;
-	Kinematics.wheel2.actual_speed.rpm=2;
-	Kinematics.wheel3.actual_speed.rpm=3;
-	Kinematics.wheel4.actual_speed.rpm=4;
-	Kinematics.actual_velocities.linear_x=5;
-	Kinematics.actual_velocities.linear_y=6;
-	Kinematics.actual_velocities.angular_z=7;
-	gimbal2.actual_angle=8;
-	gimbal1.actual_angle=9;
-  	
+{  	
 	json_t *root;
 	char *out;           
 	root = json_pack("[{sfsfsfsfsfsfsfsfsf}[fffffffff]]",\
@@ -68,11 +58,6 @@ void send_infantry_info_by_json(void)
 
 void send_chassis_info_by_json(void)
 {
-	Kinematics.actual_velocities.linear_x=5;
-	Kinematics.actual_velocities.linear_y=6;
-	Kinematics.actual_velocities.angular_z=7;
-	gimbal2.actual_angle=8;
-	gimbal1.actual_angle=9;	
 	json_t *root;
 	char *out;           //
 	root = json_pack("[{sfsfsfsfsf}[fffff]]",\
@@ -95,9 +80,6 @@ void send_chassis_info_by_json(void)
 
 void send_gimbal_info_by_json(void)   
 {
-
-//	Kinematics.target_angular.gimbal_angular.yaw_angular=170;
-	//Kinematics.target_angular.gimbal_angular.yaw_angular=10;
   json_t *root;
 	char *out;           
 	root = json_pack("[{sfsf}[ff]]",\

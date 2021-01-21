@@ -1,62 +1,30 @@
+/**
+  ******************************************************************************
+  * @file    Project/USER/main.c 
+  * @author  Siyuan Qiao&Junyu Luo
+  * @version V1.0.0
+  * @date    1.2021
+  * @brief   
+  ******************************************************************************
+  * @attention
+  ******************************************************************************
+      ..................NEUQ_SUDO..................
+
+  ...........革命尚未成功，同志仍需努力...........
+*/  
 #include "My_Init.h"
-#include "delay.h"
-#include "mode.h"
-
-#include "Tim3_Events.h"
-#include "led.h"
-#include "stm32f4xx_tim.h"
-#include "bsp_debug_usart.h"
-
-#include "remote_code.h"
-#include "motor.h"
-#include "kinematic.h"
-#include "fric.h"
-
-#include "json.h"
-#include <jansson.h>
-#include <string.h>
-#include "gimbal.h"
-#include "imuReader.h"
-
-
-#define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336   
-#define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
-#define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
-float max_base_linear_speed=217.817f;
-float max_base_rotational_speed=7.260570f;
-extern IMU_DATA imu_data;
-extern char receiveBuffer[MAX_LENGTH];
-extern char json_Buffer[MAX_LENGTH];
-float x_max_speed,y_max_speed,z_max_speed;//测量最大速度用
+/**
+  *@brief  主函数初始化，进入循环等待中断
+  */
 int main()
 {
- 	All_Init();												//机器人所有配置初始化
-	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度           
-	max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;			//地盘中心最大角速度
-//	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
-		
-	//	set_moto_angle(4000,0,0,0);		//调试   设定指定角度
-	
-//	set_moto_speed(0,0,0,0);			//调试    设定指定速度
-	
-	while(1)
+ 	All_Init();												//机器人所有配置初始化	
+	while(1)                          //进入循环
 	{
-		
 		LED0=!LED0;
 		delay_ms(500);
-	
-		
 	}
 }
-
-extern uint8_t flag_command_recieved;
-extern uint8_t flag_command_recieved1;
-extern uint8_t flag_command_recieved2;
-extern uint8_t flag_command_recieved3;
-extern uint8_t flag_command_recieved4;
-extern uint8_t flag_command_recieved5;
-
-
 
 
 //定时器3中断服务函数			1ms

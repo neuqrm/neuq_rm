@@ -10,7 +10,10 @@
 MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;
 LOOPBACK loopback;
 
-int max_motor_speed=15336;		//电机最大线速度
+int max_motor_speed=MAX_MOTOR_SPEED;		//电机最大线速度
+float max_base_linear_speed=MAX_BASE_LINEAR_SPEED;  //底盘中心最大线速度 
+float max_base_rotational_speed=MAX_BASE_ROTATIONAL_SPEED;  //地盘中心最大角速度
+int callback_flag=1;
 
 
 void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current)
@@ -32,6 +35,62 @@ void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_
 		motor->round_cnt ++;
 	motor->total_angle = motor->round_cnt * 8192 + motor->actual_angle;// - motor->start_angle;
 }
+/**********************三值滤波****************************/
+/*  @function name:record_gimbal_callback()
+    @author:junyu luo
+    @date:2021.1.5
+    @instruction:采样三次can总线的数据，去掉三个中的最大和最小值，剩下的作为传入数据，避免电机数据错误引起的控制量变化
+*/     
+/*********************************************************/
+void record_gimbal_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current)
+{
+	static int temp_speed1,temp_speed2,temp_speed3,temp_angle1,temp_angle2,temp_angle3;
+	static int maxangle,minangle,maxspeed,minspeed;
+	motor->last_angle = motor->actual_angle;
+	motor->actual_current = current;
+	//motor->actual_speed = speed;
+	//motor->actual_current = current;
+
+	switch(callback_flag)
+	{
+		case(1):
+		{
+		temp_angle1=angle;
+		temp_speed1=speed;
+		callback_flag=2;
+	  }
+	break;
+		case(2):
+	{
+		temp_angle2=angle;
+		temp_speed2=speed;
+		callback_flag=3;
+	}
+	break;
+		case(3):
+	{
+		temp_angle3=angle;
+		temp_speed3=speed;
+		maxspeed=(temp_speed1>temp_speed2?temp_speed1:temp_speed2);
+		maxspeed=(maxspeed>temp_speed3?maxspeed:temp_speed3);
+		minspeed=(temp_speed1<temp_speed2?temp_speed1:temp_speed2);
+		minspeed=(maxspeed<temp_speed3?minspeed:temp_speed3);
+
+		maxangle=(temp_angle1>temp_angle2?temp_angle1:temp_angle2);
+		maxangle=(maxangle>temp_angle3?maxspeed:temp_angle3);
+		minangle=(temp_angle1<temp_angle2?temp_angle1:temp_angle2);
+		minangle=(maxangle<temp_angle3?minangle:temp_angle3);
+
+		motor->actual_angle =(temp_angle1+temp_angle2+temp_angle3)-maxangle-minangle;
+	  motor->actual_speed =(temp_speed1+temp_speed2+temp_speed3)-maxspeed-minspeed;
+		
+		callback_flag=1;
+	}
+	break;
+	default:break;
+}
+}
+	
 
 
 // 函数: motorr_init()

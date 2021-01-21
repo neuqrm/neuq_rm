@@ -53,7 +53,7 @@ typedef struct{
 	int round_cnt;				//相对开机时转过的圈数
 	int total_angle;			//总共转过的计数
 	
-	int actual_speed;			//电机真实速度,rpm
+	float actual_speed;			//电机真实速度,rpm
 	int target_speed;			//电机目标速度,rpm  转/min
 	
 	int actual_current;		//电机真实电流
@@ -85,7 +85,7 @@ typedef struct{
 
 extern LOOPBACK loopback;
 	
-
+void record_gimbal_callback(MOTOR_t *motor, unsigned short angle, short speed, short current);
 void record_motor_callback(MOTOR_t *motor, unsigned short angle, short speed, short current);
 void motor_init(void);			//电机初始化
 void set_chassis_current(void);	//设置电机电流

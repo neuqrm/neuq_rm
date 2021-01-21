@@ -47,8 +47,9 @@ void Robo_Move()
 	}
   if(/*(Control_Mode) ==*/ 1 /*0x03*/)//((Control_Mode & auto_control) == auto_control)
 	{
+		pid_target_speed =pid_pc();
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);		
-		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
+		gimbal_control(pid_target_speed/*Kinematics.target_angular.gimbal_angular.yaw_angular*/,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//auto_fire();//上位机发送标志位  开火
 	}
  
