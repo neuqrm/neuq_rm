@@ -1,27 +1,24 @@
+/**
+  ******************************************************************************
+  * @file    Project/APP/speed_pid.c 
+  * @author  Siyuan Qiao&Junyu Luo
+  * @version V1.0.0
+  * @date    1.2021
+  * @brief   pid 函数文件
+  ******************************************************************************
+  * @attention
+  ******************************************************************************
+*/
 #include "speed_pid.h"
-#include "motor.h"
-#include "Kinematic.h"
 
-#define IntegralUpperLimit    5000    //底盘抗积分饱和值
-#define Integralgimbal        500     //云台积分饱和值
-#define IntegralSeparation    300     //底盘积分分离
-#define vPID_OUT_MAX          8000		//即最大电流
-#define gPID_OUT_MAX          30000   //云台pid输出限幅
-#define gimbal_angel_upperlimit  500  //云台抗积分饱和值
-#define gimbal_angel_downlimit   20   //云台积分分离
-#define tvPID_OUT_MAX         9000    //拨弹轮
+PID_t pid_t;
+//int vpid_out_max=vPID_OUT_MAX;
+enum switch_flag_t switch_flag; //不同模块的枚举类型
 
-int pid_flag_start=1;
-int pid_flag_end=0;
-
-int vpid_out_max=vPID_OUT_MAX;
-int find_max(void);
-
-// 函数: VPID_Init()
-// 描述: 电机转速pid参数初始化
-// 参数：速度参数结构体
-// 输出：无
-// 内部函数，用户无需调用
+/**
+  * @breif 电机转速pid参数初始化
+	* @attention 内部函数，无需调用
+	*/
 void VPID_Init(VPID_t *vpid)
 {
 	vpid->target_speed=0;
@@ -31,13 +28,13 @@ void VPID_Init(VPID_t *vpid)
 	vpid->err_integration=0;
 	vpid->P_OUT=0;
 	vpid->I_OUT=0;
+	vpid->D_OUT=0;
 	vpid->PID_OUT=0;
 }
 
-// 函数: VPID_Init_All()
-// 描述: 四..个电机速度初始化
-// 参数：无
-// 输出：无
+/**
+  * @breif 电机速度环pid初始化
+  */
 void VPID_Init_All()	
 {
 	VPID_Init(&motor1.vpid);
@@ -45,47 +42,98 @@ void VPID_Init_All()
 	VPID_Init(&motor3.vpid);
 	VPID_Init(&motor4.vpid);
 	VPID_Init(&motor5.vpid);
+	VPID_Init(&gimbal_p.vpid);
+	VPID_Init(&gimbal_y.vpid);
 }
 
 
-// 函数: vpid_realize()
-// 描述: 速度pid计算
-// 参数：速度pid参数结构体，速度pid的p和i，微分项不需要
-// 输出：无
-// 内部函数，用户无需调用
-void vpid_realize(VPID_t *vpid,float kp,float ki)
+/**
+  * @breif 速度环pid计算公式，微分项一般不需要
+  * @attention 内部函数用户无需调用
+  */
+void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 {
 		vpid->err = vpid->target_speed - vpid->actual_speed;
 		
-	if(vpid->err==0)
-	{
-   vpid->err_integration=0;
-	}
-	if(abs(vpid->err) <= IntegralSeparation)		//积分分离
+ switch(switch_flag)
+ {
+	 case(CHASSIC):
+	 {
+		if(abs(vpid->err) <= CHASSIC_IntegralSeparation)		//积分分离
 			vpid->err_integration += vpid->err;
-	if(vpid->err_integration > IntegralUpperLimit)		//抗积分饱和
-		vpid->err_integration = IntegralUpperLimit;
-	else if(vpid->err_integration < -IntegralUpperLimit)
-		vpid->err_integration = -Integralgimbal;
-	
-	vpid->P_OUT = kp * vpid->err;								//P项
-	vpid->I_OUT = ki * vpid->err_integration;		//I项
-	
-	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT )> vPID_OUT_MAX) 
-		vpid->PID_OUT = vPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT ) < -vPID_OUT_MAX) 
-		vpid->PID_OUT = -vPID_OUT_MAX;
-	else
+	  if(vpid->err_integration > CHASSIC_Integral_max)		//抗积分饱和
+		vpid->err_integration = CHASSIC_Integral_max;
+	  else if(vpid->err_integration < -CHASSIC_Integral_max)
+		vpid->err_integration = -CHASSIC_Integral_max;
+		
+		vpid->P_OUT = kp * vpid->err;								//P项
+	  vpid->I_OUT = ki * vpid->err_integration;		//I项
+		
+		//输出限幅
+		if((vpid->P_OUT + vpid->I_OUT )> CHASSIC_vPID_max) 
+		vpid->PID_OUT = CHASSIC_vPID_max;
+	  else if((vpid->P_OUT + vpid->I_OUT ) < -CHASSIC_vPID_max) 
+		vpid->PID_OUT = -CHASSIC_vPID_max;
+	  else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+   }
+	 break;
+	 case(TRIGGER):
+	 {
+	 	if(abs(vpid->err) <= TRIGGER_IntegralSeparation)		//积分分离
+			vpid->err_integration += vpid->err;
+	  if(vpid->err_integration > TRIGGER_Integral_max)		//抗积分饱和
+		vpid->err_integration = TRIGGER_Integral_max;
+	  else if(vpid->err_integration < -TRIGGER_Integral_max)
+		vpid->err_integration = -TRIGGER_Integral_max;
+		
+		vpid->P_OUT = kp * vpid->err;								//P项
+	  vpid->I_OUT = ki * vpid->err_integration;		//I项
+
+		//输出限幅
+	  if((vpid->P_OUT + vpid->I_OUT )> TRIGGER_vPID_max) 
+		vpid->PID_OUT = TRIGGER_vPID_max;
+	  else if((vpid->P_OUT + vpid->I_OUT ) < -TRIGGER_vPID_max) 
+		vpid->PID_OUT = -TRIGGER_vPID_max;
+	  else
+		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+	 }
+		break;
+	 case(GIMBAL):
+	 {
+	 	if(abs(vpid->err) <= GIMBAL_IntegralSeparation)		//积分分离
+		vpid->err_integration += vpid->err;
+	  if(vpid->err_integration > GIMBAL_Integral_max)		//抗积分饱和
+		vpid->err_integration = GIMBAL_Integral_max;
+	  else if(vpid->err_integration < -GIMBAL_Integral_max)
+		vpid->err_integration = -GIMBAL_Integral_max;
+	
+	  vpid->P_OUT = kp * vpid->err;								//P项
+	  vpid->I_OUT = ki * vpid->err_integration;		//I项
+	  vpid->D_OUT = kd * (vpid->err-vpid->last_err);//D项
+	  vpid->last_err=vpid->err;
+	  //输出限幅
+	  if(abs(vpid->err) <= 2)
+	  vpid->PID_OUT=0;
+	  else
+	  {	
+	  if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> GIMBAL_vPID_max) 
+		vpid->PID_OUT = GIMBAL_vPID_max;
+	  else if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT) < -GIMBAL_vPID_max) 
+		vpid->PID_OUT = -GIMBAL_vPID_max;
+	  else
+		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
+    }
+	 }
+	  break;
+		default:break;
+  }		
 }
 
-
-// 函数: vpid_PI_realize()
-// 描述: 电机转速pid实现
-// 参数：电机转速pid的p和i，微分项不需要
-// 输出：无
-void vpid_PI_realize(float kp,float ki)
+/**
+  * @breif 底盘pid速度环运算函数
+  */
+void vpid_chassic_realize(float kp,float ki,float kd)
 {
 	//读取电机当前转速
 	motor1.vpid.actual_speed = motor1.actual_speed;
@@ -93,182 +141,83 @@ void vpid_PI_realize(float kp,float ki)
 	motor3.vpid.actual_speed = motor3.actual_speed;
 	motor4.vpid.actual_speed = motor4.actual_speed;
 	
-
+	switch_flag = CHASSIC;
 	//计算输出值
-	vpid_realize(&motor1.vpid,kp,ki);
-	vpid_realize(&motor2.vpid,kp,ki);
-	vpid_realize(&motor3.vpid,kp,ki);
-	vpid_realize(&motor4.vpid,kp,ki);
+	vpid_realize(&motor1.vpid,kp,ki,kd);
+	vpid_realize(&motor2.vpid,kp,ki,kd);
+	vpid_realize(&motor3.vpid,kp,ki,kd);
+	vpid_realize(&motor4.vpid,kp,ki,kd);
 	
-	/******************功率控制方案*************************/
-
+	switch_flag = NUL;
+//功率控制方案（测试）
 /*	power_limitation_jugement();
 	power_limitation_coefficient();*/
-	
 }
-
-void tvpid_realize(VPID_t *vpid,float kp,float ki)
-{
-	vpid->err = vpid->target_speed - vpid->actual_speed;
-	
-	if(abs(vpid->err) <= IntegralSeparation)		//积分分离
-		vpid->err_integration += vpid->err;
-	if(vpid->err_integration > IntegralUpperLimit)		//抗积分饱和
-		vpid->err_integration = IntegralUpperLimit;
-	else if(vpid->err_integration < -IntegralUpperLimit)
-		vpid->err_integration = -IntegralUpperLimit;
-	
-	vpid->P_OUT = kp * vpid->err;								//P项
-	vpid->I_OUT = ki * vpid->err_integration;		//I项
-	
-	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > tvPID_OUT_MAX) 
-		vpid->PID_OUT = tvPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT) < -tvPID_OUT_MAX) 
-		vpid->PID_OUT = -tvPID_OUT_MAX;
-	else
-		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
-}
-void tvpid_PI_realize(float kp,float ki)
+/**
+  * @breif 拨弹轮pid速度环运算函数
+  */
+void vpid_trigger_realize(float kp,float ki,float kd)
 {
 	//读取电机当前转速
-	
 	motor5.vpid.actual_speed = motor5.actual_speed;
-	
-
+	switch_flag = TRIGGER;
 	//计算输出值
-	vpid_realize(&motor5.vpid,kp,ki);
-
-	
-	
-	
+	vpid_realize(&motor5.vpid,kp,ki,kd);
+	switch_flag = NUL;
 }
-
-// 函数: set_motor_speed()
-// 描述: 设置目标速度
-// 参数：4个电机的目标速度
-// 输出：无
-void set_chassis_motor_speed(int motor1_speed,int motor2_speed,int motor3_speed,int motor4_speed)
-{
-	motor1.vpid.target_speed = motor1_speed;		//因为电机方向相反  所以加负号
-	motor2.vpid.target_speed = motor2_speed;
-	motor3.vpid.target_speed = motor3_speed;
-	motor4.vpid.target_speed = motor4_speed;
-	
-	
-	
-	motor1.target_speed = motor1_speed;		//因为电机方向相反  所以加负号
-	motor2.target_speed = motor2_speed;
-	motor3.target_speed = motor3_speed;
-	motor4.target_speed = motor4_speed;
-	
-}
-
-void set_GIMBAL_angle(int gimbal1_speed,int gimbal2_speed)
-{
-	gimbal1.apid.target_speed = gimbal1_speed;  //angel是速度
-	//gimbal1.apid.target_angle = gimbal1_angle;
-}
-
-void set_trigger_motor_speed(int motor5_speed)
-{
-	motor5.vpid.target_speed = motor5_speed;
-	
-	motor5.target_speed = motor5_speed;	
-	
-
-}
-void set_gimbal1_motor_speed(int gimbal1_speed)
-  {
-	gimbal1.vpid.target_speed = gimbal1_speed;
-	gimbal1.target_speed = gimbal1_speed;		
-	
-	}
-
-
-/*********************************************云台pid部分*******************************************************/
-void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kda)
-{
-	vpid->err = vpid->target_speed - vpid->actual_speed;	
-	/*if(vpid->err==0)
-	{
-   vpid->err_integration=0;
-	}*/
-	//if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
-		//	vpid->err_integration += vpid->err;
-//	if(vpid->err_integration > gimbal_angel_upperlimit)		//抗积分饱和
-	//	vpid->err_integration = Integralgimbal;
-	//else if(vpid->err_integration < -gimbal_angel_upperlimit)
-		//vpid->err_integration = -Integralgimbal;
-	
-	vpid->P_OUT = kpa * vpid->err;								//P项
-	vpid->I_OUT = kia * vpid->err_integration;		//I项
-	vpid->D_OUT = kda * (vpid->err-vpid->last_err);//D项
-	vpid->last_err=vpid->err;
-	//输出限幅
-	if(abs(vpid->err) <= 2)
-	vpid->PID_OUT=0;
-	else
-	{	
-	if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> gPID_OUT_MAX) 
-		vpid->PID_OUT = gPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT) < -gPID_OUT_MAX) 
-		vpid->PID_OUT = -gPID_OUT_MAX;
-	else
-		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
-  }
-  
-}
-
-void apid_GIMBAL_PI_realize(float kpa,float kia,float kda)
+/**
+  * @breif 云台pid速度环运算函数
+  */
+void vpid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,float kd_p)
 {
 	//读取电机当前转速
-	gimbal1.apid.actual_speed = gimbal1.actual_speed;
-	gimbal1.apid.actual_angle = gimbal1.actual_angle;
-	//计算输出值
-	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia,kda);
+	gimbal_y.vpid.actual_speed = gimbal_y.actual_speed;
+	gimbal_y.vpid.actual_speed = gimbal_y.actual_speed;
+	
+	switch_flag = GIMBAL;
+	
+	vpid_realize(&gimbal_y.vpid,kp_y,ki_y,kd_y);  //开始pid计算
+	vpid_realize(&gimbal_p.vpid,kp_p,ki_p,kd_p);
+	
+	switch_flag = NUL;
 }
 
-/*************************************************云台pid部分******************************************************/
+/************以下为测试用程序***************/
+int pid_target_speed=0;//速度环测试变量
+int pid_target_angle=4096;  //位置环测试变量
 
-// 函数: abs()
-// 描述: 自定义的求绝对值函数，因为math.h里的不好用
-// 参数：input
-// 输出：|input|
-int abs(int input)
-{
-	if(input<0)
-		input = -input;
-	return input;
-}
-
+int pid_flag_start=1;
+int pid_flag_end=0;
+/**
+  * @breif can模式下的云台测试程序，效果是手指拨动云台让其180度范围内来回旋转
+  */
 int pid_auto(void)
 {
 	int a=0;
-   if(gimbal1.actual_angle>=2048&&gimbal1.actual_angle<=6144&&pid_flag_start)
+   if(gimbal_y.actual_angle>=2048&&gimbal_y.actual_angle<=6144&&pid_flag_start)
 	 {
 	   a=60;
 	 }
-	 if(gimbal1.actual_angle>=2048&&gimbal1.actual_angle<=6144&&pid_flag_end)
+	 if(gimbal_y.actual_angle>=2048&&gimbal_y.actual_angle<=6144&&pid_flag_end)
 	 {
 		 a=-60;
 	 }
-   if(gimbal1.actual_angle<2048&&gimbal1.actual_angle>2008)
+   if(gimbal_y.actual_angle<2048&&gimbal_y.actual_angle>2008)
 	 {
 	 a=0;
 	 }
-	 if(gimbal1.actual_angle<6184&&gimbal1.actual_angle>6144)
+	 if(gimbal_y.actual_angle<6184&&gimbal_y.actual_angle>6144)
 	 {
 	 a=0;
 	 }
 
-	 if(gimbal1.actual_angle>=6184)
+	 if(gimbal_y.actual_angle>=6184)
 	 {
 	   a=0;
 		 pid_flag_start=0;
 		 pid_flag_end=1;
 	 }
-	 if(gimbal1.actual_angle<=2008)
+	 if(gimbal_y.actual_angle<=2008)
 	 {
 	  a=0;
 		pid_flag_start=1;
@@ -276,35 +225,14 @@ int pid_auto(void)
 	 } 
 	 return a;
 }
+/**
+  * @breif can模式下的云台测试程序
+  */
 
 int pid_pc(void)
 {
 	int a = 0;
-/*if(gimbal1.actual_angle>=2730&&gimbal1.actual_angle<=5462&&pid_flag_start)
-{
-	a=5462-gimbal1.actual_angle;
-}
-if(gimbal1.actual_angle<=5462&&gimbal1.actual_angle>=2730&&pid_flag_end)
-{
-	a=2730-gimbal1.actual_angle;
-}
-if(gimbal1.actual_angle>5470)
-{
-	a=0;
-	pid_flag_start=0;
-  pid_flag_end=1;
-}
-if(gimbal1.actual_angle<2720)
-{
-	a=0;
-	pid_flag_start=1;
-  pid_flag_start=0;
-}
-else
-{
-a=0;
-}*/
-a=4096-gimbal1.actual_angle;
+a=4096-gimbal_y.actual_angle;
 a=a*0.0347624*3;
   return a;
 }

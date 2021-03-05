@@ -33,14 +33,19 @@
  extern "C" {
 #endif 
 
-/* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx.h"
+//这个值不可以太大，否则出问题
+#define MAX_LENGTH 150
 
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+extern char receiveBuffer[MAX_LENGTH];
+extern char json_Buffer[MAX_LENGTH];
+extern uint8_t flag_command_recieved;
+extern uint8_t flag_command_recieved1;
+extern uint8_t flag_command_recieved2;
+extern uint8_t flag_command_recieved3;
+extern uint8_t flag_command_recieved4;
+extern uint8_t flag_command_recieved5;
 
+	 
 void NMI_Handler(void);
 void HardFault_Handler(void);
 void MemManage_Handler(void);

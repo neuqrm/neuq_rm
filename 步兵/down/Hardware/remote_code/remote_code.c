@@ -1,7 +1,19 @@
+/**
+  ******************************************************************************
+  * @file    Project/HARDWARE/remote_code.c 
+  * @author  Siyuan Qiao & Junyu Luo
+  * @version V1.0.0
+  * @date    1.2021
+  * @brief   
+  ******************************************************************************
+  * @attention Ò£¿ØÆ÷¿ØÖÆ³ÌÐò
+  ******************************************************************************
+      ..................NEUQ_SUDO..................
+*/
+
 #include "remote_code.h"
 #include "DJi_remote.h"
 #include "FS_remote.h"
-#include "speed_pid.h"
 #include "motor.h"
 #include "kinematic.h"
 #include "fric.h"
@@ -9,6 +21,7 @@
 #include "gimbal.h"
 #include "imuReader.h"              
 #include <math.h>
+#include "mode.h"
 #include "delay.h"
 u8 Control_Mode = control_mode;
 
@@ -22,10 +35,9 @@ float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
 
-// º¯Êý: Remote_Control()
-// ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
-// ²ÎÊý£ºÎÞ
-// Êä³ö£ºÎÞ
+/**
+  * @brief  Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
+  */
 void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏàÓ¦¶¯×÷
 {	
 	if(chassis_CH_width>remote_min_value && chassis_CH_width<remote_max_value)		//Èç¹ûÂú×ãÒ£¿ØÌõ¼þ
@@ -36,14 +48,13 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 	else
 	{
 		//±êÖ¾Î»¸ÄÎª×Ô¶¯Ä£Ê½
-		Control_Mode |= auto_control;												//ÐÞ¸ÄControl_ModeµÚ¶þÎ»Îª1
-		
+		Control_Mode |= auto_control;												//ÐÞ¸ÄControl_ModeµÚ¶þÎ»Îª1		
 	}
 	
 	if((Control_Mode & auto_control) != auto_control)			//Èç¹û¿ØÖÆÄ£Ê½²»µÈÓÚ×Ô¶¯¿ØÖÆ£¬¼´Ò£¿Ø¿ØÖÆ
 	{
 		
-			if(chassis_CH_width==3)
+			if(Remote_control_mode == chassis_CH_width)
 			{  
 				 x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
 				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
@@ -94,14 +105,28 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 	      	break;
 				}						
 			                      }
-			if(gimbal_CH_width==1)
+			if(Remote_control_mode == gimbal_CH_width)
 			{
+				switch(gimbal_modes)
+				{
+				case(gimbal_pwm_mode):  				//pwmÄ£Ê½ÏÂ¿ØÖÆÔÆÌ¨×ª½Ç
+
+			  	pwm_pulse_p=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				  pwm_pulse_y=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				
+				break;
+				case(gimbal_can_mode):           //canÄ£Ê½ÏÂ¿ØÖÆÔÆÌ¨×ª½Ç
+					Kinematics.pitch.target_angle = caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+					Kinematics.yaw.target_angle = caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+        break;
+				default:break;
+        }
 				switch (trigger_CH_width)
 				{
 					case 1:
 				  fric1_on(1500);
 				  fric2_on(1500);
-         static int count_1=1;	
+          static int count_1=1;	
 					count_1++;
 					if(count_1>100)
 					{trigger_speed = 100;
@@ -136,16 +161,12 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 					
 					default:
 	      	break;
-				                  }
-						
-					
-				pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
-				pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				                  }											
 				       		}
 			
 			
 		
-		if(dance_CH_width==2)	//Ð¡ÍÓÂÝÄ£Ê½
+		if(Remote_control_mode == dance_CH_width)	//Ð¡ÍÓÂÝÄ£Ê½
 		{
 		     x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
 				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
@@ -156,7 +177,7 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
     x_speed=cx_speed;
 		y_speed=cy_speed;
-		Gimbal_control(yaw_angularRead());
+		gimbal_speed_control(yaw_angularRead(),Kinematics.pitch.target_angular);
 		set_gimbal_current();
 	
 		}
@@ -172,11 +193,8 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		Kinematics.target_velocities.linear_x=x_speed;//·ÅÔÚrobomoveÖÐÖ´ÐÐ.
 		Kinematics.target_velocities.linear_y=y_speed;
 		Kinematics.target_velocities.angular_z=r_speed;
-		speed_control(x_speed,y_speed,r_speed);
-		trigger_control(trigger_speed);
-		//TIM_SetCompare1(TIM1,pwm_pulse1);
-		//TIM_SetCompare2(TIM1,pwm_pulse2);
-	
+		chassic_speed_control(x_speed,y_speed,r_speed);
+		trigger_control(trigger_speed);	
 	}
 	
 }
@@ -216,33 +234,66 @@ static float caculate_rotational_speed(int width,int mid,int min,int max)
 
 static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 {
-	float pwm_pulse=1500;
-		if(width>=(mid+2))
-		pwm_pulse=(1500 - 1.0*(width-(mid+2))/(max-(mid+2))*210);
-	else if(width<=(mid-2))
-	  pwm_pulse=(1500 + 1.0*((mid-2)-width)/((mid-2)-min)*105);
-	else
-		pwm_pulse=1500;
-	return pwm_pulse;
-	/*
-	float pwm_pulse=1500;
-	if(width>=(mid+2))
-  pwm_pulse=pwm_pulse-1;
-	else if(width<=(mid-2))
-*/
+	float pwm_can;                         //´Ë±äÁ¿·µ»Ø¼ÆËãµÃ³öµÄpwmÂö¿í»òÕßcanÄ£Ê½ÏÂµÄ»úÐµ½Ç¶ÈÖµ
+	switch(gimbal_modes)
+	{
+		case(gimbal_pwm_mode):
+			
+	   pwm_can=BASIC_PITCH_ANGLE_PWM;
+		 if(width>=(mid+2))
+		  pwm_can=(BASIC_PITCH_ANGLE_PWM - 1.0*(width-(mid+2))/(max-(mid+2))*210);
+	   else if(width<=(mid-2))
+	    pwm_can=(BASIC_PITCH_ANGLE_PWM + 1.0*((mid-2)-width)/((mid-2)-min)*105);
+	   else
+		  pwm_can=BASIC_PITCH_ANGLE_PWM;
+	
+		 break;
+		 
+		case(gimbal_can_mode):
+		 pwm_can=BASIC_PITCH_ANGLE_CAN;
+		 if(width>=(mid+2))
+		  pwm_can=(BASIC_PITCH_ANGLE_CAN - 1.0*(width-(mid+2))/(max-(mid+2))*2047);
+	   else if(width<=(mid-2))
+	    pwm_can=(BASIC_PITCH_ANGLE_CAN + 1.0*((mid-2)-width)/((mid-2)-min)*1023);
+	   else
+		  pwm_can=BASIC_PITCH_ANGLE_CAN;		
+		 
+		 break;
+		 default:break;
+   }
+	return pwm_can;
 }
 
 static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 {
-	float pwm_pulse=1290;
-		if(width>=(mid+2))
-		pwm_pulse=(1290 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
-	else if(width<=(mid-2))
-	  pwm_pulse=(1290 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
-	else
-		pwm_pulse=1290;
-	return pwm_pulse;
-	
+	float pwm_can;
+	switch(gimbal_modes)
+	{
+		case(gimbal_pwm_mode):
+	    pwm_can=BASIC_YAW_ANGLE_PWM;
+		 if(width>=(mid+2))
+	 	  pwm_can=(BASIC_YAW_ANGLE_PWM - 1.0*(width-(mid+2))/(max-(mid+2))*420);
+	   else if(width<=(mid-2))
+	    pwm_can=(BASIC_YAW_ANGLE_PWM + 1.0*((mid-2)-width)/((mid-2)-min)*420);
+	   else
+		  pwm_can=BASIC_YAW_ANGLE_PWM;
+
+		 break;
+		 
+		 case(gimbal_can_mode):
+		  pwm_can=BASIC_YAW_ANGLE_CAN;
+		 if(width>=(mid+2))
+		  pwm_can=(BASIC_YAW_ANGLE_CAN - 1.0*(width-(mid+2))/(max-(mid+2))*4095);
+	   else if(width<=(mid-2))
+	    pwm_can=(BASIC_YAW_ANGLE_CAN + 1.0*((mid-2)-width)/((mid-2)-min)*4095);
+	   else
+		  pwm_can=BASIC_YAW_ANGLE_CAN;
+		 
+		 break;
+		 default:break;
+		 
+   }
+		 return pwm_can;
 }
 
 

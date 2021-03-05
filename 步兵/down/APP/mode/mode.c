@@ -2,9 +2,9 @@
 #include "mode.h"
 #include "motor.h"
 
-extern enum  chassis_mode_t  chassis_modes;
-extern enum  gimbal_mode_t   gimbal_modes;
-extern enum  fric_mode_t     fric_modes;
+enum chassis_mode_t chassis_modes;
+enum gimbal_mode_t gimbal_modes;
+enum fric_mode_t fric_modes;
 
 void chassis_behavior(void)
 {
@@ -16,7 +16,7 @@ void chassis_behavior(void)
 		  max_motor_speed=15336;
 		  max_base_linear_speed=217.812f;
 		  max_base_rotational_speed=7.26057;
-			vpid_out_max=8000;
+			//vpid_out_max=8000;
 		
 		break;
 		
@@ -29,7 +29,7 @@ void chassis_behavior(void)
 			max_motor_speed=30672;
 		  max_base_linear_speed=435.624f;
 		  max_base_rotational_speed=14.52114;
-			vpid_out_max=16000;
+			//vpid_out_max=16000;
 		
 		break;
 		

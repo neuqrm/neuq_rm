@@ -1,9 +1,25 @@
+/**
+  ******************************************************************************
+  * @file    Project/HARDWARE/gimbal.c 
+  * @author  Junyu Luo
+  * @version V1.0.0
+  * @date    11.2019
+  * @brief   云台程序
+  ******************************************************************************
+  * @attention
+  ******************************************************************************
+*/
+
 #include "gimbal.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_tim.h"
 #include "sys.h"
+float pwm_pulse_p=1500;   //云台脉宽
+float pwm_pulse_y=1290;
 
-
+/**
+  * @breif 云台定时器初始化函数
+	*/
 void TIM1_GIMBAL_Init(void)
 {  
 	GPIO_InitTypeDef GPIO_InitStructure;

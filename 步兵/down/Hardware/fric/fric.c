@@ -1,8 +1,10 @@
 #include "fric.h"
-#include "math.h"
+#include <math.h>
 #include "stm32f4xx.h"
 #include "kinematic.h"
 #include "motor.h"
+
+extern Kinematics_t Kinematics;
 void fric_PWM_configuration(void) //
 {
 
@@ -88,7 +90,7 @@ void fric2_on(uint16_t cmd)
 
 void auto_fire(void)
 {
-if(Kinematics.target_angular.fric_angular==1)//自动射击使用
+if(Kinematics.fric.target_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
 			  
@@ -104,7 +106,7 @@ if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 							count_=1;
 					}
 		}
-		else if(Kinematics.target_angular.fric_angular==0)
+		else if(Kinematics.fric.target_angular==0)
 		{   
 			  fric1_on(1000);
 				fric2_on(1000);

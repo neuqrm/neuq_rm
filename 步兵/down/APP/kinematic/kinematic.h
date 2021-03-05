@@ -16,14 +16,31 @@
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
 
-typedef struct
-{
-	float kp;			
-	float ki;						
-}Pid_parameter;
 
+#define set_trigger_speed(motor5_speed) \
+				do{                                   \
+						motor5.vpid.target_speed = motor5_speed; \
+	          motor5.target_speed = motor5_speed;	     \
+        }while(0)                                    \
 
+#define set_gimbal_y_motor_speed(gimbal_y_speed) \
+				do{                                    \
+			     gimbal_y.vpid.target_speed = gimbal_y_speed; \
+	         gimbal_y.target_speed = gimbal_y_speed;		  \
+        }while(0)                                     \
 
+#define trigger_to_motor(trigger_angular)	\
+				do{                               \
+					motor5.target_speed =(int)(trigger_angular*M2006_REDUCTION_RATIO); \
+				}while(0)                                                            \
+												
+#define set_gimbal_angle(yaw_angle,pitch_angle) \
+				do{ \
+					gimbal_y.apid.target_angle = yaw_angle; \
+          gimbal_p.apid.target_angle = pitch_angle; \
+				}while(0)                                   \
+
+				
 typedef struct
 {
 	float linear_vel;			//线速度
@@ -43,23 +60,14 @@ typedef struct
 	float linear_y;
 	float angular_z; //角速度rpm
 }Velocities_t;
-//新增
-typedef struct
-{
-	float yaw_angular; 
-	float pitch_angular;
-	
-}Gimbal_t;
-
 
 typedef struct
 {
-	Gimbal_t gimbal_angular; 
-	float fric_angular;
-	float trigger_angular;
-	
-}Angular_t;
-
+	float target_angular;
+	float actual_angular;
+  float target_angle;
+	float actual_angle;
+}Application_t;
 
 typedef struct
 {
@@ -68,17 +76,13 @@ typedef struct
 	Wheel_t wheel3;
 	Wheel_t wheel4;
 	
-	Velocities_t target_velocities;		//目标速度
-	Velocities_t actual_velocities;	//实际速度
-  Angular_t  target_angular;
-	Angular_t  actual_angular;
-	
+	Velocities_t target_velocities;		//目标线速度
+	Velocities_t actual_velocities; 	//实际线速度
+	Application_t trigger;
+	Application_t fric;
+	Application_t pitch;
+	Application_t yaw;
 }Kinematics_t;
-/****************************************************/
-
-
-
-
 
 
 
@@ -86,21 +90,18 @@ typedef struct
 extern Kinematics_t Kinematics;
 extern float max_base_linear_speed;
 extern float max_base_rotational_speed;
-extern Pid_parameter Chassis,Gimbal,Trigger;
 
 extern int stop_flag_1;
 extern int stop_flag_2;
 extern int stop_flag_3; //新加入的，防止刹车过硬过载by LUO   666  by Q
 
 void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z);
-void trigger_to_motor(float trigger_angular);
 void Get_Base_Velocities(void);
-void speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度转换为电机转速
+void chassic_speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度转换为电机转速
 void trigger_control(float trigger_angular);
-void gimbal_control(float gimbal1_angle,float gimbal2_angle);
-void Gimbal_control(float gimbal1_speed);
-float KalmanFilter(const float ResrcData,float ProcessNiose_Q,float MeasureNoise_R);
+void gimbal_speed_control(float gimbal_y_angle,float gimbal_p_angle);
 void break_jugement(void);  // by luo
+void gimbal_angle_control(float yaw_angle,float pitch_angle);
 
 #endif
 

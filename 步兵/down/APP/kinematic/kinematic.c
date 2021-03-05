@@ -3,7 +3,7 @@
   * @file    Project/APP/kinematic.c 
   * @author  Siyuan Qiao&Junyu Luo 
   * @version V1.0.0
-  * @date    2-09-2020
+  * @date    2.2020
   * @brief   底盘正逆运动学演算
   *          线速度单位： cm/s
   *          角速度单位： rad/s
@@ -17,7 +17,7 @@
 #include "kinematic.h"
 #include "motor.h"
 #include "speed_pid.h"
-#include "angle_pid.h"
+#include "algorithm.h"
 
 
 Kinematics_t Kinematics;
@@ -26,8 +26,6 @@ Kinematics_t Kinematics;
 //把想要得到的底盘速度转换为轮子的线速度
 void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 {
-
-	
 	Kinematics.wheel1.target_speed.linear_vel = linear_x - linear_y + angular_z*(half_width+half_length);
 	Kinematics.wheel2.target_speed.linear_vel = linear_x + linear_y - angular_z*(half_width+half_length);
 	Kinematics.wheel3.target_speed.linear_vel = linear_x + linear_y + angular_z*(half_width+half_length);
@@ -42,13 +40,6 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 	motor2.target_speed =   (int)(Kinematics.wheel2.target_speed.rpm * M3508_REDUCTION_RATIO);
 	motor3.target_speed =  - (int)(Kinematics.wheel3.target_speed.rpm * M3508_REDUCTION_RATIO);
 	motor4.target_speed =  (int)(Kinematics.wheel4.target_speed.rpm * M3508_REDUCTION_RATIO);
-	
-}
-
-void trigger_to_motor(float trigger_angular)
-{
-     
-	motor5.target_speed =(int)(trigger_angular*M2006_REDUCTION_RATIO);
 	
 }
 
@@ -88,7 +79,7 @@ int find_max(void);
 int stop_flag_1=0;
 int stop_flag_4=0;
 
-void speed_control(float speed_x, float speed_y, float speed_r)
+void chassic_speed_control(float speed_x, float speed_y, float speed_r)
 {
 	int max;
 	if(stop_flag_1 == 0 && speed_x == 0 && speed_y == 0 && speed_r == 0)
@@ -112,7 +103,7 @@ void speed_control(float speed_x, float speed_y, float speed_r)
 			motor4.target_speed=(int)(motor4.target_speed*max_motor_speed*1.0/max);
 		}
 			//改变速度pid目标速度
-			set_chassis_motor_speed(motor1.target_speed, motor2.target_speed, motor3.target_speed, motor4.target_speed);
+			set_chassis_speed(motor1.target_speed, motor2.target_speed, motor3.target_speed, motor4.target_speed);
 	}
 }	
 
@@ -131,35 +122,30 @@ else if(trigger_angular!=0)
 		
 		trigger_to_motor(trigger_angular);
 		
-		set_trigger_motor_speed(motor5.target_speed);		
+		set_trigger_speed(motor5.target_speed);		
 }
 	}
 
 
 int stop_flag_3=0;
 	
-void gimbal_control(float gimbal1_speed,float gimbal2_speed)    //
+void gimbal_speed_control(float gimbal_y_speed,float gimbal_p_speed)    //
 {
-	//转换命令
-	//gimbal1_angle=gimbal1_angle*8191/360;
-  //gimbal2_angle=gimbal2_angle*8191/360;
 	
-	 /*	if(gimbal1_speed == 0)
+	 /*	if(gimbal_y_speed == 0)
 	{
 		stop_gimbal_motor();			//停下来  并角度闭环
 	}
     else*/
-    //gimbal1_speed = KalmanFilter(gimbal1_speed,1,200);
-	  set_GIMBAL_angle(gimbal1_speed,gimbal2_speed);//(gimbal1_angle,gimbal2_angle);
+    //gimbal_y_speed = KalmanFilter(gimbal_y_speed,1,200);
+	  set_gimbal_speed(gimbal_y_speed,gimbal_p_speed);//(gimbal_y_angle,gimbal_p_angle);
 }
 
-void Gimbal_control(float gimbal1_speed)     //小陀螺模式使用
-  {
-		gimbal1.target_speed= -5000*gimbal1_speed;
-		set_gimbal1_motor_speed(gimbal1.target_speed);
-		
-   }
-
+void gimbal_angle_control(float yaw_angle,float pitch_angle)
+{
+	
+	set_gimbal_angle(yaw_angle,pitch_angle);
+}
 
 	
 void break_jugement(void)
@@ -186,45 +172,4 @@ int find_max()
     temp=abs(motor4.target_speed);
   return temp;
 }
-
-/*-------------------------------------------------------------------------------------------------------------*/
-/*       
-        Q:过程噪声，Q增大，动态响应变快，收敛稳定性变坏
-        R:测量噪声，R增大，动态响应变慢，收敛稳定性变好       
-*/
-
-float KalmanFilter(const float ResrcData,float ProcessNiose_Q,float MeasureNoise_R)
-                                        
-{
-        float R = MeasureNoise_R;
-        float Q = ProcessNiose_Q;
-
-        static        float x_last = 0;
-
-        float x_mid = x_last;
-        float x_now;
-
-        static        float p_last = 0;
-
-        float p_mid ;
-        float p_now;
-        float kg;       
-
-        x_mid=x_last; //x_last=x(k-1|k-1),x_mid=x(k|k-1)
-        p_mid=p_last+Q; //p_mid=p(k|k-1),p_last=p(k-1|k-1),Q=噪声
-        kg=p_mid/(p_mid+R); //kg为kalman filter，R为噪声
-        x_now=x_mid+kg*(ResrcData-x_mid);//估计出的最优值
-               
-        p_now=(1-kg)*p_mid;//最优值对应的covariance       
-
-        p_last = p_now; //更新covariance值
-        x_last = x_now; //更新系统状态值
-
-        return x_now;               
-}
-
-/*-------------------------------------------------------------------------------------------------------------*/
-
-
-
 

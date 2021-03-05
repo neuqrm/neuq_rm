@@ -8,7 +8,7 @@
 #include "LED.h"
 #include "myflash.h"
 #include "timer.h"
-#include "buzzer.h"
+//#include "buzzer.h"
 #include "can.h"
 #include "power.h"
 #include "fric.h"
@@ -53,20 +53,19 @@ void All_Init()
 
 	Debug_USART_Config();           //通信串口初始化（USART2）
 	JSON_USART_Config();           	//主从控通信串口初始化（UART7）
-	
+	bsp_imu_usart_init();
+
 	motor_init();		//电机参数初始化
 	fric_PWM_configuration();       //摩擦轮电机pwm初始化   TIM1 /*******************************/新增
 	TIM1_GIMBAL_Init();
 
 	TIM3_Int_Init(10-1,9000-1);		  //定时器时钟90M，9000，所以90M/9000=10Khz的计数频率，计数10次为1ms  即1khz
-	//TIM12_PWM_Init(1000-1,90-1);		//90M/90约1Mhz的计数频率,重装载值1000，所以PWM频率为 1M/400=2.5Khz. 
-  TIM4_Int_Init(100-1,9000-1);
-  bsp_imu_usart_init();
+  //TIM4_Int_Init(100-1,9000-1);   //测试用时钟
 	VPID_Init_All();								//速度pid参数初始化
 	APID_Init_All();								//角度pid参数初始化
-
 	ap_pid_flag = ang_pid;									//位置角度闭环选择标志
 	stop_chassis_motor();									//让电机保持当前角度（锁死电机）
+	
 
 	RCC_GetClocksFreq(&get_rcc_clock); 			//查看系统时钟(watch中)
 	

@@ -9,8 +9,8 @@
 #define	CAN_2006Motor3_ID      0x203
 #define	CAN_2006Motor4_ID      0x204
 #define CAN_TRIGGER_ID         0x205
-#define CAN_GIMBAL1_ID         0x20A
-#define CAN_GIMBAL2_ID         0x20B
+#define CAN_GIMBAL_Y_ID         0x20A
+#define CAN_GIMBAL_P_ID         0x20B
 
 
 //电机转速pid参数结构体
@@ -23,6 +23,7 @@ typedef struct{
 	
 	int P_OUT;
 	int I_OUT;
+	int D_OUT;
 	int PID_OUT;
 }VPID_t;
 
@@ -38,8 +39,8 @@ typedef struct{
 	int I_OUT;
 	int D_OUT;
 	int PID_OUT;
-	int actual_speed;
-	int target_speed;
+	/*int actual_speed;
+	int target_speed;*/
 }APID_t;
 //电机参数结构体
 typedef struct{
@@ -47,6 +48,7 @@ typedef struct{
 	int start_angle;			//电机初始角度值
 	int start_angle_flag;	//记录电机初始角度值的flag
 	int stop_angle;				//发送停止命令时候的角度值
+	int target_angle;
 	
 	float actual_angle;			//当前真实角度值
 	int last_angle;				//上一次返回的角度值
@@ -63,7 +65,7 @@ typedef struct{
 	APID_t apid;
 }MOTOR_t;
 
-extern MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;//**********************************
+extern MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal_y,gimbal_p;//**********************************
 
 extern int max_motor_speed;
 extern float max_base_linear_speed;
@@ -78,8 +80,8 @@ typedef struct{
 	int motor4_current;
 	int motor5_current;
 	int motor6_current;
-	int gimbal1_current;
-	int gimbal2_current;
+	int gimbal_y_current;
+	int gimbal_p_current;
 	
 }LOOPBACK;
 
@@ -94,7 +96,6 @@ void set_gimbal_current(void);
 void stop_chassis_motor(void);	//将电机角度固定在当前值
 void stop_trigger_motor(void);
 void set_gimbal_current(void); //设置云台电流 2020.7.24
-void stop_gimbal_motor(void);
 
 #endif
 
