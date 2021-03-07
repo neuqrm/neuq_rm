@@ -76,20 +76,19 @@ void Get_Base_Velocities(void)
 // 输出：4个电机速度
 // 注：电机1、4的默认旋转方向和车轮实际正方向相反，需要取反
 int find_max(void);
-int stop_flag_1=0;
-int stop_flag_4=0;
+int stop_flag_chassis=0;
 
-void chassic_speed_control(float speed_x, float speed_y, float speed_r)
+void chassis_speed_control(float speed_x, float speed_y, float speed_r)
 {
 	int max;
-	if(stop_flag_1 == 0 && speed_x == 0 && speed_y == 0 && speed_r == 0)
+	if(stop_flag_chassis == 0 && speed_x == 0 && speed_y == 0 && speed_r == 0)
 	{
-		stop_flag_1 = 1;			//停止   此标志为了避免多次进入
+		stop_flag_chassis = 1;			//停止   此标志为了避免多次进入
 		stop_chassis_motor();			//停下来  并角度闭环
 	}
 	else if(speed_x != 0 || speed_y != 0 || speed_r != 0)
 	{
-		stop_flag_1 = 0;
+		stop_flag_chassis = 0;
 		//速度换算
 		BaseVel_To_WheelVel(speed_x, speed_y, speed_r);
  
@@ -107,18 +106,18 @@ void chassic_speed_control(float speed_x, float speed_y, float speed_r)
 	}
 }	
 
-int stop_flag_2=0;
+int stop_flag_trigger=0;
 
 void trigger_control(float trigger_angular)
 {
-if(stop_flag_2 == 0 && trigger_angular==0)
+if(stop_flag_trigger == 0 && trigger_angular==0)
 	{
-		stop_flag_2 = 1;			//停止   此标志为了避免多次进入
+		stop_flag_trigger = 1;			//停止   此标志为了避免多次进入
 		stop_trigger_motor();			//停下来  并角度闭环
 	}
 else if(trigger_angular!=0)
 	{
-		stop_flag_2 = 0;
+		stop_flag_trigger = 0;
 		
 		trigger_to_motor(trigger_angular);
 		
@@ -127,7 +126,6 @@ else if(trigger_angular!=0)
 	}
 
 
-int stop_flag_3=0;
 	
 void gimbal_speed_control(float gimbal_y_speed,float gimbal_p_speed)    //
 {
@@ -143,17 +141,10 @@ void gimbal_speed_control(float gimbal_y_speed,float gimbal_p_speed)    //
 
 void gimbal_angle_control(float yaw_angle,float pitch_angle)
 {
-	
 	set_gimbal_angle(yaw_angle,pitch_angle);
 }
 
 	
-void break_jugement(void)
-{
-    if(motor1.actual_speed <=0.05f)
-		 stop_flag_3=1;
-    
-}
 // 函数: find_max()
 // 描述: 找到计算得到的电机速度最大值
 // 参数：无

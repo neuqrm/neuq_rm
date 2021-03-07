@@ -41,11 +41,15 @@ void Debug_Key(void);							//调试按键
 																			//注意！角速度的英文是angular velocity，这里为了方便全部使用angular代表角速度，与原英文有别
 #define Angle_Pitch gimbal_p.apid.target_angle
 #define Angle_Yaw   gimbal_y.apid.target_angle
+#define Trigger_Speed Kinematics.trigger.actual_angular
+/***********pid参数宏定义***********/
+#define v_chassis_p  pid_t.chassis_pid.speed_loop.kp  
+#define v_chassis_i  pid_t.chassis_pid.speed_loop.ki  
+#define v_chassis_d  pid_t.chassis_pid.speed_loop.kd  
 
-/***********pid参数宏定义************/
-#define v_chassic_p  pid_t.chassic_pid.speed_loop.kp  
-#define v_chassic_i  pid_t.chassic_pid.speed_loop.ki  
-#define v_chassic_d  pid_t.chassic_pid.speed_loop.kd  
+#define a_chassis_p  pid_t.chassis_pid.position_loop.kp  
+#define a_chassis_i  pid_t.chassis_pid.position_loop.ki  
+#define a_chassis_d  pid_t.chassis_pid.position_loop.kd  
 
 #define v_trigger_p  pid_t.trigger_pid.speed_loop.kp  
 #define v_trigger_i  pid_t.trigger_pid.speed_loop.ki  
@@ -63,6 +67,10 @@ void Debug_Key(void);							//调试按键
 #define v_pitch_p    pid_t.pitch_pid.speed_loop.kp
 #define v_pitch_i    pid_t.pitch_pid.speed_loop.ki
 #define v_pitch_d   pid_t.pitch_pid.speed_loop.kd
+
+/***********功能使能***********/
+#define CHASSIS_BREAK_EN 0    // 启动时底盘刹住 1使能，0失能
+#define GIMBAL_POS_EN    0    // 启动云台位置环，1使能，0失能
 
 
 #endif

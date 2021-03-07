@@ -13,7 +13,6 @@
 
 #include "remote_code.h"
 #include "DJi_remote.h"
-#include "FS_remote.h"
 #include "motor.h"
 #include "kinematic.h"
 #include "fric.h"
@@ -23,7 +22,6 @@
 #include <math.h>
 #include "mode.h"
 #include "delay.h"
-u8 Control_Mode = control_mode;
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
@@ -40,75 +38,21 @@ float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
   */
 void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏàÓ¦¶¯×÷
 {	
-	if(chassis_CH_width>remote_min_value && chassis_CH_width<remote_max_value)		//Èç¹ûÂú×ãÒ£¿ØÌõ¼ş
-	{
-		//±êÖ¾Î»¸ÄÎªÒ£¿ØÄ£Ê½
-		Control_Mode &= remote_control;											//ĞŞ¸ÄControl_ModeµÚ¶şÎ»Îª0
-	}
+	if(Remote_control_mode>remote_min_value && Remote_control_mode<remote_max_value)		//ÅĞ¶ÏÒ£¿ØÆ÷ÊÇ·ñ¿ªÆô
+		control_mode = DJi_Remote_Control;								//±êÖ¾Î»¸ÄÎªÒ£¿ØÄ£Ê½
 	else
-	{
-		//±êÖ¾Î»¸ÄÎª×Ô¶¯Ä£Ê½
-		Control_Mode |= auto_control;												//ĞŞ¸ÄControl_ModeµÚ¶şÎ»Îª1		
-	}
-	
-	if((Control_Mode & auto_control) != auto_control)			//Èç¹û¿ØÖÆÄ£Ê½²»µÈÓÚ×Ô¶¯¿ØÖÆ£¬¼´Ò£¿Ø¿ØÖÆ
-	{
-		
+		control_mode = auto_control;							//±êÖ¾Î»¸ÄÎª×Ô¶¯Ä£Ê½
+						
 			if(Remote_control_mode == chassis_CH_width)
 			{  
 				 x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
 				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
-				
-				switch(trigger_CH_width)
-				{
-					case  1:
-					
-			   	fric1_on(2200);//1500
-				  fric2_on(2200);
-         static int count_1=1;	
-					count_1++;
-					if(count_1>100)
-					{trigger_speed = 150;
-					    count_1=1;           }
-					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
-					{ 
-						static int count_=1;
-					  count_++;
-						trigger_speed =pow(-1,count_)*100;
-						if(count_>100)
-							count_=1;
-					}
-					break;
-					
-					case 2:
-					 trigger_speed = 150;
-				   fric1_on(1000);
-				   fric2_on(1000);
-					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
-					{ 
-						static int count_=1;
-					  count_++;
-						trigger_speed =pow(-1,count_)*50;
-						if(count_>100)
-							count_=1;
-					}
-					break;
-					
-					case 3:
-						trigger_speed = 0;
-				    fric1_on(400);//1000
-				    fric2_on(400);
-					break;
-					
-					default:
-	      	break;
-				}						
-			                      }
+		  }
 			if(Remote_control_mode == gimbal_CH_width)
 			{
 				switch(gimbal_modes)
-				{
+			 {
 				case(gimbal_pwm_mode):  				//pwmÄ£Ê½ÏÂ¿ØÖÆÔÆÌ¨×ª½Ç
 
 			  	pwm_pulse_p=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
@@ -121,7 +65,24 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
         break;
 				default:break;
         }
-				switch (trigger_CH_width)
+			}
+
+		if(Remote_control_mode == dance_CH_width)	//Ğ¡ÍÓÂİÄ£Ê½
+		{
+		     x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value); 
+		     theta = Kinematics.actual_velocities.angular_z * 0.004f + theta; 
+	       theta = yawRead();
+		     cx_speed = x_speed*cos(theta) + y_speed*sin(theta);
+		     cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
+         x_speed=cx_speed;
+	       y_speed=cy_speed;
+	       gimbal_speed_control(yaw_angularRead(),Kinematics.pitch.target_angular);
+		     set_gimbal_current();
+		}
+		
+		switch (trigger_control_mode)                                               //Ò£¿ØÆ÷ÓÒ²¦¸Ë
 				{
 					case 1:
 				  fric1_on(1500);
@@ -161,53 +122,26 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					
 					default:
 	      	break;
-				                  }											
-				       		}
-			
-			
-		
-		if(Remote_control_mode == dance_CH_width)	//Ğ¡ÍÓÂİÄ£Ê½
-		{
-		     x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
-				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
-			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value); 
-		theta = Kinematics.actual_velocities.angular_z * 0.004f + theta; 
-	  theta = yawRead();
-		cx_speed = x_speed*cos(theta) + y_speed*sin(theta);
-		cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
-    x_speed=cx_speed;
-		y_speed=cy_speed;
-		gimbal_speed_control(yaw_angularRead(),Kinematics.pitch.target_angular);
-		set_gimbal_current();
-	
-		}
-		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
+				 }											
+
+		if((control_mode) == DJi_Remote_Control)
 		{
 			y_speed = y_speed;
 			r_speed = -r_speed; //È¡·´£¬Ê¹ÄæÊ±ÕëĞı×ªÎªÕıÏò
 		}
-		else if((Control_Mode&FS_Remote_Control) == FS_Remote_Control)		//ÒòÎªFS_Remote_Control = 0£¬Òò´ËÅĞ¶ÏÊ±±ØĞë·ÅÔÚelse ifÀï
-		{
-			y_speed = -y_speed;
-		}
-		Kinematics.target_velocities.linear_x=x_speed;//·ÅÔÚrobomoveÖĞÖ´ĞĞ.
-		Kinematics.target_velocities.linear_y=y_speed;
-		Kinematics.target_velocities.angular_z=r_speed;
-		chassic_speed_control(x_speed,y_speed,r_speed);
-		trigger_control(trigger_speed);	
-	}
-	
+			dji_remote_assignment();  //½«ÉÏÊöÒ£¿Ø¼ÆËãÊı¾İ¸³Öµ£¬Ö´ĞĞ²¿·ÖÔÚrobomoveÀï
+  
 }
 
 
-// º¯Êı: caculate_speed()
-// ÃèÊö: ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈıÖáËÙ¶ÈÉÏ
-// ²ÎÊı£ºwidth£ºÍ¨µÀÖµ 
-//			 mid£ºÍ¨µÀÖĞ¼äÖµ 
-//			 min£ºÍ¨µÀÊä³ö×îĞ¡Öµ
-//       max£ºÍ¨µÀÊä³ö×î´óÖµ
-// Êä³ö£º¶ÔÓ¦µÄËÙ¶ÈÖµ
-//ÄÚ²¿º¯Êı£¬ÓÃ»§ÎŞĞèµ÷ÓÃ
+
+/**
+  * @brief  ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈıÖáËÙ¶ÈÉÏ
+  * @param  width£ºÍ¨µÀÖµ 
+  *         mid£ºÍ¨µÀÖĞ¼äÖµ 
+  *         min£ºÍ¨µÀÊä³ö×îĞ¡Öµ
+  *         max£ºÍ¨µÀÊä³ö×î´óÖµ
+  */
 static float caculate_linear_speed(int width,int mid,int min,int max)
 {
   float speed=0;

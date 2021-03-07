@@ -27,6 +27,10 @@ extern uint8_t flag_command_recieved4;
 extern uint8_t flag_command_recieved5;
 /**************************************/
 
+/************功能使能标识符*************/
+#define MSG_SEND_EN 0      // 1为使能，0为失能
+/**************************************/
+
 void All_Init(void);			//机器人所有参数初始化函数
 
 

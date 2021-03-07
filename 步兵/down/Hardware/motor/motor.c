@@ -210,13 +210,13 @@ void set_gimbal_current()
 	
 	//电机目标电流为速度pid输出
 	gimbal_y.target_current = gimbal_y.apid.PID_OUT;//gimbal_y.apid.PID_OUT; //gimbal_y.vpid.PID_OUT;
-
+  gimbal_p.target_current = gimbal_p.apid.PID_OUT;
 	
 	//can总线通信协议，参照电调说明书
 	current_msg[2] =gimbal_y.target_current >> 8;			//1号电机电流高8位
 	current_msg[3] =gimbal_y.target_current & 0xff;		//1号电机电流低8位
-	//current_msg[4] =gimbal_p.target_current >> 8;			//2号电机电流高8位
-	//current_msg[5] =gimbal_p.target_current & 0xff;		//2号电机电流低8位
+	current_msg[4] =gimbal_p.target_current >> 8;			//2号电机电流高8位
+	current_msg[5] =gimbal_p.target_current & 0xff;		//2号电机电流低8位
 	
 	CAN1_Send_GIMBAL_Msg(current_msg);
 
@@ -228,14 +228,13 @@ void set_gimbal_current()
 void stop_chassis_motor()
 {
 	//读取当前角度值
-	motor1.stop_angle = motor1.actual_angle;
-	motor2.stop_angle = motor2.actual_angle;
-	motor3.stop_angle = motor3.actual_angle;
-	motor4.stop_angle = motor4.actual_angle;
+	motor1.stop_angle = motor1.total_angle;
+	motor2.stop_angle = motor2.total_angle;
+	motor3.stop_angle = motor3.total_angle;
+	motor4.stop_angle = motor4.total_angle;
 	
 	//改变角度pid目标角度值
 	set_chassis_motor_angle(motor1.stop_angle,motor2.stop_angle,motor3.stop_angle,motor4.stop_angle);
-	
 }
 
 /**

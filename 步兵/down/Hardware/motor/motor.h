@@ -4,10 +4,10 @@
 
 //can stdid
 #define CAN_LoopBack_ID				 0x200		//用于环回模式自检调试
-#define	CAN_2006Motor1_ID  	   0x201
-#define	CAN_2006Motor2_ID      0x202
-#define	CAN_2006Motor3_ID      0x203
-#define	CAN_2006Motor4_ID      0x204
+#define	CAN_3508Motor1_ID  	   0x201
+#define	CAN_3508Motor2_ID      0x202
+#define	CAN_3508Motor3_ID      0x203
+#define	CAN_3508Motor4_ID      0x204
 #define CAN_TRIGGER_ID         0x205
 #define CAN_GIMBAL_Y_ID         0x20A
 #define CAN_GIMBAL_P_ID         0x20B

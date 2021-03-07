@@ -57,23 +57,23 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 		
  switch(switch_flag)
  {
-	 case(CHASSIC):
+	 case(CHASSIS):
 	 {
-		if(abs(vpid->err) <= CHASSIC_IntegralSeparation)		//积分分离
+		if(abs(vpid->err) <= CHASSIS_IntegralSeparation)		//积分分离
 			vpid->err_integration += vpid->err;
-	  if(vpid->err_integration > CHASSIC_Integral_max)		//抗积分饱和
-		vpid->err_integration = CHASSIC_Integral_max;
-	  else if(vpid->err_integration < -CHASSIC_Integral_max)
-		vpid->err_integration = -CHASSIC_Integral_max;
+	  if(vpid->err_integration > CHASSIS_Integral_max)		//抗积分饱和
+		vpid->err_integration = CHASSIS_Integral_max;
+	  else if(vpid->err_integration < -CHASSIS_Integral_max)
+		vpid->err_integration = -CHASSIS_Integral_max;
 		
 		vpid->P_OUT = kp * vpid->err;								//P项
 	  vpid->I_OUT = ki * vpid->err_integration;		//I项
 		
 		//输出限幅
-		if((vpid->P_OUT + vpid->I_OUT )> CHASSIC_vPID_max) 
-		vpid->PID_OUT = CHASSIC_vPID_max;
-	  else if((vpid->P_OUT + vpid->I_OUT ) < -CHASSIC_vPID_max) 
-		vpid->PID_OUT = -CHASSIC_vPID_max;
+		if((vpid->P_OUT + vpid->I_OUT )> CHASSIS_vPID_max) 
+		vpid->PID_OUT = CHASSIS_vPID_max;
+	  else if((vpid->P_OUT + vpid->I_OUT ) < -CHASSIS_vPID_max) 
+		vpid->PID_OUT = -CHASSIS_vPID_max;
 	  else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
    }
@@ -133,7 +133,7 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 /**
   * @breif 底盘pid速度环运算函数
   */
-void vpid_chassic_realize(float kp,float ki,float kd)
+void vpid_chassis_realize(float kp,float ki,float kd)
 {
 	//读取电机当前转速
 	motor1.vpid.actual_speed = motor1.actual_speed;
@@ -141,7 +141,7 @@ void vpid_chassic_realize(float kp,float ki,float kd)
 	motor3.vpid.actual_speed = motor3.actual_speed;
 	motor4.vpid.actual_speed = motor4.actual_speed;
 	
-	switch_flag = CHASSIC;
+	switch_flag = CHASSIS;
 	//计算输出值
 	vpid_realize(&motor1.vpid,kp,ki,kd);
 	vpid_realize(&motor2.vpid,kp,ki,kd);

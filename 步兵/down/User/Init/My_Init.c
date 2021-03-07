@@ -8,7 +8,6 @@
 #include "LED.h"
 #include "myflash.h"
 #include "timer.h"
-//#include "buzzer.h"
 #include "can.h"
 #include "power.h"
 #include "fric.h"
@@ -16,7 +15,6 @@
 #include "speed_pid.h"
 #include "angle_pid.h"
 #include "DJi_remote.h"
-#include "FS_remote.h"
 #include "remote_code.h"
 #include "bsp_debug_usart.h"
 #include "bsp_uart7.h"
@@ -40,10 +38,7 @@ void All_Init()
 	power_init();										  //电机电源初始化，默认为关
 	power_open_all();									//开启所有电机电源
 	
-	if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)					//大疆遥控器
-		Dji_Remote_Init();									//大疆遥控器初始化
-	else if((Control_Mode&FS_Remote_Control) == FS_Remote_Control)					//富斯遥控器
-		FS_Remote_Init();										//富斯遥控器初始化
+	Dji_Remote_Init();									//大疆遥控器初始化
 
 	led_init();											//led初始化
 	key_init();											//按键初始化
@@ -56,14 +51,13 @@ void All_Init()
 	bsp_imu_usart_init();
 
 	motor_init();		//电机参数初始化
-	fric_PWM_configuration();       //摩擦轮电机pwm初始化   TIM1 /*******************************/新增
+	fric_PWM_configuration();       //摩擦轮电机pwm初始化   TIM1 新增
 	TIM1_GIMBAL_Init();
 
 	TIM3_Int_Init(10-1,9000-1);		  //定时器时钟90M，9000，所以90M/9000=10Khz的计数频率，计数10次为1ms  即1khz
   //TIM4_Int_Init(100-1,9000-1);   //测试用时钟
 	VPID_Init_All();								//速度pid参数初始化
 	APID_Init_All();								//角度pid参数初始化
-	ap_pid_flag = ang_pid;									//位置角度闭环选择标志
 	stop_chassis_motor();									//让电机保持当前角度（锁死电机）
 	
 

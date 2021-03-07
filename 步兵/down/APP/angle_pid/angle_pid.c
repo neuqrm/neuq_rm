@@ -15,8 +15,6 @@
 #include <math.h>
 #include "speed_pid.h"
 
-#define aPID_OUT_MAX          30000		//即最大速度
-int ap_pid_flag = ang_pid;	//角度和位置pid标志
 
 // 函数: APID_Init()
 // 描述: 电机机械角度pid参数初始化
@@ -85,7 +83,7 @@ void apid_realize(APID_t *apid,float kp,float ki,float kd)
 		  apid->PID_OUT = apid->P_OUT + apid->D_OUT;
 		}
 		break;
-		case(CHASSIC):
+		case(CHASSIS):
 		{
 			apid->P_OUT = kp * apid->err;
 	    apid->D_OUT = kd * (apid->err-apid->last_err);
@@ -103,19 +101,19 @@ void apid_realize(APID_t *apid,float kp,float ki,float kd)
   }	
 }
 
-// 函数: apid_chassic_realize()
+// 函数: apid_chassis_realize()
 // 描述: 电机机械角度pid实现
 // 参数：电机机械角度pid系数
 // 输出：无
-void apid_chassic_realize(float kp,float ki,float kd)
+void apid_chassis_realize(float kp,float ki,float kd)
 {
 	//读取当前角度值
-	motor1.apid.actual_angle = motor1.actual_angle;
-	motor2.apid.actual_angle = motor2.actual_angle;
-	motor3.apid.actual_angle = motor3.actual_angle;
-	motor4.apid.actual_angle = motor4.actual_angle;
+	motor1.apid.actual_angle = motor1.total_angle;
+	motor2.apid.actual_angle = motor2.total_angle;
+	motor3.apid.actual_angle = motor3.total_angle;
+	motor4.apid.actual_angle = motor4.total_angle;
 	
-	switch_flag = CHASSIC;
+	switch_flag = CHASSIS;
 	//计算电机机械角度pid
 	apid_realize(&motor1.apid,kp,ki,kd);
 	apid_realize(&motor2.apid,kp,ki,kd);
@@ -138,5 +136,7 @@ void apid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,
 	apid_realize(&gimbal_y.apid,kp_y,ki_y,kd_y);
 	apid_realize(&gimbal_p.apid,kp_p,ki_p,kd_p);
 	switch_flag = NUL;
+	
+	set_gimbal_speed(gimbal_y.apid.PID_OUT,gimbal_p.apid.PID_OUT);
 }
 

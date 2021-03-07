@@ -2,20 +2,6 @@
 #define _REMOTE_CODE_H_
 #include "sys.h"
 
-//Control_Mode第1位   FS为0   DJi为1
-#define FS_Remote_Control			0x0
-#define DJi_Remote_Control		0x1
-
-//Control_Mode第2位  auto为1   remote为0
-#define auto_control					0x2
-#define remote_control        0x1
-#define ROS_control						0x4
-
-//Control_Mode第1位遥控器选择，第二位模式选择
-#define control_mode     (auto_control | DJi_Remote_Control)			//自动+大疆遥控器
-
-extern u8 Control_Mode;
-
 /*
   //大疆遥控器参数范围
   ch0:364-1024-1684
@@ -36,7 +22,7 @@ extern u8 Control_Mode;
 	#define dance_CH_width        2   					 //跳舞脉宽				s1拨到最下
 	#define chassis_CH_width      3  				     //遥控底盘    s1拨到中间   1 3  2      最上云台  中间底盘  最下陀螺
 	#define gimbal_CH_width       1              //遥控云台    s1最上  1
-	#define trigger_CH_width      rc.s2          //拨弹轮控制
+	#define trigger_control_mode      rc.s2          //拨弹轮控制
 	
 	/*以下定义中的数值均通过watch中观察各通道值所得*/
 	
@@ -59,6 +45,14 @@ extern u8 Control_Mode;
 	#define stop_min_value				1.5
 	#define remote_max_value      4
 	#define remote_min_value     0.5		//remote范围应包含stop
+  
+	#define dji_remote_assignment() \
+	do{ \
+	Kinematics.target_velocities.linear_x=x_speed; \
+  Kinematics.target_velocities.linear_y=y_speed; \
+	Kinematics.target_velocities.angular_z=r_speed; \
+  Kinematics.trigger.actual_angular=trigger_speed; \
+	}while(0)                                        \
 
 
 void Remote_Control(void);

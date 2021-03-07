@@ -17,7 +17,6 @@
 #include "kinematic.h"
 #include "mode.h"
 #include "bsp_debug_usart.h"
-#include "remote_code.h"
 #include "gimbal.h"
 #include "delay.h"
 #include "stm32f4xx_it.h"
@@ -145,11 +144,11 @@ void resolve_json_chassis_command(void)
 	root = json_loads(json_Buffer,0,&error); //
 	chassis_obj = json_object_get( root, "chassis" );  //Get a value corresponding to key from object
 	item_obj = json_array_get( chassis_obj, 0 );//Returns the element in array at position index
-	Kinematics.target_velocities.linear_x =5.0f*json_integer_value(item_obj);	//real
+	Kinematics.target_velocities.linear_x =1.0f*json_integer_value(item_obj);	//real
 	item_obj = json_array_get( chassis_obj, 1 );
-	Kinematics.target_velocities.linear_y = 5.0f*json_integer_value(item_obj);
+	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z = 0.8f*json_integer_value(item_obj);
+	Kinematics.target_velocities.angular_z = 1.0f*json_integer_value(item_obj);
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);
@@ -180,27 +179,7 @@ void resolve_json_gimbal_speed_command()
   */
 /*void resolve_json_pidparam_command(void)   
 { 
-	json_t *root;
-	json_t *para_obj;
-	json_t *item_obj;
-	json_error_t error;
-	root = json_loads(json_Buffer,0,&error);
-	para_obj = json_object_get( root, "Pid_param" );
-	item_obj = json_array_get( para_obj, 0 );
-	Chassis.kp=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( para_obj, 1 );
-	Chassis.ki=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( para_obj, 2 );
-	Gimbal.kp=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( para_obj, 3 );
-	Gimbal.ki=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( para_obj, 4);
-	Trigger.kp=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( para_obj, 5 );
-	Trigger.ki=1.0f*json_integer_value(item_obj);
-	json_decref(item_obj);
-	json_decref(para_obj);
-	json_decref(root);
+
 }
 */
 

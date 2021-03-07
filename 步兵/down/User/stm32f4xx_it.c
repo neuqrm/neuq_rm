@@ -236,26 +236,26 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 	
 	switch(RxMessage.StdId)
 	{
-		case(CAN_2006Motor1_ID):
+		case(CAN_3508Motor1_ID):
 			record_motor_callback(&motor1, angle, speed, current);
 		break;
-		case(CAN_2006Motor2_ID):
+		case(CAN_3508Motor2_ID):
 			record_motor_callback(&motor2, angle, speed, current);
 		break;
-		case(CAN_2006Motor3_ID):
+		case(CAN_3508Motor3_ID):
 			record_motor_callback(&motor3, angle, speed, current);
 		break;
-		case(CAN_2006Motor4_ID):
+		case(CAN_3508Motor4_ID):
 			record_motor_callback(&motor4, angle, speed, current);
 		break;
 		case(CAN_TRIGGER_ID):
 			record_motor_callback(&motor5, angle, speed, current);
 		break;
 		case(CAN_GIMBAL_Y_ID):
-		record_gimbal_callback(&gimbal_y, angle, speed, current);
+		  record_motor_callback(&gimbal_y, angle, speed, current);
 		break;
 		case(CAN_GIMBAL_P_ID):
-		record_gimbal_callback(&gimbal_p, angle, speed, current);
+		  record_motor_callback(&gimbal_p, angle, speed, current);
 		break;
 		case(CAN_LoopBack_ID):
 		{

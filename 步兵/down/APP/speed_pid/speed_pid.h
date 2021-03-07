@@ -10,9 +10,9 @@
 	6020电机电压范围						-30000 ~ +30000
 */
 
-#define CHASSIC_Integral_max         5000            //抗积分饱和
-#define CHASSIC_IntegralSeparation   500             //积分分离
-#define CHASSIC_vPID_max             8000            //输出限幅
+#define CHASSIS_Integral_max         5000            //抗积分饱和
+#define CHASSIS_IntegralSeparation   500             //积分分离
+#define CHASSIS_vPID_max             8000            //输出限幅
 #define TRIGGER_Integral_max         3000
 #define TRIGGER_IntegralSeparation   50
 #define TRIGGER_vPID_max             9000
@@ -46,40 +46,45 @@
 #define pid_init() \
 				do{ \
 					/*底盘速度环*/                        \
-					pid_t.chassic_pid.speed_loop.kp = 2; \
-					pid_t.chassic_pid.speed_loop.ki = 0.05; \
-					pid_t.chassic_pid.speed_loop.kd = 0; \
+					pid_t.chassis_pid.speed_loop.kp = 2; \
+					pid_t.chassis_pid.speed_loop.ki = 0.05; \
+					pid_t.chassis_pid.speed_loop.kd = 0; \
 					                                     \
+					/*底盘位置环*/                        \
+					pid_t.chassis_pid.position_loop.kp = 0.2; \
+					pid_t.chassis_pid.position_loop.ki = 0.05; \
+					pid_t.chassis_pid.position_loop.kd = 0; \
+                                               \
 					/*拨弹轮速度环*/                      \
 					pid_t.trigger_pid.speed_loop.kp = 2.5; \
 					pid_t.trigger_pid.speed_loop.ki = 0.05; \
 					pid_t.trigger_pid.speed_loop.kd = 0; \
                                                \
 					/*云台yaw位置环*/                    \
-					pid_t.yaw_pid.position_loop.kp = 2; \
+					pid_t.yaw_pid.position_loop.kp = 0; \
 					pid_t.yaw_pid.position_loop.ki = 0; \
 					pid_t.yaw_pid.position_loop.kd = 0; \
 					                                    \
 					/*云台yaw速度环*/                    \
-				  pid_t.yaw_pid.speed_loop.kp = 380; \
-				  pid_t.yaw_pid.speed_loop.ki = 0.01; \
+				  pid_t.yaw_pid.speed_loop.kp = 0; \
+				  pid_t.yaw_pid.speed_loop.ki = 0; \
 				  pid_t.yaw_pid.speed_loop.kd = 0; \
 					                                 \
 					/*云台pitch位置环*/                    \
-					pid_t.pitch_pid.position_loop.kp = 2; \
+					pid_t.pitch_pid.position_loop.kp = 0; \
 					pid_t.pitch_pid.position_loop.ki = 0; \
 					pid_t.pitch_pid.position_loop.kd = 0; \
 					                                      \
 					/*云台pitch速度环*/                    \
-				  pid_t.pitch_pid.speed_loop.kp = 380; \
-				  pid_t.pitch_pid.speed_loop.ki = 0.01; \
+				  pid_t.pitch_pid.speed_loop.kp = 0; \
+				  pid_t.pitch_pid.speed_loop.ki = 0; \
 				  pid_t.pitch_pid.speed_loop.kd = 0; \
 				}while(0)                            \
 				
 typedef enum switch_flag_t
 {
 	
-	CHASSIC = 1,
+	CHASSIS = 1,
 	TRIGGER = 2,
 	GIMBAL  = 3,
 	NUL=0,
@@ -100,7 +105,7 @@ typedef struct
 				
 typedef struct
 {
-  PID_Loop_t chassic_pid;
+  PID_Loop_t chassis_pid;
 	PID_Loop_t trigger_pid;
 	PID_Loop_t yaw_pid;
 	PID_Loop_t pitch_pid;
@@ -113,7 +118,7 @@ extern switch_flag_t switch_flag;
 
 void VPID_Init_All(void);			//电机转速PID参数初始化
 
-void vpid_chassic_realize(float kp,float ki,float kd);				//电机转速PID实现
+void vpid_chassis_realize(float kp,float ki,float kd);				//电机转速PID实现
 void vpid_trigger_realize(float kp,float ki,float kd);      //拨弹
 void vpid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,float kd_p); //云台速度环
 

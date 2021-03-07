@@ -18,37 +18,38 @@
 	*/
 void Robo_Move()
 {
-	if(stop_flag_1 && ap_pid_flag == ang_pid)			//如果此时速度为0（停止）或者自动控制时没有在运行位置闭环   那么角度闭环
-	{	
-		break_jugement();
-		if(stop_flag_3 && 1)
-		{
-			stop_chassis_motor();
-		}
-		apid_chassic_realize(0.2,0.05,0);			
-	
-	}
-  if(1) //(Control_Mode) == 0x03 Control_Mode & auto_control) == auto_control)
+	if(CHASSIS_BREAK_EN)          //底盘刹车使能
 	{
-		chassic_speed_control(Liner_X, Liner_Y, Angular_Z);		 
-		gimbal_speed_control(Angular_Yaw, Angular_Pitch);      //使用云台速度环控制
-	  //gimbal_angle_control(Angle_Yaw,Angle_Pitch);  //使用云台位置环控制
-		//auto_fire();//上位机发送标志位  开火
-	 }
- 
+	 if(stop_flag_chassis==1)			//如果此时速度为0（停止）那么角度闭环
+		apid_chassis_realize(a_chassis_p,a_chassis_i,a_chassis_d);		//底盘位置环给定	
+  }
+ /***** 各运动控制函数 ******/
+		chassis_speed_control(Liner_X, Liner_Y, Angular_Z);		 
+		trigger_control(Trigger_Speed);	
 	
-   	vpid_chassic_realize(v_chassic_p,v_chassic_i,v_chassic_d);			//速度闭环2  0.05
+	  if(GIMBAL_POS_EN)                             //云台位置环使能
+		gimbal_angle_control(Angle_Yaw,Angle_Pitch);  //云台位置环控制
+		else
+		gimbal_speed_control(Angular_Yaw, Angular_Pitch);      //云台速度环控制	
+		//auto_fire();//上位机发送标志位  开火
+	 
+ /***** pid计算及电流赋值 *****/
+   	vpid_chassis_realize(v_chassis_p,v_chassis_i,v_chassis_d);			//速度闭环2  0.05
 	  vpid_trigger_realize(v_trigger_p,v_trigger_i,v_trigger_d);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-    //apid_gimbal_realize(a_yaw_p,a_yaw_i,a_yaw_d,a_pitch_p,a_pitch_i,a_pitch_d);	        //云台位置环给定
+		if(GIMBAL_POS_EN)
+    apid_gimbal_realize(a_yaw_p,a_yaw_i,a_yaw_d,a_pitch_p,a_pitch_i,a_pitch_d);	        //云台位置环给定
+		
 	  vpid_gimbal_realize(v_yaw_p,v_yaw_i,v_yaw_d,v_pitch_p,v_pitch_i,v_pitch_d);     //  云台速度环设定
-		set_chassis_current();		//设定电机电流
+
+ /***** 设定电机电流电压值 *****/	
+	  set_chassis_current();		
 	  set_trigger_current();
 	  set_gimbal_current();
 
-	  TIM_SetCompare1(TIM1,pwm_pulse_p);
-		TIM_SetCompare2(TIM1,pwm_pulse_y);
+ /***** 舵机脉宽 *****/
+	  TIM_SetCompare1(TIM1,pwm_pulse_p);                              //pitch轴
+		TIM_SetCompare2(TIM1,pwm_pulse_y);                              //yaw轴
 
-	  
 }
 
 
