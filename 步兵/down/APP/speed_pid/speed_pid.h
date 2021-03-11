@@ -17,8 +17,8 @@
 #define TRIGGER_IntegralSeparation   50
 #define TRIGGER_vPID_max             9000
 
-#define GIMBAL_Integral_max         500
-#define GIMBAL_IntegralSeparation   20
+#define GIMBAL_Integral_max         8000
+#define GIMBAL_IntegralSeparation   15
 #define GIMBAL_vPID_max             20000
 
 //宏定义，电机目标速度复赋值

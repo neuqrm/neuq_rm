@@ -25,7 +25,7 @@
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
-float cx_speed=0,cy_speed=0;
+float cx_speed=0,cy_speed=0,fric_angular=0;
 int flag = 0;
 //ÄÚ²¿º¯ÊıÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
@@ -38,11 +38,7 @@ float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
   */
 void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏàÓ¦¶¯×÷
 {	
-	if(Remote_control_mode>remote_min_value && Remote_control_mode<remote_max_value)		//ÅĞ¶ÏÒ£¿ØÆ÷ÊÇ·ñ¿ªÆô
-		control_mode = DJi_Remote_Control;								//±êÖ¾Î»¸ÄÎªÒ£¿ØÄ£Ê½
-	else
-		control_mode = auto_control;							//±êÖ¾Î»¸ÄÎª×Ô¶¯Ä£Ê½
-						
+	
 			if(Remote_control_mode == chassis_CH_width)
 			{  
 				 x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
@@ -85,8 +81,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		switch (trigger_control_mode)                                               //Ò£¿ØÆ÷ÓÒ²¦¸Ë
 				{
 					case 1:
-				  fric1_on(1500);
-				  fric2_on(1500);
+					fric_angular=1500;
           static int count_1=1;	
 					count_1++;
 					if(count_1>100)
@@ -103,8 +98,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					break;
 					case 2:
 					trigger_speed = -50;
-				  fric1_on(1000);
-				  fric2_on(1000);
+				  fric_angular=1000;
 					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//·´×ª
 					{ 
 						static int count_=1;
@@ -116,8 +110,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					break;
 					case 3:
 					trigger_speed = 0;
-				  fric1_on(1000);
-				  fric2_on(1000);
+					fric_angular=1000;
 					break;
 					
 					default:

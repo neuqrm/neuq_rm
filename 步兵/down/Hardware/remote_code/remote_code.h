@@ -51,7 +51,8 @@
 	Kinematics.target_velocities.linear_x=x_speed; \
   Kinematics.target_velocities.linear_y=y_speed; \
 	Kinematics.target_velocities.angular_z=r_speed; \
-  Kinematics.trigger.actual_angular=trigger_speed; \
+  Kinematics.trigger.target_angular=trigger_speed; \
+	Kinematics.fric.target_angular=fric_angular;     \
 	}while(0)                                        \
 
 

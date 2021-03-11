@@ -11,7 +11,6 @@
 */
 #include "Tim3_Events.h"
 
-
 /**
   * @breif 运动控制函数
 	* @param  各pid参数
@@ -49,6 +48,8 @@ void Robo_Move()
  /***** 舵机脉宽 *****/
 	  TIM_SetCompare1(TIM1,pwm_pulse_p);                              //pitch轴
 		TIM_SetCompare2(TIM1,pwm_pulse_y);                              //yaw轴
+		fric1_on(FRIC_Speed);
+		fric2_on(FRIC_Speed);
 
 }
 

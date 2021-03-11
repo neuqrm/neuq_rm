@@ -14,7 +14,7 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_tim.h"
 #include "sys.h"
-float pwm_pulse_p=1500;   //云台脉宽
+float pwm_pulse_p=1500;   //云台初始化脉宽
 float pwm_pulse_y=1290;
 
 /**
