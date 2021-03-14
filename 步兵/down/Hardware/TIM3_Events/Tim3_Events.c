@@ -23,20 +23,23 @@ void Robo_Move()
 		apid_chassis_realize(a_chassis_p,a_chassis_i,a_chassis_d);		//底盘位置环给定	
   }
  /***** 各运动控制函数 ******/
-		chassis_speed_control(Liner_X, Liner_Y, Angular_Z);		 
-		trigger_control(Trigger_Speed);	
+		chassis_speed_control(Liner_X, Liner_Y, Angular_Z);		 //底盘速度控制
+		trigger_control(Trigger_Speed);	                       //拨弹轮速度控制
 	
-	  if(GIMBAL_POS_EN)                             //云台位置环使能
-		gimbal_angle_control(Angle_Yaw,Angle_Pitch);  //云台位置环控制
-		else
-		gimbal_speed_control(Angular_Yaw, Angular_Pitch);      //云台速度环控制	
+    if(gimbal_modes == gimbal_can_mode)	          //如果在云台模式下
+		{
+	    if(GIMBAL_POS_EN)                             //云台位置环使能
+		   gimbal_angle_control(Angle_Yaw,Angle_Pitch);  //云台位置环控制
+		  else
+		   gimbal_speed_control(Angular_Yaw, Angular_Pitch);      //云台速度环控制	
+	  }
 		//auto_fire();//上位机发送标志位  开火
 	 
  /***** pid计算及电流赋值 *****/
    	vpid_chassis_realize(v_chassis_p,v_chassis_i,v_chassis_d);			//速度闭环2  0.05
 	  vpid_trigger_realize(v_trigger_p,v_trigger_i,v_trigger_d);      //拨弹轮速度闭环  参数未确定   2.5  0.05
 		if(GIMBAL_POS_EN)
-    apid_gimbal_realize(a_yaw_p,a_yaw_i,a_yaw_d,a_pitch_p,a_pitch_i,a_pitch_d);	        //云台位置环给定
+     apid_gimbal_realize(a_yaw_p,a_yaw_i,a_yaw_d,a_pitch_p,a_pitch_i,a_pitch_d);	        //云台位置环给定
 		
 	  vpid_gimbal_realize(v_yaw_p,v_yaw_i,v_yaw_d,v_pitch_p,v_pitch_i,v_pitch_d);     //  云台速度环设定
 
@@ -46,11 +49,13 @@ void Robo_Move()
 	  set_gimbal_current();
 
  /***** 舵机脉宽 *****/
-	  TIM_SetCompare1(TIM1,pwm_pulse_p);                              //pitch轴
-		TIM_SetCompare2(TIM1,pwm_pulse_y);                              //yaw轴
-		fric1_on(FRIC_Speed);
-		fric2_on(FRIC_Speed);
-
+		if(gimbal_modes == gimbal_pwm_mode)
+		{
+	   TIM_SetCompare1(TIM1,pwm_pulse_p);                              //pitch轴
+		 TIM_SetCompare2(TIM1,pwm_pulse_y);                              //yaw轴
+		}
+		 fric1_on(FRIC_Speed);                                           //摩擦轮控制
+		 fric2_on(FRIC_Speed);
 }
 
 

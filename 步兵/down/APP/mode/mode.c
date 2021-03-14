@@ -104,9 +104,11 @@ void  all_behavior()
 void mode_init()
 {
 	//通信模式选择
-	control_mode = DJi_Remote_Control;
+	control_mode = DJi_Remote_Control;  //	auto_control 上位机控制模式  DJi_Remote_Control  DJI遥控器控制
+
+
 	//云台模式选择
-  gimbal_modes = gimbal_pwm_mode;
+  gimbal_modes = gimbal_can_mode;   //	gimbal_pwm_mode 云台使用6020pwm模式控制  gimbal_can_mode 6020can模式控制
 	
 	//底盘模式选择
 	

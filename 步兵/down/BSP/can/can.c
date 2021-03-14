@@ -35,8 +35,8 @@ u8 CAN1_Mode_Init(u8 tsjw,u8 tbs2,u8 tbs1,u16 brp,u8 mode)
 	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0| GPIO_Pin_1;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;//复用功能
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//推挽输出
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;//100MHz
-    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;//上拉
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//50MHz
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉
     GPIO_Init(GPIOD, &GPIO_InitStructure);//初始化PD0,PD1
 	
 	  //引脚复用映射配置

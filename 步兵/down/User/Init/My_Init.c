@@ -44,7 +44,7 @@ void All_Init()
 	key_init();											//按键初始化
 
 	CAN1_Mode_Init(CAN_SJW_1tq,CAN_BS2_4tq,CAN_BS1_4tq,5,CAN_Mode_Normal);				//can初始化（电机初始化） 45M/(4+4+1)/5
-	CAN2_Mode_Init(CAN_SJW_1tq,CAN_BS2_4tq,CAN_BS1_4tq,5,CAN_Mode_Normal);				//can初始化（电机初始化） 45M/(4+4+1)/5
+	//CAN2_Mode_Init(CAN_SJW_1tq,CAN_BS2_4tq,CAN_BS1_4tq,5,CAN_Mode_Normal);				//can初始化（电机初始化） 45M/(4+4+1)/5
 
 	Debug_USART_Config();           //通信串口初始化（USART2）
 	JSON_USART_Config();           	//主从控通信串口初始化（UART7）
@@ -52,8 +52,8 @@ void All_Init()
 
 	motor_init();		//电机参数初始化
 	fric_PWM_configuration();       //摩擦轮电机pwm初始化   TIM1 新增
+	
 	TIM1_GIMBAL_Init();
-
 	TIM3_Int_Init(10-1,9000-1);		  //定时器时钟90M，9000，所以90M/9000=10Khz的计数频率，计数10次为1ms  即1khz
   //TIM4_Int_Init(100-1,9000-1);   //测试用时钟
 	VPID_Init_All();								//速度pid参数初始化

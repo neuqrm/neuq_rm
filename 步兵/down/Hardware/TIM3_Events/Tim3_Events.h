@@ -17,6 +17,7 @@
 #include "gimbal.h"
 #include "json.h"
 #include "angle_pid.h"
+#include "mode.h"
 
 void Robo_Move(void);							//机器人运动控制
 void Debug_Key(void);							//调试按键
@@ -40,8 +41,8 @@ void Debug_Key(void);							//调试按键
 																							*/
                                       
 																			//注意！角速度的英文是angular velocity，这里为了方便全部使用angular代表角速度，与原英文有别
-#define Angle_Pitch gimbal_p.apid.target_angle
-#define Angle_Yaw   gimbal_y.apid.target_angle
+#define Angle_Pitch Kinematics.pitch.target_angle
+#define Angle_Yaw   Kinematics.yaw.target_angle
 
 /***** 拨弹轮控制量 *****/
 #define Trigger_Speed Kinematics.trigger.target_angular
@@ -77,7 +78,7 @@ void Debug_Key(void);							//调试按键
 
 /***** 功能使能 *****/
 #define CHASSIS_BREAK_EN 0    // 启动时底盘刹住 1使能，0失能
-#define GIMBAL_POS_EN    0    // 启动云台位置环，1使能，0失能
+#define GIMBAL_POS_EN    1    // 启动云台位置环，1使能，0失能
 
 
 #endif

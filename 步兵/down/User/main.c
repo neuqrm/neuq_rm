@@ -18,9 +18,9 @@
   */
 int main()
 {
+	mode_init();                      //初始化机器人模式控制
  	All_Init();												//机器人硬件及结构体初始化
 	pid_init();                       //初始化pid各项参数的值
-	mode_init();                      //初始化机器人模式控制
 	while(1)                          //进入循环
 	{
 		LED0=!LED0;
@@ -53,7 +53,7 @@ void TIM3_IRQHandler(void)
    
 	 if(flag_command_recieved1 == 1)
 		{
-			resolve_json_gimbal_speed_command();  //云台速度指令
+			resolve_json_gimbal_angle_command();  //云台速度指令
 			flag_command_recieved1 = 0;	
 		}
 	

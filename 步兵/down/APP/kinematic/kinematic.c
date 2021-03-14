@@ -18,7 +18,7 @@
 #include "motor.h"
 #include "speed_pid.h"
 #include "algorithm.h"
-
+#include "gimbal.h"
 
 Kinematics_t Kinematics;
 
@@ -141,6 +141,8 @@ void gimbal_speed_control(float gimbal_y_speed,float gimbal_p_speed)    //
 
 void gimbal_angle_control(float yaw_angle,float pitch_angle)
 {
+	yaw_angle = BASIC_YAW_ANGLE_CAN + yaw_angle/360*8192; 
+	pitch_angle = BASIC_PITCH_ANGLE_CAN + pitch_angle/360*8192;
 	set_gimbal_angle(yaw_angle,pitch_angle);
 }
 

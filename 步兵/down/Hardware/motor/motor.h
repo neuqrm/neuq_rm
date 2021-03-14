@@ -25,6 +25,9 @@ typedef struct{
 	int I_OUT;
 	int D_OUT;
 	int PID_OUT;
+	
+	int pid_count;           //pid变量，用于计算平均误差
+	float average_err;           //平均误差，使误差曲线更加平滑
 }VPID_t;
 
 //电机机械角度参数
@@ -57,7 +60,7 @@ typedef struct{
 	
 	float actual_speed;			//电机真实速度,rpm
 	int target_speed;			//电机目标速度,rpm  转/min
-	
+	int last_speed;       //电机上一次回传的速度值
 	int actual_current;		//电机真实电流
 	int target_current;		//电机目标电流
 	//int temp;							//电机温度（2006电机不支持，3508支持）

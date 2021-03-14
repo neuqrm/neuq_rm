@@ -16,9 +16,11 @@
 #include "delay.h"
 #include "angle_pid.h"
 #include "kinematic.h"
-
+#include "algorithm.h"
 MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal_y,gimbal_p;
 LOOPBACK loopback;
+int Q=0.01;
+int R=0.01;
 
 int max_motor_speed=MAX_MOTOR_SPEED;		//电机最大线速度
 float max_base_linear_speed=MAX_BASE_LINEAR_SPEED;  //底盘中心最大线速度 
@@ -32,7 +34,9 @@ void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_
 {
 	motor->last_angle = motor->actual_angle;
 	motor->actual_angle = angle;
-	motor->actual_speed = speed;
+	motor->actual_speed = 0.5*(speed + motor->last_speed);
+	//motor->actual_speed = KalmanFilter(speed,Q,R);
+	motor->last_speed = speed;
 	motor->actual_current = current;
 	//motor1.temp = temp;
 	if(motor->start_angle_flag==0)

@@ -11,6 +11,8 @@
 */
 #include "speed_pid.h"
 
+int errr[AVERAGE]={0};
+int average = AVERAGE;
 PID_t pid_t;
 //int vpid_out_max=vPID_OUT_MAX;
 enum switch_flag_t switch_flag; //不同模块的枚举类型
@@ -30,6 +32,8 @@ void VPID_Init(VPID_t *vpid)
 	vpid->I_OUT=0;
 	vpid->D_OUT=0;
 	vpid->PID_OUT=0;
+	vpid->pid_count=0;
+	vpid->average_err=0;
 }
 
 /**
@@ -45,8 +49,6 @@ void VPID_Init_All()
 	VPID_Init(&gimbal_p.vpid);
 	VPID_Init(&gimbal_y.vpid);
 }
-
-
 /**
   * @breif 速度环pid计算公式，微分项一般不需要
   * @attention 内部函数用户无需调用
@@ -101,29 +103,33 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 		break;
 	 case(GIMBAL):
 	 {
+		 
+		if(vpid->pid_count>=average)
+		vpid->pid_count=0;
+		errr[vpid->pid_count] = 0.5*(vpid->err+vpid->last_err);
+		vpid->pid_count++;
+		for(int i=0;i<=(average-1);i++)
+		vpid->average_err += (errr[i]);  
+
 	 	if(abs(vpid->err) <= GIMBAL_IntegralSeparation)		//积分分离
-		vpid->err_integration += vpid->err;
+		vpid->err_integration += vpid->average_err;
 	  if(vpid->err_integration > GIMBAL_Integral_max)		//抗积分饱和
 		vpid->err_integration = GIMBAL_Integral_max;
 	  else if(vpid->err_integration < -GIMBAL_Integral_max)
 		vpid->err_integration = -GIMBAL_Integral_max;
-	
-	  vpid->P_OUT = kp * vpid->err;								//P项
+		
+		
+	  vpid->P_OUT = 0.1f*kp*vpid->average_err;								//P项
 	  vpid->I_OUT = ki * vpid->err_integration;		//I项
 	  vpid->D_OUT = kd * (vpid->err-vpid->last_err);//D项
 	  vpid->last_err=vpid->err;
-	  //输出限幅
-	  if(abs(vpid->err) <= 2)
-	  vpid->PID_OUT=0;
-	  else
-	  {	
+	  //输出限幅 
 	  if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> GIMBAL_vPID_max) 
 		vpid->PID_OUT = GIMBAL_vPID_max;
 	  else if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT) < -GIMBAL_vPID_max) 
 		vpid->PID_OUT = -GIMBAL_vPID_max;
 	  else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
-    }
 	 }
 	  break;
 		default:break;

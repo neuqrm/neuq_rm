@@ -1,6 +1,6 @@
 #ifndef _ANGLE_PID_H
 #define _ANGLE_PID_H
-#define aPID_OUT_MAX          30000		//即最大速度
+#define aPID_OUT_MAX          100		//即最大速度
 
 #define set_trigger_motor_angle(motor5_angle) \
         do{ \

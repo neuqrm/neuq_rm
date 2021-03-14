@@ -131,11 +131,11 @@ void apid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,
 	gimbal_y.apid.actual_angle = gimbal_y.actual_angle;
 	gimbal_p.apid.actual_angle = gimbal_y.actual_angle;
 	
-	switch_flag = GIMBAL;
+	switch_flag = GIMBAL;                                //判断标志位
 	//计算电机机械角度pid
 	apid_realize(&gimbal_y.apid,kp_y,ki_y,kd_y);
 	apid_realize(&gimbal_p.apid,kp_p,ki_p,kd_p);
-	switch_flag = NUL;
+	switch_flag = NUL;                                   //标志位清零
 	
 	set_gimbal_speed(gimbal_y.apid.PID_OUT,gimbal_p.apid.PID_OUT);
 }

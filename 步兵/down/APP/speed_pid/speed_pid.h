@@ -17,9 +17,10 @@
 #define TRIGGER_IntegralSeparation   50
 #define TRIGGER_vPID_max             9000
 
-#define GIMBAL_Integral_max         8000
-#define GIMBAL_IntegralSeparation   15
-#define GIMBAL_vPID_max             20000
+#define GIMBAL_Integral_max          5000
+#define GIMBAL_IntegralSeparation    20
+#define GIMBAL_vPID_max              20000
+#define AVERAGE                      10              //平均误差数组长度     
 
 //宏定义，电机目标速度复赋值
 #define set_chassis_speed(motor1_speed,motor2_speed,motor3_speed,motor4_speed) \
@@ -61,12 +62,12 @@
 					pid_t.trigger_pid.speed_loop.kd = 0; \
                                                \
 					/*云台yaw位置环*/                    \
-					pid_t.yaw_pid.position_loop.kp = 0; \
+					pid_t.yaw_pid.position_loop.kp = 1; \
 					pid_t.yaw_pid.position_loop.ki = 0; \
 					pid_t.yaw_pid.position_loop.kd = 0; \
 					                                    \
 					/*云台yaw速度环*/                    \
-				  pid_t.yaw_pid.speed_loop.kp = 0; \
+				  pid_t.yaw_pid.speed_loop.kp = 220; \
 				  pid_t.yaw_pid.speed_loop.ki = 0; \
 				  pid_t.yaw_pid.speed_loop.kd = 0; \
 					                                 \
