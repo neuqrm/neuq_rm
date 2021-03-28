@@ -1,63 +1,27 @@
 /**
   ******************************************************************************
-  * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_it.c 
-  * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    06-March-2015
-  * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and 
-  *          peripherals interrupt service routine.
+  * @file    Project/USER/stm32f4xx_it.c 
+  * @author  Siyuan Qiao&Junyu Luo
+  * @version V1.0.0
+  * @date    1.2021
+  * @brief   中断文件
   ******************************************************************************
   * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
   ******************************************************************************
-  */
-
-/* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_it.h"
-
+*/
 #include <string.h>
-#include <stdio.h>
+#include "stdint.h"
+#include "stm32f4xx_it.h"
 #include <jansson.h>
 #include "json.h"
-
 #include "bsp_debug_usart.h"
 #include "bsp_uart7.h"
 #include "can.h"
 #include "motor.h"
-
 #include "speed_pid.h"
 #include "kinematic.h"
 #include "imuReader.h"
 #include "bsp_imu_usart.h"
-/** @addtogroup STM32F429I_DISCOVERY_Examples
-  * @{
-  */
-
-/** @addtogroup FMC_SDRAM
-  * @{
-  */ 
-
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
 
 
 /******************************************************************************/
@@ -129,16 +93,17 @@ const uint8_t flag_json_start_mask   = 0xFE;
 const uint8_t flag_json_stop    = 0x02;
 const uint8_t flag_json_stop_mask    = 0xFD;
 //接收缓冲区__IO
+
+
 char receiveBuffer[MAX_LENGTH];
-extern char json_Buffer[MAX_LENGTH];
-extern uint8_t flag_command_recieved;
-extern uint8_t flag_command_recieved1;
-extern uint8_t flag_command_recieved2;
-extern uint8_t flag_command_recieved3;
-extern uint8_t flag_command_recieved4;
-extern uint8_t flag_command_recieved5;
-
-
+char json_Buffer[MAX_LENGTH];
+uint8_t flag_command_recieved = 0;
+uint8_t flag_command_recieved1 = 0;
+uint8_t flag_command_recieved2 = 0;
+uint8_t flag_command_recieved3 = 0;
+uint8_t flag_command_recieved4 = 0;
+uint8_t flag_command_recieved5 = 0;
+uint8_t flag_command_recieved6 = 0;
 
 void JSON_USART_IRQHandler(void)
 {
@@ -175,7 +140,7 @@ void JSON_USART_IRQHandler(void)
 			flag_json_recieve |= flag_json_stop; //结束标志置一
 			flag_json_recieve &= flag_json_start_mask;	//开始标志置零
 			//printf("%s",receiveBuffer);
-			memset(json_Buffer, 0, sizeof(json_Buffer));	//清空缓冲区，防止上一次的数据剩余导致乱码
+			memset(json_Buffer, 0, sizeof(json_Buffer));	//清空缓冲区，防止上一次的数据剩余导致乱码 
 			strcpy(json_Buffer,receiveBuffer);	//接收缓冲区给json缓冲区
 			memset(receiveBuffer, 0, sizeof(receiveBuffer)); //清空接收缓冲区
 			
@@ -271,25 +236,27 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 	
 	switch(RxMessage.StdId)
 	{
-		case(CAN_2006Motor1_ID):
+		case(CAN_3508Motor1_ID):
 			record_motor_callback(&motor1, angle, speed, current);
 		break;
-		case(CAN_2006Motor2_ID):
+		case(CAN_3508Motor2_ID):
 			record_motor_callback(&motor2, angle, speed, current);
 		break;
-		case(CAN_2006Motor3_ID):
+		case(CAN_3508Motor3_ID):
 			record_motor_callback(&motor3, angle, speed, current);
 		break;
-		case(CAN_2006Motor4_ID):
+		case(CAN_3508Motor4_ID):
 			record_motor_callback(&motor4, angle, speed, current);
 		break;
 		case(CAN_TRIGGER_ID):
 			record_motor_callback(&motor5, angle, speed, current);
 		break;
-		case(CAN_GIMBAL1_ID):
-		record_motor_callback(&gimbal1, angle, speed, current);
-		case(CAN_GIMBAL2_ID):
-		record_motor_callback(&gimbal2, angle, speed, current);
+		case(CAN_GIMBAL_Y_ID):
+		  record_motor_callback(&gimbal_y, angle, speed, current);
+		break;
+		case(CAN_GIMBAL_P_ID):
+		  record_motor_callback(&gimbal_p, angle, speed, current);
+		break;
 		case(CAN_LoopBack_ID):
 		{
 			loopback.motor1_current= RxMessage.Data[0]<<8 | RxMessage.Data[1]<<0;

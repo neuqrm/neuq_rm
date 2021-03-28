@@ -5,6 +5,9 @@
 #define Fric_DOWN 1300
 #define Fric_OFF 1000
 
+/***** Ä¦²ÁÂÖ¿ØÖÆÁ¿ *****/
+#define FRIC_Speed Kinematics.fric.target_angular
+
 typedef signed char int8_t;
 typedef signed short int int16_t;
 typedef signed int int32_t;
@@ -18,6 +21,7 @@ typedef unsigned char bool_t;
 typedef float fp32;
 typedef double fp64;
 void auto_fire(void);
+void fric_control(void);
 extern void fric_PWM_configuration(void);
 extern void fric_off(void);
 extern void fric1_on(uint16_t cmd);

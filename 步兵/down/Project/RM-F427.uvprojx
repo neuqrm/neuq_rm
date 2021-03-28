@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32F427IIHx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.14.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F4xx_DFP.2.13.0</PackID>
+          <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IRAM(0x20000000,0x00030000) IRAM2(0x10000000,0x00010000) IROM(0x08000000,0x00200000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -52,7 +52,7 @@
           <OutputName>RM_typeA</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\Listing\</ListingPath>
@@ -326,8 +326,8 @@
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
+            <v6Lang>1</v6Lang>
+            <v6LangP>1</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -337,7 +337,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F427_437xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\User\sys;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\FS_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader;..\User\sys;..\User\algorithm;..\APP\encoder;..\APP\shoot;..\APP\referee;..\BSP\referee</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -556,6 +556,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\Init\My_Init.c</FilePath>
             </File>
+            <File>
+              <FileName>algorithm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\algorithm\algorithm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -596,6 +601,16 @@
               <FileType>1</FileType>
               <FilePath>..\APP\judge\judge.c</FilePath>
             </File>
+            <File>
+              <FileName>encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\encoder\encoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\referee\referee.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -630,6 +645,11 @@
               <FileName>bsp_imu_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\usart\bsp_imu_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_referee_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\referee\bsp_referee_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -675,11 +695,6 @@
               <FileName>DJi_remote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\DJi_remote\DJi_remote.c</FilePath>
-            </File>
-            <File>
-              <FileName>FS_remote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Hardware\FS_remote\FS_remote.c</FilePath>
             </File>
             <File>
               <FileName>remote_code.c</FileName>
