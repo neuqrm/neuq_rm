@@ -28,7 +28,7 @@ int main()
 	}
 }
 /**motor5.actual_angle
-  * @brief  定时器3中断服务函数			1msmotor5.apid.PID_OUT
+  * @brief  定时器3中断服务函数			
   */
 void TIM3_IRQHandler(void)
 {

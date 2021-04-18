@@ -3884,69 +3884,69 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x000001ac   Data   RO            3    RESET               startup_stm32f427_437xx.o
-    0x080001ac   0x080001ac   0x00000000   Code   RO         7311  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080001ac   0x080001ac   0x00000004   Code   RO         7724    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080001b0   0x080001b0   0x00000004   Code   RO         7727    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080001b4   0x080001b4   0x00000000   Code   RO         7729    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080001b4   0x080001b4   0x00000000   Code   RO         7731    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x080001b4   0x080001b4   0x00000008   Code   RO         7732    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x080001bc   0x080001bc   0x00000000   Code   RO         7734    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x080001bc   0x080001bc   0x00000000   Code   RO         7736    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x080001bc   0x080001bc   0x00000004   Code   RO         7725    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x080001ac   0x080001ac   0x00000000   Code   RO         7493  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080001ac   0x080001ac   0x00000004   Code   RO         7906    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080001b0   0x080001b0   0x00000004   Code   RO         7909    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080001b4   0x080001b4   0x00000000   Code   RO         7911    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080001b4   0x080001b4   0x00000000   Code   RO         7913    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080001b4   0x080001b4   0x00000008   Code   RO         7914    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x080001bc   0x080001bc   0x00000000   Code   RO         7916    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x080001bc   0x080001bc   0x00000000   Code   RO         7918    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x080001bc   0x080001bc   0x00000004   Code   RO         7907    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x080001c0   0x080001c0   0x00000024   Code   RO            4    .text               startup_stm32f427_437xx.o
-    0x080001e4   0x080001e4   0x0000002c   Code   RO         7323    .text               mc_w.l(uidiv.o)
-    0x08000210   0x08000210   0x00000040   Code   RO         7331    .text               mc_w.l(memmovea.o)
-    0x08000250   0x08000250   0x00000024   Code   RO         7333    .text               mc_w.l(memseta.o)
-    0x08000274   0x08000274   0x0000000e   Code   RO         7337    .text               mc_w.l(strlen.o)
-    0x08000282   0x08000282   0x0000001c   Code   RO         7339    .text               mc_w.l(strcmp.o)
-    0x0800029e   0x0800029e   0x00000014   Code   RO         7341    .text               mc_w.l(memchr.o)
-    0x080002b2   0x080002b2   0x00000012   Code   RO         7345    .text               mc_w.l(strcpy.o)
-    0x080002c4   0x080002c4   0x00000004   Code   RO         7649    .text               mc_w.l(strtoll.o)
-    0x080002c8   0x080002c8   0x0000014e   Code   RO         7651    .text               mf_w.l(dadd.o)
-    0x08000416   0x08000416   0x000000e4   Code   RO         7653    .text               mf_w.l(dmul.o)
-    0x080004fa   0x080004fa   0x000000de   Code   RO         7655    .text               mf_w.l(ddiv.o)
-    0x080005d8   0x080005d8   0x0000002c   Code   RO         7657    .text               mf_w.l(ffltl.o)
-    0x08000604   0x08000604   0x00000022   Code   RO         7659    .text               mf_w.l(dflti.o)
-    0x08000626   0x08000626   0x0000003e   Code   RO         7663    .text               mf_w.l(dfixi.o)
-    0x08000664   0x08000664   0x00000026   Code   RO         7665    .text               mf_w.l(f2d.o)
+    0x080001e4   0x080001e4   0x0000002c   Code   RO         7505    .text               mc_w.l(uidiv.o)
+    0x08000210   0x08000210   0x00000040   Code   RO         7513    .text               mc_w.l(memmovea.o)
+    0x08000250   0x08000250   0x00000024   Code   RO         7515    .text               mc_w.l(memseta.o)
+    0x08000274   0x08000274   0x0000000e   Code   RO         7519    .text               mc_w.l(strlen.o)
+    0x08000282   0x08000282   0x0000001c   Code   RO         7521    .text               mc_w.l(strcmp.o)
+    0x0800029e   0x0800029e   0x00000014   Code   RO         7523    .text               mc_w.l(memchr.o)
+    0x080002b2   0x080002b2   0x00000012   Code   RO         7527    .text               mc_w.l(strcpy.o)
+    0x080002c4   0x080002c4   0x00000004   Code   RO         7831    .text               mc_w.l(strtoll.o)
+    0x080002c8   0x080002c8   0x0000014e   Code   RO         7833    .text               mf_w.l(dadd.o)
+    0x08000416   0x08000416   0x000000e4   Code   RO         7835    .text               mf_w.l(dmul.o)
+    0x080004fa   0x080004fa   0x000000de   Code   RO         7837    .text               mf_w.l(ddiv.o)
+    0x080005d8   0x080005d8   0x0000002c   Code   RO         7839    .text               mf_w.l(ffltl.o)
+    0x08000604   0x08000604   0x00000022   Code   RO         7841    .text               mf_w.l(dflti.o)
+    0x08000626   0x08000626   0x0000003e   Code   RO         7845    .text               mf_w.l(dfixi.o)
+    0x08000664   0x08000664   0x00000026   Code   RO         7847    .text               mf_w.l(f2d.o)
     0x0800068a   0x0800068a   0x00000002   PAD
-    0x0800068c   0x0800068c   0x00000030   Code   RO         7667    .text               mf_w.l(cdcmple.o)
-    0x080006bc   0x080006bc   0x00000030   Code   RO         7669    .text               mf_w.l(cdrcmple.o)
-    0x080006ec   0x080006ec   0x00000038   Code   RO         7671    .text               mf_w.l(d2f.o)
-    0x08000724   0x08000724   0x00000062   Code   RO         7739    .text               mc_w.l(uldiv.o)
-    0x08000786   0x08000786   0x0000001e   Code   RO         7741    .text               mc_w.l(llshl.o)
-    0x080007a4   0x080007a4   0x00000020   Code   RO         7743    .text               mc_w.l(llushr.o)
-    0x080007c4   0x080007c4   0x00000024   Code   RO         7745    .text               mc_w.l(llsshr.o)
-    0x080007e8   0x080007e8   0x0000009c   Code   RO         7749    .text               mc_w.l(strtod.o)
-    0x08000884   0x08000884   0x00000090   Code   RO         7751    .text               mc_w.l(__strtoll.o)
-    0x08000914   0x08000914   0x00000000   Code   RO         7753    .text               mc_w.l(iusefp.o)
-    0x08000914   0x08000914   0x0000006e   Code   RO         7754    .text               mf_w.l(fepilogue.o)
-    0x08000982   0x08000982   0x000000ba   Code   RO         7756    .text               mf_w.l(depilogue.o)
-    0x08000a3c   0x08000a3c   0x0000002e   Code   RO         7760    .text               mf_w.l(dscalb.o)
-    0x08000a6a   0x08000a6a   0x00000030   Code   RO         7762    .text               mf_w.l(dfixul.o)
+    0x0800068c   0x0800068c   0x00000030   Code   RO         7849    .text               mf_w.l(cdcmple.o)
+    0x080006bc   0x080006bc   0x00000030   Code   RO         7851    .text               mf_w.l(cdrcmple.o)
+    0x080006ec   0x080006ec   0x00000038   Code   RO         7853    .text               mf_w.l(d2f.o)
+    0x08000724   0x08000724   0x00000062   Code   RO         7921    .text               mc_w.l(uldiv.o)
+    0x08000786   0x08000786   0x0000001e   Code   RO         7923    .text               mc_w.l(llshl.o)
+    0x080007a4   0x080007a4   0x00000020   Code   RO         7925    .text               mc_w.l(llushr.o)
+    0x080007c4   0x080007c4   0x00000024   Code   RO         7927    .text               mc_w.l(llsshr.o)
+    0x080007e8   0x080007e8   0x0000009c   Code   RO         7931    .text               mc_w.l(strtod.o)
+    0x08000884   0x08000884   0x00000090   Code   RO         7933    .text               mc_w.l(__strtoll.o)
+    0x08000914   0x08000914   0x00000000   Code   RO         7935    .text               mc_w.l(iusefp.o)
+    0x08000914   0x08000914   0x0000006e   Code   RO         7936    .text               mf_w.l(fepilogue.o)
+    0x08000982   0x08000982   0x000000ba   Code   RO         7938    .text               mf_w.l(depilogue.o)
+    0x08000a3c   0x08000a3c   0x0000002e   Code   RO         7942    .text               mf_w.l(dscalb.o)
+    0x08000a6a   0x08000a6a   0x00000030   Code   RO         7944    .text               mf_w.l(dfixul.o)
     0x08000a9a   0x08000a9a   0x00000002   PAD
-    0x08000a9c   0x08000a9c   0x00000024   Code   RO         7764    .text               mc_w.l(init.o)
-    0x08000ac0   0x08000ac0   0x00000008   Code   RO         7768    .text               mc_w.l(ctype_o.o)
-    0x08000ac8   0x08000ac8   0x00000012   Code   RO         7790    .text               mc_w.l(isspace_o.o)
+    0x08000a9c   0x08000a9c   0x00000024   Code   RO         7946    .text               mc_w.l(init.o)
+    0x08000ac0   0x08000ac0   0x00000008   Code   RO         7950    .text               mc_w.l(ctype_o.o)
+    0x08000ac8   0x08000ac8   0x00000012   Code   RO         7972    .text               mc_w.l(isspace_o.o)
     0x08000ada   0x08000ada   0x00000002   PAD
-    0x08000adc   0x08000adc   0x00000360   Code   RO         7796    .text               mc_w.l(scanf_fp.o)
-    0x08000e3c   0x08000e3c   0x00000040   Code   RO         7800    .text               mc_w.l(_sgetc.o)
-    0x08000e7c   0x08000e7c   0x000000c2   Code   RO         7802    .text               mc_w.l(_strtoull.o)
-    0x08000f3e   0x08000f3e   0x000000a2   Code   RO         7804    .text               mf_w.l(dsqrt.o)
-    0x08000fe0   0x08000fe0   0x0000001a   Code   RO         7806    .text               mf_w.l(dfltui.o)
-    0x08000ffa   0x08000ffa   0x0000001c   Code   RO         7811    .text               mc_w.l(_chval.o)
-    0x08001016   0x08001016   0x00000018   Code   RO         7813    .text               mf_w.l(dfltul.o)
-    0x0800102e   0x0800102e   0x00000016   Code   RO         5640    i.APID_Init         angle_pid.o
-    0x08001044   0x08001044   0x0000004c   Code   RO         5641    i.APID_Init_All     angle_pid.o
-    0x08001090   0x08001090   0x0000008c   Code   RO         4564    i.All_Init          my_init.o
-    0x0800111c   0x0800111c   0x00000108   Code   RO         4627    i.BaseVel_To_WheelVel  kinematic.o
-    0x08001224   0x08001224   0x0000000c   Code   RO         5812    i.Base_TIM_config   fric.o
-    0x08001230   0x08001230   0x00000004   Code   RO         4329    i.BusFault_Handler  stm32f4xx_it.o
-    0x08001234   0x08001234   0x00000100   Code   RO         5219    i.CAN1_Mode_Init    can.o
-    0x08001334   0x08001334   0x00000188   Code   RO         4330    i.CAN1_RX0_IRQHandler  stm32f4xx_it.o
-    0x080014bc   0x080014bc   0x00000070   Code   RO         5221    i.CAN1_Send_CHASSIS_Msg  can.o
-    0x0800152c   0x0800152c   0x00000070   Code   RO         5222    i.CAN1_Send_GIMBAL_Msg  can.o
-    0x0800159c   0x0800159c   0x00000070   Code   RO         5223    i.CAN1_Send_Trigger_Msg  can.o
+    0x08000adc   0x08000adc   0x00000360   Code   RO         7978    .text               mc_w.l(scanf_fp.o)
+    0x08000e3c   0x08000e3c   0x00000040   Code   RO         7982    .text               mc_w.l(_sgetc.o)
+    0x08000e7c   0x08000e7c   0x000000c2   Code   RO         7984    .text               mc_w.l(_strtoull.o)
+    0x08000f3e   0x08000f3e   0x000000a2   Code   RO         7986    .text               mf_w.l(dsqrt.o)
+    0x08000fe0   0x08000fe0   0x0000001a   Code   RO         7988    .text               mf_w.l(dfltui.o)
+    0x08000ffa   0x08000ffa   0x0000001c   Code   RO         7993    .text               mc_w.l(_chval.o)
+    0x08001016   0x08001016   0x00000018   Code   RO         7995    .text               mf_w.l(dfltul.o)
+    0x0800102e   0x0800102e   0x00000016   Code   RO         5808    i.APID_Init         angle_pid.o
+    0x08001044   0x08001044   0x0000004c   Code   RO         5809    i.APID_Init_All     angle_pid.o
+    0x08001090   0x08001090   0x0000008c   Code   RO         4677    i.All_Init          my_init.o
+    0x0800111c   0x0800111c   0x00000108   Code   RO         4740    i.BaseVel_To_WheelVel  kinematic.o
+    0x08001224   0x08001224   0x0000000c   Code   RO         5990    i.Base_TIM_config   fric.o
+    0x08001230   0x08001230   0x00000004   Code   RO         4436    i.BusFault_Handler  stm32f4xx_it.o
+    0x08001234   0x08001234   0x00000100   Code   RO         5369    i.CAN1_Mode_Init    can.o
+    0x08001334   0x08001334   0x00000188   Code   RO         4437    i.CAN1_RX0_IRQHandler  stm32f4xx_it.o
+    0x080014bc   0x080014bc   0x00000070   Code   RO         5371    i.CAN1_Send_CHASSIS_Msg  can.o
+    0x0800152c   0x0800152c   0x00000070   Code   RO         5372    i.CAN1_Send_GIMBAL_Msg  can.o
+    0x0800159c   0x0800159c   0x00000070   Code   RO         5373    i.CAN1_Send_Trigger_Msg  can.o
     0x0800160c   0x0800160c   0x00000108   Code   RO          465    i.CAN_FilterInit    stm32f4xx_can.o
     0x08001714   0x08001714   0x00000012   Code   RO          471    i.CAN_ITConfig      stm32f4xx_can.o
     0x08001726   0x08001726   0x00000114   Code   RO          472    i.CAN_Init          stm32f4xx_can.o
@@ -3962,23 +3962,23 @@ Memory Map of the image
     0x08001c96   0x08001c96   0x00000014   Code   RO          863    i.DMA_GetCurrentMemoryTarget  stm32f4xx_dma.o
     0x08001caa   0x08001caa   0x00000002   PAD
     0x08001cac   0x08001cac   0x00000058   Code   RO          868    i.DMA_Init          stm32f4xx_dma.o
-    0x08001d04   0x08001d04   0x00000002   Code   RO         4331    i.DebugMon_Handler  stm32f4xx_it.o
+    0x08001d04   0x08001d04   0x00000002   Code   RO         4438    i.DebugMon_Handler  stm32f4xx_it.o
     0x08001d06   0x08001d06   0x00000002   PAD
-    0x08001d08   0x08001d08   0x00000040   Code   RO         5777    i.Debug_Key         tim3_events.o
-    0x08001d48   0x08001d48   0x000000c0   Code   RO         5153    i.Debug_USART_Config  bsp_debug_usart.o
-    0x08001e08   0x08001e08   0x0000013c   Code   RO         5688    i.Dji_Remote_Init   dji_remote.o
+    0x08001d08   0x08001d08   0x00000040   Code   RO         5955    i.Debug_Key         tim3_events.o
+    0x08001d48   0x08001d48   0x000000c0   Code   RO         5300    i.Debug_USART_Config  bsp_debug_usart.o
+    0x08001e08   0x08001e08   0x0000013c   Code   RO         5856    i.Dji_Remote_Init   dji_remote.o
     0x08001f44   0x08001f44   0x00000090   Code   RO         1593    i.GPIO_Init         stm32f4xx_gpio.o
     0x08001fd4   0x08001fd4   0x00000046   Code   RO         1594    i.GPIO_PinAFConfig  stm32f4xx_gpio.o
     0x0800201a   0x0800201a   0x00000004   Code   RO         1600    i.GPIO_ResetBits    stm32f4xx_gpio.o
     0x0800201e   0x0800201e   0x00000004   Code   RO         1601    i.GPIO_SetBits      stm32f4xx_gpio.o
     0x08002022   0x08002022   0x00000002   PAD
-    0x08002024   0x08002024   0x00000134   Code   RO         4628    i.Get_Base_Velocities  kinematic.o
-    0x08002158   0x08002158   0x00000054   Code   RO         4629    i.Get_Gimbal_Angle  kinematic.o
-    0x080021ac   0x080021ac   0x00000004   Code   RO         4332    i.HardFault_Handler  stm32f4xx_it.o
-    0x080021b0   0x080021b0   0x000000c0   Code   RO         5267    i.JSON_USART_Config  bsp_uart7.o
-    0x08002270   0x08002270   0x00000010   Code   RO         4472    i.MY_NVIC_SetVectorTable  sys.o
-    0x08002280   0x08002280   0x00000004   Code   RO         4333    i.MemManage_Handler  stm32f4xx_it.o
-    0x08002284   0x08002284   0x00000002   Code   RO         4334    i.NMI_Handler       stm32f4xx_it.o
+    0x08002024   0x08002024   0x00000134   Code   RO         4741    i.Get_Base_Velocities  kinematic.o
+    0x08002158   0x08002158   0x00000054   Code   RO         4742    i.Get_Gimbal_Angle  kinematic.o
+    0x080021ac   0x080021ac   0x00000004   Code   RO         4439    i.HardFault_Handler  stm32f4xx_it.o
+    0x080021b0   0x080021b0   0x000000c0   Code   RO         5420    i.JSON_USART_Config  bsp_uart7.o
+    0x08002270   0x08002270   0x00000010   Code   RO         4585    i.MY_NVIC_SetVectorTable  sys.o
+    0x08002280   0x08002280   0x00000004   Code   RO         4440    i.MemManage_Handler  stm32f4xx_it.o
+    0x08002284   0x08002284   0x00000002   Code   RO         4441    i.NMI_Handler       stm32f4xx_it.o
     0x08002286   0x08002286   0x00000002   PAD
     0x08002288   0x08002288   0x00000078   Code   RO          161    i.NVIC_Init         misc.o
     0x08002300   0x08002300   0x00000014   Code   RO          162    i.NVIC_PriorityGroupConfig  misc.o
@@ -3988,18 +3988,18 @@ Memory Map of the image
     0x08002374   0x08002374   0x00000020   Code   RO         2090    i.RCC_APB2PeriphClockCmd  stm32f4xx_rcc.o
     0x08002394   0x08002394   0x00000020   Code   RO         2092    i.RCC_APB2PeriphResetCmd  stm32f4xx_rcc.o
     0x080023b4   0x080023b4   0x000000e8   Code   RO         2099    i.RCC_GetClocksFreq  stm32f4xx_rcc.o
-    0x0800249c   0x0800249c   0x00000068   Code   RO         5689    i.RemoteDataProcess  dji_remote.o
-    0x08002504   0x08002504   0x000004f8   Code   RO         5730    i.Remote_Control    remote_code.o
-    0x080029fc   0x080029fc   0x00000190   Code   RO         5778    i.Robo_Move         tim3_events.o
+    0x0800249c   0x0800249c   0x00000068   Code   RO         5857    i.RemoteDataProcess  dji_remote.o
+    0x08002504   0x08002504   0x000004f8   Code   RO         5898    i.Remote_Control    remote_code.o
+    0x080029fc   0x080029fc   0x00000190   Code   RO         5956    i.Robo_Move         tim3_events.o
     0x08002b8c   0x08002b8c   0x00000120   Code   RO           13    i.SetSysClock       system_stm32f4xx.o
-    0x08002cac   0x08002cac   0x00000068   Code   RO         4473    i.Stm32_Clock_Init  sys.o
-    0x08002d14   0x08002d14   0x0000010c   Code   RO         4474    i.Sys_Clock_Set     sys.o
+    0x08002cac   0x08002cac   0x00000068   Code   RO         4586    i.Stm32_Clock_Init  sys.o
+    0x08002d14   0x08002d14   0x0000010c   Code   RO         4587    i.Sys_Clock_Set     sys.o
     0x08002e20   0x08002e20   0x00000068   Code   RO           15    i.SystemInit        system_stm32f4xx.o
-    0x08002e88   0x08002e88   0x00000108   Code   RO         5917    i.TIM1_GIMBAL_Init  gimbal.o
+    0x08002e88   0x08002e88   0x00000108   Code   RO         6099    i.TIM1_GIMBAL_Init  gimbal.o
     0x08002f90   0x08002f90   0x0000017c   Code   RO         4216    i.TIM3_IRQHandler   main.o
-    0x0800310c   0x0800310c   0x0000005c   Code   RO         5189    i.TIM3_Int_Init     timer.o
-    0x08003168   0x08003168   0x00000030   Code   RO         5813    i.TIM6_config       fric.o
-    0x08003198   0x08003198   0x00000030   Code   RO         5814    i.TIM7_config       fric.o
+    0x0800310c   0x0800310c   0x0000005c   Code   RO         5336    i.TIM3_Int_Init     timer.o
+    0x08003168   0x08003168   0x00000030   Code   RO         5991    i.TIM6_config       fric.o
+    0x08003198   0x08003198   0x00000030   Code   RO         5992    i.TIM7_config       fric.o
     0x080031c8   0x080031c8   0x00000018   Code   RO         3204    i.TIM_ARRPreloadConfig  stm32f4xx_tim.o
     0x080031e0   0x080031e0   0x00000006   Code   RO         3211    i.TIM_ClearITPendingBit  stm32f4xx_tim.o
     0x080031e6   0x080031e6   0x00000018   Code   RO         3216    i.TIM_Cmd           stm32f4xx_tim.o
@@ -4022,12 +4022,12 @@ Memory Map of the image
     0x080034ee   0x080034ee   0x00000004   Code   RO         3280    i.TIM_SetCompare3   stm32f4xx_tim.o
     0x080034f2   0x080034f2   0x00000004   Code   RO         3281    i.TIM_SetCompare4   stm32f4xx_tim.o
     0x080034f6   0x080034f6   0x00000002   PAD
-    0x080034f8   0x080034f8   0x000000ac   Code   RO         5102    i.TIM_Steering_Engine_PWM_Init  steering_engine.o
+    0x080034f8   0x080034f8   0x000000ac   Code   RO         5246    i.TIM_Steering_Engine_PWM_Init  steering_engine.o
     0x080035a4   0x080035a4   0x00000084   Code   RO         3288    i.TIM_TimeBaseInit  stm32f4xx_tim.o
-    0x08003628   0x08003628   0x00000054   Code   RO         5304    i.UART5_IRQHandler  uart5.o
-    0x0800367c   0x0800367c   0x000002a8   Code   RO         4335    i.UART7_IRQHandler  stm32f4xx_it.o
-    0x08003924   0x08003924   0x000000a8   Code   RO         5690    i.USART1_IRQHandler  dji_remote.o
-    0x080039cc   0x080039cc   0x00000234   Code   RO         4336    i.USART6_IRQHandler  stm32f4xx_it.o
+    0x08003628   0x08003628   0x00000054   Code   RO         5460    i.UART5_IRQHandler  uart5.o
+    0x0800367c   0x0800367c   0x000002a8   Code   RO         4442    i.UART7_IRQHandler  stm32f4xx_it.o
+    0x08003924   0x08003924   0x000000a8   Code   RO         5858    i.USART1_IRQHandler  dji_remote.o
+    0x080039cc   0x080039cc   0x00000234   Code   RO         4443    i.USART6_IRQHandler  stm32f4xx_it.o
     0x08003c00   0x08003c00   0x0000001e   Code   RO         3767    i.USART_ClearITPendingBit  stm32f4xx_usart.o
     0x08003c1e   0x08003c1e   0x00000018   Code   RO         3770    i.USART_Cmd         stm32f4xx_usart.o
     0x08003c36   0x08003c36   0x00000012   Code   RO         3771    i.USART_DMACmd      stm32f4xx_usart.o
@@ -4037,185 +4037,185 @@ Memory Map of the image
     0x08003dd6   0x08003dd6   0x00000002   PAD
     0x08003dd8   0x08003dd8   0x000000d4   Code   RO         3777    i.USART_Init        stm32f4xx_usart.o
     0x08003eac   0x08003eac   0x0000000a   Code   RO         3784    i.USART_ReceiveData  stm32f4xx_usart.o
-    0x08003eb6   0x08003eb6   0x00000004   Code   RO         4337    i.UsageFault_Handler  stm32f4xx_it.o
+    0x08003eb6   0x08003eb6   0x00000004   Code   RO         4444    i.UsageFault_Handler  stm32f4xx_it.o
     0x08003eba   0x08003eba   0x00000002   PAD
-    0x08003ebc   0x08003ebc   0x0000002c   Code   RO         4705    i.VPID_Init         speed_pid.o
-    0x08003ee8   0x08003ee8   0x0000004c   Code   RO         4706    i.VPID_Init_All     speed_pid.o
-    0x08003f34   0x08003f34   0x00000030   Code   RO         7587    i.__0snprintf       mc_w.l(printfa.o)
-    0x08003f64   0x08003f64   0x0000002c   Code   RO         7591    i.__0vsnprintf      mc_w.l(printfa.o)
-    0x08003f90   0x08003f90   0x0000001a   Code   RO         6135    i.__ARM_common_switch8  jansson_CM3LE.lib(dump.o)
-    0x08003faa   0x08003faa   0x00000030   Code   RO         7696    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x08003fda   0x08003fda   0x00000016   Code   RO         6828    i.__ARM_isinf       jansson_CM3LE.lib(value.o)
-    0x08003ff0   0x08003ff0   0x00000018   Code   RO         6833    i.__ARM_isnan       jansson_CM3LE.lib(value.o)
-    0x08004008   0x08004008   0x00000008   Code   RO         7642    i.__aeabi_errno_addr  mc_w.l(errno.o)
-    0x08004010   0x08004010   0x000000c8   Code   RO         7267    i.__hardfp_cos      m_wm.l(cos.o)
-    0x080040d8   0x080040d8   0x00000c50   Code   RO         7279    i.__hardfp_pow      m_wm.l(pow.o)
-    0x08004d28   0x08004d28   0x000000c8   Code   RO         7293    i.__hardfp_sin      m_wm.l(sin.o)
-    0x08004df0   0x08004df0   0x00000438   Code   RO         7701    i.__ieee754_rem_pio2  m_wm.l(rred.o)
-    0x08005228   0x08005228   0x00000170   Code   RO         7673    i.__kernel_cos      m_wm.l(cos_i.o)
-    0x08005398   0x08005398   0x000000f8   Code   RO         7698    i.__kernel_poly     m_wm.l(poly.o)
-    0x08005490   0x08005490   0x00000130   Code   RO         7706    i.__kernel_sin      m_wm.l(sin_i.o)
-    0x080055c0   0x080055c0   0x00000030   Code   RO         7676    i.__mathlib_dbl_divzero  m_wm.l(dunder.o)
-    0x080055f0   0x080055f0   0x00000014   Code   RO         7677    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
-    0x08005604   0x08005604   0x00000014   Code   RO         7678    i.__mathlib_dbl_infnan2  m_wm.l(dunder.o)
-    0x08005618   0x08005618   0x00000020   Code   RO         7679    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
-    0x08005638   0x08005638   0x00000020   Code   RO         7680    i.__mathlib_dbl_overflow  m_wm.l(dunder.o)
-    0x08005658   0x08005658   0x00000020   Code   RO         7682    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
-    0x08005678   0x08005678   0x0000000e   Code   RO         7817    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08005686   0x08005686   0x00000002   Code   RO         7818    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08005688   0x08005688   0x0000000e   Code   RO         7819    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08003ebc   0x08003ebc   0x0000002c   Code   RO         4821    i.VPID_Init         speed_pid.o
+    0x08003ee8   0x08003ee8   0x0000004c   Code   RO         4822    i.VPID_Init_All     speed_pid.o
+    0x08003f34   0x08003f34   0x00000030   Code   RO         7769    i.__0snprintf       mc_w.l(printfa.o)
+    0x08003f64   0x08003f64   0x0000002c   Code   RO         7773    i.__0vsnprintf      mc_w.l(printfa.o)
+    0x08003f90   0x08003f90   0x0000001a   Code   RO         6317    i.__ARM_common_switch8  jansson_CM3LE.lib(dump.o)
+    0x08003faa   0x08003faa   0x00000030   Code   RO         7878    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x08003fda   0x08003fda   0x00000016   Code   RO         7010    i.__ARM_isinf       jansson_CM3LE.lib(value.o)
+    0x08003ff0   0x08003ff0   0x00000018   Code   RO         7015    i.__ARM_isnan       jansson_CM3LE.lib(value.o)
+    0x08004008   0x08004008   0x00000008   Code   RO         7824    i.__aeabi_errno_addr  mc_w.l(errno.o)
+    0x08004010   0x08004010   0x000000c8   Code   RO         7449    i.__hardfp_cos      m_wm.l(cos.o)
+    0x080040d8   0x080040d8   0x00000c50   Code   RO         7461    i.__hardfp_pow      m_wm.l(pow.o)
+    0x08004d28   0x08004d28   0x000000c8   Code   RO         7475    i.__hardfp_sin      m_wm.l(sin.o)
+    0x08004df0   0x08004df0   0x00000438   Code   RO         7883    i.__ieee754_rem_pio2  m_wm.l(rred.o)
+    0x08005228   0x08005228   0x00000170   Code   RO         7855    i.__kernel_cos      m_wm.l(cos_i.o)
+    0x08005398   0x08005398   0x000000f8   Code   RO         7880    i.__kernel_poly     m_wm.l(poly.o)
+    0x08005490   0x08005490   0x00000130   Code   RO         7888    i.__kernel_sin      m_wm.l(sin_i.o)
+    0x080055c0   0x080055c0   0x00000030   Code   RO         7858    i.__mathlib_dbl_divzero  m_wm.l(dunder.o)
+    0x080055f0   0x080055f0   0x00000014   Code   RO         7859    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
+    0x08005604   0x08005604   0x00000014   Code   RO         7860    i.__mathlib_dbl_infnan2  m_wm.l(dunder.o)
+    0x08005618   0x08005618   0x00000020   Code   RO         7861    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
+    0x08005638   0x08005638   0x00000020   Code   RO         7862    i.__mathlib_dbl_overflow  m_wm.l(dunder.o)
+    0x08005658   0x08005658   0x00000020   Code   RO         7864    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
+    0x08005678   0x08005678   0x0000000e   Code   RO         7999    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08005686   0x08005686   0x00000002   Code   RO         8000    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08005688   0x08005688   0x0000000e   Code   RO         8001    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x08005696   0x08005696   0x00000002   PAD
-    0x08005698   0x08005698   0x0000000c   Code   RO         7644    i.__set_errno       mc_w.l(errno.o)
-    0x080056a4   0x080056a4   0x00000184   Code   RO         7593    i._fp_digits        mc_w.l(printfa.o)
-    0x08005828   0x08005828   0x0000000e   Code   RO         7798    i._is_digit         mc_w.l(scanf_fp.o)
+    0x08005698   0x08005698   0x0000000c   Code   RO         7826    i.__set_errno       mc_w.l(errno.o)
+    0x080056a4   0x080056a4   0x00000184   Code   RO         7775    i._fp_digits        mc_w.l(printfa.o)
+    0x08005828   0x08005828   0x0000000e   Code   RO         7980    i._is_digit         mc_w.l(scanf_fp.o)
     0x08005836   0x08005836   0x00000002   PAD
-    0x08005838   0x08005838   0x000006dc   Code   RO         7594    i._printf_core      mc_w.l(printfa.o)
-    0x08005f14   0x08005f14   0x00000024   Code   RO         7595    i._printf_post_padding  mc_w.l(printfa.o)
-    0x08005f38   0x08005f38   0x0000002e   Code   RO         7596    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08005f66   0x08005f66   0x00000016   Code   RO         7597    i._snputc           mc_w.l(printfa.o)
-    0x08005f7c   0x08005f7c   0x000000ac   Code   RO         5643    i.apid_gimbal_realize  angle_pid.o
-    0x08006028   0x08006028   0x0000029c   Code   RO         5644    i.apid_realize      angle_pid.o
-    0x080062c4   0x080062c4   0x00000064   Code   RO         5645    i.apid_trigeer_realize  angle_pid.o
-    0x08006328   0x08006328   0x00000018   Code   RO         6482    i.array_copy        jansson_CM3LE.lib(value.o)
-    0x08006340   0x08006340   0x000000bc   Code   RO         5352    i.bsp_imu_usart_init  bsp_imu_usart.o
-    0x080063fc   0x080063fc   0x00000016   Code   RO         6922    i.bucket_is_empty   jansson_CM3LE.lib(hashtable.o)
+    0x08005838   0x08005838   0x000006dc   Code   RO         7776    i._printf_core      mc_w.l(printfa.o)
+    0x08005f14   0x08005f14   0x00000024   Code   RO         7777    i._printf_post_padding  mc_w.l(printfa.o)
+    0x08005f38   0x08005f38   0x0000002e   Code   RO         7778    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x08005f66   0x08005f66   0x00000016   Code   RO         7779    i._snputc           mc_w.l(printfa.o)
+    0x08005f7c   0x08005f7c   0x000000ac   Code   RO         5811    i.apid_gimbal_realize  angle_pid.o
+    0x08006028   0x08006028   0x0000029c   Code   RO         5812    i.apid_realize      angle_pid.o
+    0x080062c4   0x080062c4   0x00000064   Code   RO         5813    i.apid_trigeer_realize  angle_pid.o
+    0x08006328   0x08006328   0x00000018   Code   RO         6664    i.array_copy        jansson_CM3LE.lib(value.o)
+    0x08006340   0x08006340   0x000000bc   Code   RO         5508    i.bsp_imu_usart_init  bsp_imu_usart.o
+    0x080063fc   0x080063fc   0x00000016   Code   RO         7104    i.bucket_is_empty   jansson_CM3LE.lib(hashtable.o)
     0x08006412   0x08006412   0x00000002   PAD
-    0x08006414   0x08006414   0x000000ac   Code   RO         4776    i.caclulate_pwm_pulse  json.o
-    0x080064c0   0x080064c0   0x00000224   Code   RO         5731    i.caculate_gimbal_pitch_angle  remote_code.o
-    0x080066e4   0x080066e4   0x00000214   Code   RO         5732    i.caculate_gimbal_yaw_angle  remote_code.o
-    0x080068f8   0x080068f8   0x000000f4   Code   RO         5733    i.caculate_linear_speed  remote_code.o
-    0x080069ec   0x080069ec   0x000000f4   Code   RO         5734    i.caculate_rotational_speed  remote_code.o
-    0x08006ae0   0x08006ae0   0x000001f4   Code   RO         4630    i.chassis_speed_control  kinematic.o
-    0x08006cd4   0x08006cd4   0x0000004c   Code   RO         6183    i.decode_unicode_escape  jansson_CM3LE.lib(load.o)
-    0x08006d20   0x08006d20   0x00000038   Code   RO         4420    i.delay_init        delay.o
-    0x08006d58   0x08006d58   0x000000c0   Code   RO         6184    i.error_set         jansson_CM3LE.lib(load.o)
-    0x08006e18   0x08006e18   0x00000018   Code   RO         7692    i.fabs              m_wm.l(fabs.o)
-    0x08006e30   0x08006e30   0x0000008c   Code   RO         4631    i.find_max          kinematic.o
-    0x08006ebc   0x08006ebc   0x00000050   Code   RO         7614    i.free              mc_w.l(malloc.o)
-    0x08006f0c   0x08006f0c   0x00000014   Code   RO         5817    i.fric1_on          fric.o
-    0x08006f20   0x08006f20   0x00000014   Code   RO         5819    i.fric2_on          fric.o
-    0x08006f34   0x08006f34   0x0000012c   Code   RO         5820    i.fric_PWM_configuration  fric.o
-    0x08007060   0x08007060   0x00000034   Code   RO         5822    i.fric_gpio_config  fric.o
-    0x08007094   0x08007094   0x0000000c   Code   RO         5824    i.fric_record_control  fric.o
-    0x080070a0   0x080070a0   0x00000064   Code   RO         4633    i.gimbal_angle_control  kinematic.o
-    0x08007104   0x08007104   0x00000034   Code   RO         4634    i.gimbal_speed_control  kinematic.o
-    0x08007138   0x08007138   0x00000144   Code   RO         6923    i.hashlittle        jansson_CM3LE.lib(hashtable.o)
-    0x0800727c   0x0800727c   0x00000010   Code   RO         6925    i.hashtable_close   jansson_CM3LE.lib(hashtable.o)
-    0x0800728c   0x0800728c   0x00000022   Code   RO         6927    i.hashtable_do_clear  jansson_CM3LE.lib(hashtable.o)
-    0x080072ae   0x080072ae   0x00000076   Code   RO         6929    i.hashtable_do_rehash  jansson_CM3LE.lib(hashtable.o)
-    0x08007324   0x08007324   0x0000003c   Code   RO         6930    i.hashtable_find_pair  jansson_CM3LE.lib(hashtable.o)
-    0x08007360   0x08007360   0x00000040   Code   RO         6931    i.hashtable_get     jansson_CM3LE.lib(hashtable.o)
-    0x080073a0   0x080073a0   0x00000048   Code   RO         6932    i.hashtable_init    jansson_CM3LE.lib(hashtable.o)
-    0x080073e8   0x080073e8   0x000000ac   Code   RO         6940    i.hashtable_set     jansson_CM3LE.lib(hashtable.o)
-    0x08007494   0x08007494   0x0000002a   Code   RO         6941    i.insert_to_bucket  jansson_CM3LE.lib(hashtable.o)
-    0x080074be   0x080074be   0x00000036   Code   RO         6484    i.json_array        jansson_CM3LE.lib(value.o)
-    0x080074f4   0x080074f4   0x00000048   Code   RO         6485    i.json_array_append_new  jansson_CM3LE.lib(value.o)
-    0x0800753c   0x0800753c   0x0000001c   Code   RO         6488    i.json_array_get    jansson_CM3LE.lib(value.o)
-    0x08007558   0x08007558   0x0000004c   Code   RO         6489    i.json_array_grow   jansson_CM3LE.lib(value.o)
-    0x080075a4   0x080075a4   0x0000001c   Code   RO         4777    i.json_decref       json.o
-    0x080075c0   0x080075c0   0x00000018   Code   RO         6185    i.json_decref       jansson_CM3LE.lib(load.o)
-    0x080075d8   0x080075d8   0x00000018   Code   RO         6495    i.json_decref       jansson_CM3LE.lib(value.o)
-    0x080075f0   0x080075f0   0x00000018   Code   RO         6942    i.json_decref       jansson_CM3LE.lib(hashtable.o)
-    0x08007608   0x08007608   0x00000054   Code   RO         6497    i.json_delete       jansson_CM3LE.lib(value.o)
-    0x0800765c   0x0800765c   0x00000008   Code   RO         6499    i.json_false        jansson_CM3LE.lib(value.o)
-    0x08007664   0x08007664   0x00000010   Code   RO         6186    i.json_incref       jansson_CM3LE.lib(load.o)
-    0x08007674   0x08007674   0x0000001c   Code   RO         6501    i.json_integer      jansson_CM3LE.lib(value.o)
-    0x08007690   0x08007690   0x00000018   Code   RO         6503    i.json_integer_value  jansson_CM3LE.lib(value.o)
-    0x080076a8   0x080076a8   0x00000074   Code   RO         6191    i.json_loads        jansson_CM3LE.lib(load.o)
-    0x0800771c   0x0800771c   0x00000008   Code   RO         6504    i.json_null         jansson_CM3LE.lib(value.o)
-    0x08007724   0x08007724   0x0000004c   Code   RO         6506    i.json_object       jansson_CM3LE.lib(value.o)
-    0x08007770   0x08007770   0x0000001c   Code   RO         6511    i.json_object_get   jansson_CM3LE.lib(value.o)
-    0x0800778c   0x0800778c   0x00000028   Code   RO         7249    i.json_object_seed  jansson_CM3LE.lib(hashtable_seed.o)
-    0x080077b4   0x080077b4   0x00000040   Code   RO         6520    i.json_object_set_new_nocheck  jansson_CM3LE.lib(value.o)
-    0x080077f4   0x080077f4   0x00000034   Code   RO         6526    i.json_real         jansson_CM3LE.lib(value.o)
-    0x08007828   0x08007828   0x00000008   Code   RO         6540    i.json_true         jansson_CM3LE.lib(value.o)
-    0x08007830   0x08007830   0x00000022   Code   RO         6877    i.jsonp_error_init  jansson_CM3LE.lib(error.o)
-    0x08007852   0x08007852   0x00000010   Code   RO         6878    i.jsonp_error_set   jansson_CM3LE.lib(error.o)
+    0x08006414   0x08006414   0x000000ac   Code   RO         4892    i.caclulate_pwm_pulse  json.o
+    0x080064c0   0x080064c0   0x00000224   Code   RO         5899    i.caculate_gimbal_pitch_angle  remote_code.o
+    0x080066e4   0x080066e4   0x00000214   Code   RO         5900    i.caculate_gimbal_yaw_angle  remote_code.o
+    0x080068f8   0x080068f8   0x000000f4   Code   RO         5901    i.caculate_linear_speed  remote_code.o
+    0x080069ec   0x080069ec   0x000000f4   Code   RO         5902    i.caculate_rotational_speed  remote_code.o
+    0x08006ae0   0x08006ae0   0x000001f4   Code   RO         4743    i.chassis_speed_control  kinematic.o
+    0x08006cd4   0x08006cd4   0x0000004c   Code   RO         6365    i.decode_unicode_escape  jansson_CM3LE.lib(load.o)
+    0x08006d20   0x08006d20   0x00000038   Code   RO         4527    i.delay_init        delay.o
+    0x08006d58   0x08006d58   0x000000c0   Code   RO         6366    i.error_set         jansson_CM3LE.lib(load.o)
+    0x08006e18   0x08006e18   0x00000018   Code   RO         7874    i.fabs              m_wm.l(fabs.o)
+    0x08006e30   0x08006e30   0x0000008c   Code   RO         4744    i.find_max          kinematic.o
+    0x08006ebc   0x08006ebc   0x00000050   Code   RO         7796    i.free              mc_w.l(malloc.o)
+    0x08006f0c   0x08006f0c   0x00000014   Code   RO         5995    i.fric1_on          fric.o
+    0x08006f20   0x08006f20   0x00000014   Code   RO         5997    i.fric2_on          fric.o
+    0x08006f34   0x08006f34   0x0000012c   Code   RO         5998    i.fric_PWM_configuration  fric.o
+    0x08007060   0x08007060   0x00000034   Code   RO         6000    i.fric_gpio_config  fric.o
+    0x08007094   0x08007094   0x0000000c   Code   RO         6002    i.fric_record_control  fric.o
+    0x080070a0   0x080070a0   0x00000064   Code   RO         4746    i.gimbal_angle_control  kinematic.o
+    0x08007104   0x08007104   0x00000034   Code   RO         4747    i.gimbal_speed_control  kinematic.o
+    0x08007138   0x08007138   0x00000144   Code   RO         7105    i.hashlittle        jansson_CM3LE.lib(hashtable.o)
+    0x0800727c   0x0800727c   0x00000010   Code   RO         7107    i.hashtable_close   jansson_CM3LE.lib(hashtable.o)
+    0x0800728c   0x0800728c   0x00000022   Code   RO         7109    i.hashtable_do_clear  jansson_CM3LE.lib(hashtable.o)
+    0x080072ae   0x080072ae   0x00000076   Code   RO         7111    i.hashtable_do_rehash  jansson_CM3LE.lib(hashtable.o)
+    0x08007324   0x08007324   0x0000003c   Code   RO         7112    i.hashtable_find_pair  jansson_CM3LE.lib(hashtable.o)
+    0x08007360   0x08007360   0x00000040   Code   RO         7113    i.hashtable_get     jansson_CM3LE.lib(hashtable.o)
+    0x080073a0   0x080073a0   0x00000048   Code   RO         7114    i.hashtable_init    jansson_CM3LE.lib(hashtable.o)
+    0x080073e8   0x080073e8   0x000000ac   Code   RO         7122    i.hashtable_set     jansson_CM3LE.lib(hashtable.o)
+    0x08007494   0x08007494   0x0000002a   Code   RO         7123    i.insert_to_bucket  jansson_CM3LE.lib(hashtable.o)
+    0x080074be   0x080074be   0x00000036   Code   RO         6666    i.json_array        jansson_CM3LE.lib(value.o)
+    0x080074f4   0x080074f4   0x00000048   Code   RO         6667    i.json_array_append_new  jansson_CM3LE.lib(value.o)
+    0x0800753c   0x0800753c   0x0000001c   Code   RO         6670    i.json_array_get    jansson_CM3LE.lib(value.o)
+    0x08007558   0x08007558   0x0000004c   Code   RO         6671    i.json_array_grow   jansson_CM3LE.lib(value.o)
+    0x080075a4   0x080075a4   0x0000001c   Code   RO         4893    i.json_decref       json.o
+    0x080075c0   0x080075c0   0x00000018   Code   RO         6367    i.json_decref       jansson_CM3LE.lib(load.o)
+    0x080075d8   0x080075d8   0x00000018   Code   RO         6677    i.json_decref       jansson_CM3LE.lib(value.o)
+    0x080075f0   0x080075f0   0x00000018   Code   RO         7124    i.json_decref       jansson_CM3LE.lib(hashtable.o)
+    0x08007608   0x08007608   0x00000054   Code   RO         6679    i.json_delete       jansson_CM3LE.lib(value.o)
+    0x0800765c   0x0800765c   0x00000008   Code   RO         6681    i.json_false        jansson_CM3LE.lib(value.o)
+    0x08007664   0x08007664   0x00000010   Code   RO         6368    i.json_incref       jansson_CM3LE.lib(load.o)
+    0x08007674   0x08007674   0x0000001c   Code   RO         6683    i.json_integer      jansson_CM3LE.lib(value.o)
+    0x08007690   0x08007690   0x00000018   Code   RO         6685    i.json_integer_value  jansson_CM3LE.lib(value.o)
+    0x080076a8   0x080076a8   0x00000074   Code   RO         6373    i.json_loads        jansson_CM3LE.lib(load.o)
+    0x0800771c   0x0800771c   0x00000008   Code   RO         6686    i.json_null         jansson_CM3LE.lib(value.o)
+    0x08007724   0x08007724   0x0000004c   Code   RO         6688    i.json_object       jansson_CM3LE.lib(value.o)
+    0x08007770   0x08007770   0x0000001c   Code   RO         6693    i.json_object_get   jansson_CM3LE.lib(value.o)
+    0x0800778c   0x0800778c   0x00000028   Code   RO         7431    i.json_object_seed  jansson_CM3LE.lib(hashtable_seed.o)
+    0x080077b4   0x080077b4   0x00000040   Code   RO         6702    i.json_object_set_new_nocheck  jansson_CM3LE.lib(value.o)
+    0x080077f4   0x080077f4   0x00000034   Code   RO         6708    i.json_real         jansson_CM3LE.lib(value.o)
+    0x08007828   0x08007828   0x00000008   Code   RO         6722    i.json_true         jansson_CM3LE.lib(value.o)
+    0x08007830   0x08007830   0x00000022   Code   RO         7059    i.jsonp_error_init  jansson_CM3LE.lib(error.o)
+    0x08007852   0x08007852   0x00000010   Code   RO         7060    i.jsonp_error_set   jansson_CM3LE.lib(error.o)
     0x08007862   0x08007862   0x00000002   PAD
-    0x08007864   0x08007864   0x0000003c   Code   RO         6879    i.jsonp_error_set_source  jansson_CM3LE.lib(error.o)
-    0x080078a0   0x080078a0   0x0000002c   Code   RO         6880    i.jsonp_error_vset  jansson_CM3LE.lib(error.o)
-    0x080078cc   0x080078cc   0x00000010   Code   RO         7080    i.jsonp_free        jansson_CM3LE.lib(memory.o)
-    0x080078dc   0x080078dc   0x00000010   Code   RO         7081    i.jsonp_malloc      jansson_CM3LE.lib(memory.o)
-    0x080078ec   0x080078ec   0x0000000a   Code   RO         6541    i.jsonp_stringn_nocheck_own  jansson_CM3LE.lib(value.o)
-    0x080078f6   0x080078f6   0x00000024   Code   RO         7083    i.jsonp_strndup     jansson_CM3LE.lib(memory.o)
+    0x08007864   0x08007864   0x0000003c   Code   RO         7061    i.jsonp_error_set_source  jansson_CM3LE.lib(error.o)
+    0x080078a0   0x080078a0   0x0000002c   Code   RO         7062    i.jsonp_error_vset  jansson_CM3LE.lib(error.o)
+    0x080078cc   0x080078cc   0x00000010   Code   RO         7262    i.jsonp_free        jansson_CM3LE.lib(memory.o)
+    0x080078dc   0x080078dc   0x00000010   Code   RO         7263    i.jsonp_malloc      jansson_CM3LE.lib(memory.o)
+    0x080078ec   0x080078ec   0x0000000a   Code   RO         6723    i.jsonp_stringn_nocheck_own  jansson_CM3LE.lib(value.o)
+    0x080078f6   0x080078f6   0x00000024   Code   RO         7265    i.jsonp_strndup     jansson_CM3LE.lib(memory.o)
     0x0800791a   0x0800791a   0x00000002   PAD
-    0x0800791c   0x0800791c   0x00000064   Code   RO         7186    i.jsonp_strtod      jansson_CM3LE.lib(strconv.o)
-    0x08007980   0x08007980   0x00000030   Code   RO         5612    i.key_init          key.o
-    0x080079b0   0x080079b0   0x00000044   Code   RO         5613    i.key_press         key.o
-    0x080079f4   0x080079f4   0x00000040   Code   RO         5376    i.led_init          led.o
-    0x08007a34   0x08007a34   0x0000001c   Code   RO         6192    i.lex_close         jansson_CM3LE.lib(load.o)
-    0x08007a50   0x08007a50   0x00000012   Code   RO         6193    i.lex_free_string   jansson_CM3LE.lib(load.o)
-    0x08007a62   0x08007a62   0x00000008   Code   RO         6194    i.lex_get           jansson_CM3LE.lib(load.o)
-    0x08007a6a   0x08007a6a   0x0000001e   Code   RO         6195    i.lex_get_save      jansson_CM3LE.lib(load.o)
-    0x08007a88   0x08007a88   0x00000030   Code   RO         6196    i.lex_init          jansson_CM3LE.lib(load.o)
-    0x08007ab8   0x08007ab8   0x0000000c   Code   RO         6197    i.lex_save          jansson_CM3LE.lib(load.o)
-    0x08007ac4   0x08007ac4   0x00000138   Code   RO         6198    i.lex_scan          jansson_CM3LE.lib(load.o)
-    0x08007bfc   0x08007bfc   0x0000018c   Code   RO         6199    i.lex_scan_number   jansson_CM3LE.lib(load.o)
-    0x08007d88   0x08007d88   0x00000288   Code   RO         6200    i.lex_scan_string   jansson_CM3LE.lib(load.o)
-    0x08008010   0x08008010   0x00000026   Code   RO         6201    i.lex_unget_unsave  jansson_CM3LE.lib(load.o)
-    0x08008036   0x08008036   0x0000000e   Code   RO         6943    i.list_insert       jansson_CM3LE.lib(hashtable.o)
+    0x0800791c   0x0800791c   0x00000064   Code   RO         7368    i.jsonp_strtod      jansson_CM3LE.lib(strconv.o)
+    0x08007980   0x08007980   0x00000030   Code   RO         5777    i.key_init          key.o
+    0x080079b0   0x080079b0   0x00000044   Code   RO         5778    i.key_press         key.o
+    0x080079f4   0x080079f4   0x00000040   Code   RO         5535    i.led_init          led.o
+    0x08007a34   0x08007a34   0x0000001c   Code   RO         6374    i.lex_close         jansson_CM3LE.lib(load.o)
+    0x08007a50   0x08007a50   0x00000012   Code   RO         6375    i.lex_free_string   jansson_CM3LE.lib(load.o)
+    0x08007a62   0x08007a62   0x00000008   Code   RO         6376    i.lex_get           jansson_CM3LE.lib(load.o)
+    0x08007a6a   0x08007a6a   0x0000001e   Code   RO         6377    i.lex_get_save      jansson_CM3LE.lib(load.o)
+    0x08007a88   0x08007a88   0x00000030   Code   RO         6378    i.lex_init          jansson_CM3LE.lib(load.o)
+    0x08007ab8   0x08007ab8   0x0000000c   Code   RO         6379    i.lex_save          jansson_CM3LE.lib(load.o)
+    0x08007ac4   0x08007ac4   0x00000138   Code   RO         6380    i.lex_scan          jansson_CM3LE.lib(load.o)
+    0x08007bfc   0x08007bfc   0x0000018c   Code   RO         6381    i.lex_scan_number   jansson_CM3LE.lib(load.o)
+    0x08007d88   0x08007d88   0x00000288   Code   RO         6382    i.lex_scan_string   jansson_CM3LE.lib(load.o)
+    0x08008010   0x08008010   0x00000026   Code   RO         6383    i.lex_unget_unsave  jansson_CM3LE.lib(load.o)
+    0x08008036   0x08008036   0x0000000e   Code   RO         7125    i.list_insert       jansson_CM3LE.lib(hashtable.o)
     0x08008044   0x08008044   0x00000124   Code   RO         4217    i.main              main.o
-    0x08008168   0x08008168   0x0000006c   Code   RO         7615    i.malloc            mc_w.l(malloc.o)
-    0x080081d4   0x080081d4   0x00000018   Code   RO         5026    i.mode_init         mode.o
-    0x080081ec   0x080081ec   0x000000e8   Code   RO         5403    i.motor_init        motor.o
-    0x080082d4   0x080082d4   0x00000094   Code   RO         6202    i.parse_array       jansson_CM3LE.lib(load.o)
-    0x08008368   0x08008368   0x00000094   Code   RO         6203    i.parse_json        jansson_CM3LE.lib(load.o)
-    0x080083fc   0x080083fc   0x00000180   Code   RO         6204    i.parse_object      jansson_CM3LE.lib(load.o)
-    0x0800857c   0x0800857c   0x00000140   Code   RO         6205    i.parse_value       jansson_CM3LE.lib(load.o)
-    0x080086bc   0x080086bc   0x00000078   Code   RO         5566    i.power_init        power.o
-    0x08008734   0x08008734   0x00000010   Code   RO         5567    i.power_open_all    power.o
-    0x08008744   0x08008744   0x000000f4   Code   RO         5405    i.record_motor_callback  motor.o
-    0x08008838   0x08008838   0x000000dc   Code   RO         5406    i.record_trigger_callback  motor.o
-    0x08008914   0x08008914   0x000000bc   Code   RO         4781    i.resolve_json_chassis_command  json.o
-    0x080089d0   0x080089d0   0x00000074   Code   RO         4782    i.resolve_json_fric_command  json.o
-    0x08008a44   0x08008a44   0x00000094   Code   RO         4783    i.resolve_json_gimbal_angle_command  json.o
-    0x08008ad8   0x08008ad8   0x00000094   Code   RO         4784    i.resolve_json_gimbal_speed_command  json.o
-    0x08008b6c   0x08008b6c   0x0000008c   Code   RO         4786    i.resolve_json_steering_engine_command  json.o
-    0x08008bf8   0x08008bf8   0x00000074   Code   RO         4787    i.resolve_json_trigger_command  json.o
-    0x08008c6c   0x08008c6c   0x00000074   Code   RO         4788    i.resolve_json_trigger_shoot_command  json.o
-    0x08008ce0   0x08008ce0   0x00000006   Code   RO         6061    i.seed_from_timestamp_and_pid  jansson_config.o
+    0x08008168   0x08008168   0x0000006c   Code   RO         7797    i.malloc            mc_w.l(malloc.o)
+    0x080081d4   0x080081d4   0x00000018   Code   RO         5170    i.mode_init         mode.o
+    0x080081ec   0x080081ec   0x000000e8   Code   RO         5562    i.motor_init        motor.o
+    0x080082d4   0x080082d4   0x00000094   Code   RO         6384    i.parse_array       jansson_CM3LE.lib(load.o)
+    0x08008368   0x08008368   0x00000094   Code   RO         6385    i.parse_json        jansson_CM3LE.lib(load.o)
+    0x080083fc   0x080083fc   0x00000180   Code   RO         6386    i.parse_object      jansson_CM3LE.lib(load.o)
+    0x0800857c   0x0800857c   0x00000140   Code   RO         6387    i.parse_value       jansson_CM3LE.lib(load.o)
+    0x080086bc   0x080086bc   0x00000078   Code   RO         5728    i.power_init        power.o
+    0x08008734   0x08008734   0x00000010   Code   RO         5729    i.power_open_all    power.o
+    0x08008744   0x08008744   0x000000f4   Code   RO         5564    i.record_motor_callback  motor.o
+    0x08008838   0x08008838   0x000000dc   Code   RO         5565    i.record_trigger_callback  motor.o
+    0x08008914   0x08008914   0x000000bc   Code   RO         4897    i.resolve_json_chassis_command  json.o
+    0x080089d0   0x080089d0   0x00000074   Code   RO         4898    i.resolve_json_fric_command  json.o
+    0x08008a44   0x08008a44   0x00000094   Code   RO         4899    i.resolve_json_gimbal_angle_command  json.o
+    0x08008ad8   0x08008ad8   0x00000094   Code   RO         4900    i.resolve_json_gimbal_speed_command  json.o
+    0x08008b6c   0x08008b6c   0x0000008c   Code   RO         4902    i.resolve_json_steering_engine_command  json.o
+    0x08008bf8   0x08008bf8   0x00000074   Code   RO         4903    i.resolve_json_trigger_command  json.o
+    0x08008c6c   0x08008c6c   0x00000074   Code   RO         4904    i.resolve_json_trigger_shoot_command  json.o
+    0x08008ce0   0x08008ce0   0x00000006   Code   RO         6243    i.seed_from_timestamp_and_pid  jansson_config.o
     0x08008ce6   0x08008ce6   0x00000002   PAD
-    0x08008ce8   0x08008ce8   0x0000008c   Code   RO         5407    i.set_chassis_current  motor.o
-    0x08008d74   0x08008d74   0x0000004c   Code   RO         5408    i.set_gimbal_current  motor.o
-    0x08008dc0   0x08008dc0   0x0000002c   Code   RO         5409    i.set_trigger_current  motor.o
-    0x08008dec   0x08008dec   0x00000134   Code   RO         4910    i.shoot             shoot.o
-    0x08008f20   0x08008f20   0x0000006e   Code   RO         7714    i.sqrt              m_wm.l(sqrt.o)
+    0x08008ce8   0x08008ce8   0x0000008c   Code   RO         5566    i.set_chassis_current  motor.o
+    0x08008d74   0x08008d74   0x0000004c   Code   RO         5567    i.set_gimbal_current  motor.o
+    0x08008dc0   0x08008dc0   0x0000002c   Code   RO         5568    i.set_trigger_current  motor.o
+    0x08008dec   0x08008dec   0x00000134   Code   RO         5051    i.shoot             shoot.o
+    0x08008f20   0x08008f20   0x0000006e   Code   RO         7896    i.sqrt              m_wm.l(sqrt.o)
     0x08008f8e   0x08008f8e   0x00000002   PAD
-    0x08008f90   0x08008f90   0x00000058   Code   RO         5410    i.stop_chassis_motor  motor.o
-    0x08008fe8   0x08008fe8   0x00000020   Code   RO         5411    i.stop_trigger_motor  motor.o
-    0x08009008   0x08009008   0x0000000c   Code   RO         7126    i.strbuffer_append_byte  jansson_CM3LE.lib(strbuffer.o)
-    0x08009014   0x08009014   0x00000070   Code   RO         7127    i.strbuffer_append_bytes  jansson_CM3LE.lib(strbuffer.o)
-    0x08009084   0x08009084   0x0000000a   Code   RO         7128    i.strbuffer_clear   jansson_CM3LE.lib(strbuffer.o)
-    0x0800908e   0x0800908e   0x00000018   Code   RO         7129    i.strbuffer_close   jansson_CM3LE.lib(strbuffer.o)
-    0x080090a6   0x080090a6   0x00000022   Code   RO         7130    i.strbuffer_init    jansson_CM3LE.lib(strbuffer.o)
-    0x080090c8   0x080090c8   0x00000018   Code   RO         7131    i.strbuffer_pop     jansson_CM3LE.lib(strbuffer.o)
-    0x080090e0   0x080090e0   0x00000004   Code   RO         7133    i.strbuffer_value   jansson_CM3LE.lib(strbuffer.o)
-    0x080090e4   0x080090e4   0x000000e4   Code   RO         6206    i.stream_get        jansson_CM3LE.lib(load.o)
-    0x080091c8   0x080091c8   0x0000004a   Code   RO         6207    i.stream_unget      jansson_CM3LE.lib(load.o)
-    0x08009212   0x08009212   0x0000003e   Code   RO         6542    i.string_create     jansson_CM3LE.lib(value.o)
-    0x08009250   0x08009250   0x00000018   Code   RO         6208    i.string_get        jansson_CM3LE.lib(load.o)
-    0x08009268   0x08009268   0x00000030   Code   RO         7307    i.strtod            m_wm.l(strtod.o)
-    0x08009298   0x08009298   0x0000009c   Code   RO         4635    i.trigger_angle_control  kinematic.o
-    0x08009334   0x08009334   0x0000006c   Code   RO         4636    i.trigger_control   kinematic.o
-    0x080093a0   0x080093a0   0x0000003c   Code   RO         7213    i.utf8_check_first  jansson_CM3LE.lib(utf.o)
-    0x080093dc   0x080093dc   0x00000088   Code   RO         7214    i.utf8_check_full   jansson_CM3LE.lib(utf.o)
-    0x08009464   0x08009464   0x0000007c   Code   RO         7216    i.utf8_encode       jansson_CM3LE.lib(utf.o)
-    0x080094e0   0x080094e0   0x000000c0   Code   RO         4709    i.vpid_chassis_realize  speed_pid.o
-    0x080095a0   0x080095a0   0x00000088   Code   RO         4711    i.vpid_gimbal_realize  speed_pid.o
-    0x08009628   0x08009628   0x00000574   Code   RO         4712    i.vpid_realize      speed_pid.o
-    0x08009b9c   0x08009b9c   0x00000050   Code   RO         4713    i.vpid_trigger_realize  speed_pid.o
-    0x08009bec   0x08009bec   0x0000000c   Code   RO         6010    i.yawRead           imureader.o
-    0x08009bf8   0x08009bf8   0x0000000c   Code   RO         6011    i.yaw_angularRead   imureader.o
+    0x08008f90   0x08008f90   0x00000058   Code   RO         5569    i.stop_chassis_motor  motor.o
+    0x08008fe8   0x08008fe8   0x00000020   Code   RO         5570    i.stop_trigger_motor  motor.o
+    0x08009008   0x08009008   0x0000000c   Code   RO         7308    i.strbuffer_append_byte  jansson_CM3LE.lib(strbuffer.o)
+    0x08009014   0x08009014   0x00000070   Code   RO         7309    i.strbuffer_append_bytes  jansson_CM3LE.lib(strbuffer.o)
+    0x08009084   0x08009084   0x0000000a   Code   RO         7310    i.strbuffer_clear   jansson_CM3LE.lib(strbuffer.o)
+    0x0800908e   0x0800908e   0x00000018   Code   RO         7311    i.strbuffer_close   jansson_CM3LE.lib(strbuffer.o)
+    0x080090a6   0x080090a6   0x00000022   Code   RO         7312    i.strbuffer_init    jansson_CM3LE.lib(strbuffer.o)
+    0x080090c8   0x080090c8   0x00000018   Code   RO         7313    i.strbuffer_pop     jansson_CM3LE.lib(strbuffer.o)
+    0x080090e0   0x080090e0   0x00000004   Code   RO         7315    i.strbuffer_value   jansson_CM3LE.lib(strbuffer.o)
+    0x080090e4   0x080090e4   0x000000e4   Code   RO         6388    i.stream_get        jansson_CM3LE.lib(load.o)
+    0x080091c8   0x080091c8   0x0000004a   Code   RO         6389    i.stream_unget      jansson_CM3LE.lib(load.o)
+    0x08009212   0x08009212   0x0000003e   Code   RO         6724    i.string_create     jansson_CM3LE.lib(value.o)
+    0x08009250   0x08009250   0x00000018   Code   RO         6390    i.string_get        jansson_CM3LE.lib(load.o)
+    0x08009268   0x08009268   0x00000030   Code   RO         7489    i.strtod            m_wm.l(strtod.o)
+    0x08009298   0x08009298   0x0000009c   Code   RO         4748    i.trigger_angle_control  kinematic.o
+    0x08009334   0x08009334   0x0000006c   Code   RO         4749    i.trigger_control   kinematic.o
+    0x080093a0   0x080093a0   0x0000003c   Code   RO         7395    i.utf8_check_first  jansson_CM3LE.lib(utf.o)
+    0x080093dc   0x080093dc   0x00000088   Code   RO         7396    i.utf8_check_full   jansson_CM3LE.lib(utf.o)
+    0x08009464   0x08009464   0x0000007c   Code   RO         7398    i.utf8_encode       jansson_CM3LE.lib(utf.o)
+    0x080094e0   0x080094e0   0x000000c0   Code   RO         4825    i.vpid_chassis_realize  speed_pid.o
+    0x080095a0   0x080095a0   0x00000088   Code   RO         4827    i.vpid_gimbal_realize  speed_pid.o
+    0x08009628   0x08009628   0x00000574   Code   RO         4828    i.vpid_realize      speed_pid.o
+    0x08009b9c   0x08009b9c   0x00000050   Code   RO         4829    i.vpid_trigger_realize  speed_pid.o
+    0x08009bec   0x08009bec   0x0000000c   Code   RO         6192    i.yawRead           imureader.o
+    0x08009bf8   0x08009bf8   0x0000000c   Code   RO         6193    i.yaw_angularRead   imureader.o
     0x08009c04   0x08009c04   0x00000004   PAD
-    0x08009c08   0x08009c08   0x00000088   Data   RO         7282    .constdata          m_wm.l(pow.o)
-    0x08009c90   0x08009c90   0x00000030   Data   RO         7674    .constdata          m_wm.l(cos_i.o)
-    0x08009cc0   0x08009cc0   0x00000008   Data   RO         7700    .constdata          m_wm.l(qnan.o)
-    0x08009cc8   0x08009cc8   0x000000c8   Data   RO         7703    .constdata          m_wm.l(rred.o)
-    0x08009d90   0x08009d90   0x00000028   Data   RO         7707    .constdata          m_wm.l(sin_i.o)
-    0x08009db8   0x08009db8   0x00000081   Data   RO         7769    .constdata          mc_w.l(ctype_o.o)
+    0x08009c08   0x08009c08   0x00000088   Data   RO         7464    .constdata          m_wm.l(pow.o)
+    0x08009c90   0x08009c90   0x00000030   Data   RO         7856    .constdata          m_wm.l(cos_i.o)
+    0x08009cc0   0x08009cc0   0x00000008   Data   RO         7882    .constdata          m_wm.l(qnan.o)
+    0x08009cc8   0x08009cc8   0x000000c8   Data   RO         7885    .constdata          m_wm.l(rred.o)
+    0x08009d90   0x08009d90   0x00000028   Data   RO         7889    .constdata          m_wm.l(sin_i.o)
+    0x08009db8   0x08009db8   0x00000081   Data   RO         7951    .constdata          mc_w.l(ctype_o.o)
     0x08009e39   0x08009e39   0x00000003   PAD
-    0x08009e3c   0x08009e3c   0x00000004   Data   RO         7770    .constdata          mc_w.l(ctype_o.o)
-    0x08009e40   0x08009e40   0x00000020   Data   RO         7815    Region$$Table       anon$$obj.o
+    0x08009e3c   0x08009e3c   0x00000004   Data   RO         7952    .constdata          mc_w.l(ctype_o.o)
+    0x08009e40   0x08009e40   0x00000020   Data   RO         7997    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08009e60, Size: 0x00002dc0, Max: 0x00030000, ABSOLUTE)
@@ -4224,36 +4224,36 @@ Memory Map of the image
 
     0x20000000   0x08009e60   0x00000010   Data   RW         2131    .data               stm32f4xx_rcc.o
     0x20000010   0x08009e70   0x00000004   Data   RW         4218    .data               main.o
-    0x20000014   0x08009e74   0x0000000e   Data   RW         4340    .data               stm32f4xx_it.o
-    0x20000022   0x08009e82   0x00000004   Data   RW         4424    .data               delay.o
+    0x20000014   0x08009e74   0x0000000e   Data   RW         4447    .data               stm32f4xx_it.o
+    0x20000022   0x08009e82   0x00000004   Data   RW         4531    .data               delay.o
     0x20000026   0x08009e86   0x00000002   PAD
-    0x20000028   0x08009e88   0x00000014   Data   RW         4638    .data               kinematic.o
-    0x2000003c   0x08009e9c   0x00000018   Data   RW         4715    .data               speed_pid.o
-    0x20000054   0x08009eb4   0x00000008   Data   RW         4911    .data               shoot.o
-    0x2000005c   0x08009ebc   0x00000004   Data   RW         5027    .data               mode.o
-    0x20000060   0x08009ec0   0x00000004   Data   RW         5308    .data               uart5.o
-    0x20000064   0x08009ec4   0x00000040   Data   RW         5413    .data               motor.o
-    0x200000a4   0x08009f04   0x00000002   Data   RW         5614    .data               key.o
+    0x20000028   0x08009e88   0x00000014   Data   RW         4751    .data               kinematic.o
+    0x2000003c   0x08009e9c   0x00000018   Data   RW         4831    .data               speed_pid.o
+    0x20000054   0x08009eb4   0x00000008   Data   RW         5052    .data               shoot.o
+    0x2000005c   0x08009ebc   0x00000004   Data   RW         5171    .data               mode.o
+    0x20000060   0x08009ec0   0x00000004   Data   RW         5464    .data               uart5.o
+    0x20000064   0x08009ec4   0x00000040   Data   RW         5572    .data               motor.o
+    0x200000a4   0x08009f04   0x00000002   Data   RW         5779    .data               key.o
     0x200000a6   0x08009f06   0x00000002   PAD
-    0x200000a8   0x08009f08   0x00000030   Data   RW         5735    .data               remote_code.o
-    0x200000d8   0x08009f38   0x00000004   Data   RW         5779    .data               tim3_events.o
-    0x200000dc   0x08009f3c   0x00000008   Data   RW         5918    .data               gimbal.o
-    0x200000e4   0x08009f44   0x00000018   Data   RW         6543    .data               jansson_CM3LE.lib(value.o)
-    0x200000fc   0x08009f5c   0x00000008   Data   RW         7084    .data               jansson_CM3LE.lib(memory.o)
-    0x20000104   0x08009f64   0x00000004   Data   RW         7250    .data               jansson_CM3LE.lib(hashtable_seed.o)
-    0x20000108   0x08009f68   0x00000004   Data   RW         7645    .data               mc_w.l(errno.o)
-    0x2000010c   0x08009f6c   0x00000004   Data   RW         7747    .data               mc_w.l(mvars.o)
-    0x20000110   0x08009f70   0x00000004   Data   RW         7748    .data               mc_w.l(mvars.o)
-    0x20000114        -       0x00000226   Zero   RW         4338    .bss                stm32f4xx_it.o
+    0x200000a8   0x08009f08   0x00000030   Data   RW         5903    .data               remote_code.o
+    0x200000d8   0x08009f38   0x00000004   Data   RW         5957    .data               tim3_events.o
+    0x200000dc   0x08009f3c   0x00000008   Data   RW         6100    .data               gimbal.o
+    0x200000e4   0x08009f44   0x00000018   Data   RW         6725    .data               jansson_CM3LE.lib(value.o)
+    0x200000fc   0x08009f5c   0x00000008   Data   RW         7266    .data               jansson_CM3LE.lib(memory.o)
+    0x20000104   0x08009f64   0x00000004   Data   RW         7432    .data               jansson_CM3LE.lib(hashtable_seed.o)
+    0x20000108   0x08009f68   0x00000004   Data   RW         7827    .data               mc_w.l(errno.o)
+    0x2000010c   0x08009f6c   0x00000004   Data   RW         7929    .data               mc_w.l(mvars.o)
+    0x20000110   0x08009f70   0x00000004   Data   RW         7930    .data               mc_w.l(mvars.o)
+    0x20000114        -       0x00000226   Zero   RW         4445    .bss                stm32f4xx_it.o
     0x2000033a   0x08009f74   0x00000002   PAD
-    0x2000033c        -       0x00000010   Zero   RW         4565    .bss                my_init.o
-    0x2000034c        -       0x00000098   Zero   RW         4637    .bss                kinematic.o
-    0x200003e4        -       0x000000e0   Zero   RW         4714    .bss                speed_pid.o
-    0x200004c4        -       0x00000104   Zero   RW         5307    .bss                uart5.o
-    0x200005c8        -       0x000007a0   Zero   RW         5412    .bss                motor.o
-    0x20000d68        -       0x0000002e   Zero   RW         5691    .bss                dji_remote.o
+    0x2000033c        -       0x00000010   Zero   RW         4678    .bss                my_init.o
+    0x2000034c        -       0x00000098   Zero   RW         4750    .bss                kinematic.o
+    0x200003e4        -       0x000000e0   Zero   RW         4830    .bss                speed_pid.o
+    0x200004c4        -       0x00000104   Zero   RW         5463    .bss                uart5.o
+    0x200005c8        -       0x000007a0   Zero   RW         5571    .bss                motor.o
+    0x20000d68        -       0x0000002e   Zero   RW         5859    .bss                dji_remote.o
     0x20000d96   0x08009f74   0x00000002   PAD
-    0x20000d98        -       0x00000028   Zero   RW         6013    .bss                imureader.o
+    0x20000d98        -       0x00000028   Zero   RW         6195    .bss                imureader.o
     0x20000dc0        -       0x00001000   Zero   RW            2    HEAP                startup_stm32f427_437xx.o
     0x20001dc0        -       0x00001000   Zero   RW            1    STACK               startup_stm32f427_437xx.o
 
@@ -4265,7 +4265,7 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1038         70          0          0          0       4208   angle_pid.o
+      1038         70          0          0          0       4016   angle_pid.o
        192         10          0          0          0        737   bsp_debug_usart.o
        188         10          0          0          0        729   bsp_imu_usart.o
        192         10          0          0          0        720   bsp_uart7.o
@@ -4278,34 +4278,34 @@ Image component sizes
          6          0          0          0          0        930   jansson_config.o
       1172        166          0          0          0       9208   json.o
        116         18          0          2          0       1107   key.o
-      1712        212          0         20        152       8084   kinematic.o
+      1712        212          0         20        152       7732   kinematic.o
         64          4          0          0          0        531   led.o
-       672        116          0          4          0       4376   main.o
+       672        116          0          4          0     267596   main.o
        140         24          0          0          0       1747   misc.o
         24         10          0          4          0       1509   mode.o
       1076        122          0         64       1952       8624   motor.o
-       140          8          0          0         16        795   my_init.o
+       140          8          0          0         16        731   my_init.o
        136         12          0          0          0       1094   power.o
-      2840        294          0         48          0       5059   remote_code.o
+      2840        294          0         48          0       5783   remote_code.o
        308         46          0          8          0      28627   shoot.o
-      1924        158          0         24        224       8360   speed_pid.o
+      1924        158          0         24        224       8072   speed_pid.o
         36          8        428          0       8192        976   startup_stm32f427_437xx.o
        172          6          0          0          0        775   steering_engine.o
       1252         28          0          0          0       5613   stm32f4xx_can.o
        528         26          0          0          0       6027   stm32f4xx_dma.o
        222          0          0          0          0       3211   stm32f4xx_gpio.o
-      1656        162          0         14        550       7170   stm32f4xx_it.o
+      1656        162          0         14        550       6818   stm32f4xx_it.o
        392         48          0         16          0       6277   stm32f4xx_rcc.o
        940         66          0          0          0      13638   stm32f4xx_tim.o
        692         42          0          0          0       6778   stm32f4xx_usart.o
        388         32          0          0          0       2068   sys.o
        392         32          0          0          0     317389   system_stm32f4xx.o
-       464         34          0          4          0       1164   tim3_events.o
+       464         34          0          4          0       1100   tim3_events.o
         92          6          0          0          0        688   timer.o
         84         16          0          4        260       1454   uart5.o
 
     ----------------------------------------------------------------------
-     21314       1938        460        228      11436     474402   Object Totals
+     21314       1938        460        228      11436     737034   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         28          4          0          4          4          0   (incl. Padding)
 
@@ -4413,8 +4413,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     39516       3496       1028        276      11436     543050   Grand Totals
-     39516       3496       1028        276      11436     543050   ELF Image Totals
+     39516       3496       1028        276      11436     805682   Grand Totals
+     39516       3496       1028        276      11436     805682   ELF Image Totals
      39516       3496       1028        276          0          0   ROM Totals
 
 ==============================================================================
