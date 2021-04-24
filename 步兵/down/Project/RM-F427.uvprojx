@@ -326,8 +326,8 @@
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
+            <v6Lang>1</v6Lang>
+            <v6LangP>1</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -337,7 +337,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F427_437xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader;..\User\sys;..\User\algorithm</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader;..\User\sys;..\User\algorithm;..\APP\encoder;..\APP\shoot;..\APP\referee;..\APP\remote;..\BSP\dbus;..\BSP\referee;..\BSP\led;..\Hardware\power_limitation;..\Hardware\steering_engine;..\BSP\super_power</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -601,6 +601,21 @@
               <FileType>1</FileType>
               <FilePath>..\APP\judge\judge.c</FilePath>
             </File>
+            <File>
+              <FileName>encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\encoder\encoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>referee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\referee\referee.c</FilePath>
+            </File>
+            <File>
+              <FileName>remote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\remote\remote.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -635,6 +650,26 @@
               <FileName>bsp_imu_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\usart\bsp_imu_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\dbus\bsp_dbus.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_referee_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\referee\bsp_referee_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\led\bsp_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_supercap_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\super_power\bsp_supercap_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -677,11 +712,6 @@
               <FilePath>..\Hardware\BUZZER\buzzer.c</FilePath>
             </File>
             <File>
-              <FileName>DJi_remote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Hardware\DJi_remote\DJi_remote.c</FilePath>
-            </File>
-            <File>
               <FileName>remote_code.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\remote_code\remote_code.c</FilePath>
@@ -710,6 +740,11 @@
               <FileName>imuReader.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Hardware\imuReader\imuReader.c</FilePath>
+            </File>
+            <File>
+              <FileName>steering_engine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\steering_engine\steering_engine.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,11 +11,14 @@
 #define VEL2RPM 1.909859f										//线速度转转度
 #define M2006_REDUCTION_RATIO 36.000000f		//齿轮箱减速比
 #define M3508_REDUCTION_RATIO 19.000000f		//齿轮箱减速比
+#define GM6020_ENCODER_ANGLE  8192.0f
+
 
 #define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336   
-#define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
-#define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
-
+#define MAX_BASE_LINEAR_SPEED     80.0f  //217.817f 底盘最大平移速度，单位cm/s   
+#define MAX_BASE_ROTATIONAL_SPEED   1.2f  // 7.260570f 底盘最大旋转速度，单位rad/s    
+#define NORMAL_LINEAR_SPEED      45.0f //30.0f
+#define NORMAL_ROTATIONAL_SPEED  0.5f
 
 #define set_trigger_speed(motor5_speed) \
 				do{                                   \
@@ -38,8 +41,12 @@
 				do{ \
 					gimbal_y.apid.target_angle = yaw_angle; \
           gimbal_p.apid.target_angle = pitch_angle; \
-				}while(0)                                   \
-
+				}while(0)                                   
+#define set_trigger_angle(trigger_angle) \
+	do{ \
+		motor5.apid.target_angle = trigger_angle; \
+		motor5.target_angle = trigger_angle; \
+	}while(0) //mhp111
 				
 typedef struct
 {
@@ -98,8 +105,10 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z);
 void Get_Base_Velocities(void);
 void chassis_speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度转换为电机转速
 void trigger_control(float trigger_angular);
+void trigger_angle_control(float trigger_angle);//mhp111
 void gimbal_speed_control(float gimbal_y_angle,float gimbal_p_angle);
 void gimbal_angle_control(float yaw_angle,float pitch_angle);
+void Get_Gimbal_Angle(void);
 
 #endif
 

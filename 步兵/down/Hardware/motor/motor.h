@@ -8,9 +8,9 @@
 #define	CAN_3508Motor2_ID      0x202
 #define	CAN_3508Motor3_ID      0x203
 #define	CAN_3508Motor4_ID      0x204
-#define CAN_TRIGGER_ID         0x205
-#define CAN_GIMBAL_Y_ID         0x20A
-#define CAN_GIMBAL_P_ID         0x20B
+#define CAN_TRIGGER_ID         0x207
+#define CAN_GIMBAL_Y_ID         0x209
+#define CAN_GIMBAL_P_ID         0x20A
 
 
 //电机转速pid参数结构体
@@ -28,6 +28,8 @@ typedef struct{
 	
 	int pid_count;           //pid变量，用于计算平均误差
 	float average_err;           //平均误差，使误差曲线更加平滑
+	float last_average_err;      //上一次平均误差
+	int pitch_err[10];
 }VPID_t;
 
 //电机机械角度参数
@@ -42,6 +44,7 @@ typedef struct{
 	int I_OUT;
 	int D_OUT;
 	int PID_OUT;
+	int trigger_first_total_angle_storage;
 	/*int actual_speed;
 	int target_speed;*/
 }APID_t;
@@ -57,6 +60,7 @@ typedef struct{
 	int last_angle;				//上一次返回的角度值
 	int round_cnt;				//相对开机时转过的圈数
 	int total_angle;			//总共转过的计数
+	int last_bullet_angle;		//上次发射子弹时拨弹轮的位置
 	
 	float actual_speed;			//电机真实速度,rpm
 	int target_speed;			//电机目标速度,rpm  转/min
@@ -99,7 +103,7 @@ void set_gimbal_current(void);
 void stop_chassis_motor(void);	//将电机角度固定在当前值
 void stop_trigger_motor(void);
 void set_gimbal_current(void); //设置云台电流 2020.7.24
-
+void record_trigger_callback(MOTOR_t *motor, unsigned short angle, short speed, short current);
 #endif
 
 

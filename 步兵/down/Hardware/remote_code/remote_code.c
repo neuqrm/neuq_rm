@@ -12,7 +12,6 @@
 */
 
 #include "remote_code.h"
-#include "DJi_remote.h"
 #include "motor.h"
 #include "kinematic.h"
 #include "fric.h"
@@ -22,11 +21,21 @@
 #include <math.h>
 #include "mode.h"
 #include "delay.h"
+#include "bsp_dbus.h"
+#include "shoot.h"
+#include "steering_engine.h"
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
-float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
-float cx_speed=0,cy_speed=0,fric_angular=0;
-int flag = 0;
+float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,trigger_angle=0,theta=0;
+float cx_speed=0,cy_speed=0,fric_angular=1000;
+float yaw_angular=0,pitch_angular=0;
+int bullet_flag = 0;
+int bullet_num=0;
+int aim_flag=0;
+int aim_flag_2=0;
+int cabin_flag=0;
+int cabin_flag_1=0;
+int chassis_flag=0;
 //ÄÚ²¿º¯ÊýÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
@@ -121,12 +130,199 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		{
 			y_speed = y_speed;
 			r_speed = -r_speed; //È¡·´£¬Ê¹ÄæÊ±ÕëÐý×ªÎªÕýÏò
+			x_speed = -x_speed;
 		}
 			dji_remote_assignment();  //½«ÉÏÊöÒ£¿Ø¼ÆËãÊý¾Ý¸³Öµ£¬Ö´ÐÐ²¿·ÖÔÚrobomoveÀï
   
 }
+/**
+  * @brief  ¼üÊóÅäºÏ²ÃÅÐÏµÍ³¿ØÖÆ´úÂë
+  */
+void remote_control_test()
+{
+		if((Remote_control_mode==chassis_CH_width) || (Remote_control_mode==gimbal_CH_width))
+		{   
+			chassis_flag=0;
+			trigger_mode = speed_loop;
+		}
+		if(Remote_control_mode==dance_CH_width)
+		{
+			chassis_flag=1;
+			trigger_mode = speed_loop;
+		}
+		if(chassis_flag==0)
+		{
+			if(Remote_control_mode == chassis_CH_width)
+	   {  
+				 x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
+			   chassis_flag=0;
+		  }
+	if(Remote_control_mode == gimbal_CH_width)
+		 { 
+			 	  gimbal_loop=position_loop;
+					Kinematics.pitch.target_angle = caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+					Kinematics.yaw.target_angle = caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+		 }
+		 		switch (trigger_control_mode)                                               //Ò£¿ØÆ÷ÓÒ²¦¸Ë
+				{
+					case 1:
+					fric_angular=1400;
+          static int count_1=1;	
+					count_1++;
+					if(count_1>100)
+					{trigger_speed = 100;
+					    count_1=1;           }
+					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
+					{ 
+						static int count_=1;
+					  count_++;
+						trigger_speed =pow(-1,count_)*50;
+						if(count_>100)
+							count_=1;
+					}
+					break;
+					case 2:
+					trigger_speed = 0;
+				  fric_angular=1000;
+					/*if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//·´×ª
+					{ 
+						static int count_=1;
+					  count_++;
+						trigger_speed =pow(-1,count_)*50;
+						if(count_>100)
+							count_=1;
+					}*/
+					break;
+					case 3:
+					trigger_speed = 0;
+					fric_angular=1000;
+					break;
+					
+					default:
+	      	break;
+				 }											
 
+	 }
+	else if(chassis_flag==1)
+	{
+	/***** x,y,zÖáÔË¶¯¿ØÖÆ *****/
+  if(key_board&ws_key)
+	{
+		if((key_board&W_key) == W_key)
+		 x_speed = max_base_linear_speed;
+    if((key_board&S_key) == S_key)
+		 x_speed = -max_base_linear_speed;
+  }
+	else
+		 x_speed = 0;
+	if(key_board&ad_key)
+	{
+	  if((key_board&A_key) == A_key)
+			r_speed = -max_base_rotational_speed;
+		if((key_board&D_key) == D_key)
+			r_speed = max_base_rotational_speed;	
+	}
+	else
+		 r_speed = 0;
+	if(key_board&qe_key)
+	{
+	  if((key_board&Q_key) == Q_key)
+			y_speed = -max_base_linear_speed;
+		if((key_board&E_key) == E_key)
+			y_speed = max_base_linear_speed;	
+	}
+	else
+		  y_speed = 0;
+/***** ¼ÓËÙÄ£Ê½ *****/
+  if((key_board&SHIFT_key) == SHIFT_key)
+	{
+		max_base_linear_speed = MAX_BASE_LINEAR_SPEED;
+		max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;
+	}
+	else 
+	{
+		max_base_linear_speed = NORMAL_LINEAR_SPEED;
+		max_base_rotational_speed = NORMAL_ROTATIONAL_SPEED;
+	}
+/***** Êó±ê *****/
+	if(mouse_pre_left==1)
+	{
+		trigger_speed=100;
+		//bullet_num=1;
+		//shoot(bullet_num);
+		//bullet_flag=1;
+	/*
+trigger_mode = speed_loop;
+*/		
+	}
+	else
+		trigger_speed=0;
+	if(mouse_pre_right==1)
+	{
+		fric_angular=1295.3;
+		//bullet_num=1;
+		//shoot(bullet_num);
+	}	
+	if(mouse_pre_right==0)
+		fric_angular=1000;
+  if(mouse_x||mouse_y)
+	{
+	gimbal_loop=speed_loop;
+	yaw_angular=-mouse_x*60/350;
+	pitch_angular=-mouse_y*42/350;
+	}
+	else
+	{
+	yaw_angular=0;
+	pitch_angular=0;
+	}
+	
+/***** ÔÆÌ¨¹éÎ»¼°Ð¡ÍÓÂÝÄ£Ê½ *****/
+	if((key_board&CTRL_key)==CTRL_key)
+	{	
+	 gimbal_loop=position_loop;
+	 Kinematics.yaw.target_angle=0;
+	 Kinematics.pitch.target_angle=0;
+	}
+	if((key_board&F_key)==F_key && aim_flag==0)
+	{
+		aim_mode = auto_control;
+		aim_flag = 1;
+	}
+	if((key_board&F_key)==Null_key)
+		aim_flag=0;
+	
+	if((key_board&R_key)==R_key && aim_flag_2==0)
+	{
+	   aim_mode = DJi_Remote_Control;
+	   aim_flag_2 = 1;
+	}
+	if((key_board&R_key)==Null_key)
+	   aim_flag_2=0;
+	if((key_board&C_key)==C_key && cabin_flag==0 && cabin_flag_1==0)
+	{
+		steering_engine=1;
+    cabin_flag=1;
+		cabin_flag_1=1;
+	}
+	if((key_board&C_key)==C_key && cabin_flag==1 && cabin_flag_1==0)
+	{
+	  steering_engine=0;
+		cabin_flag=0;
+		cabin_flag_1=1;
+	}
+	if((key_board&C_key)==Null_key)
+		cabin_flag_1=0;
+}
+		  
+    	r_speed = -r_speed; //È¡·´£¬Ê¹ÄæÊ±ÕëÐý×ªÎªÕýÏò
+			x_speed = -x_speed;
+      y_speed = -y_speed;
+    dji_remote_assignment();
 
+}
 
 /**
   * @brief  ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈýÖáËÙ¶ÈÉÏ
@@ -177,13 +373,13 @@ static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 		 break;
 		 
 		case(gimbal_can_mode):
-		 pwm_can=BASIC_PITCH_ANGLE_CAN;
+		 pwm_can=0;
 		 if(width>=(mid+2))
-		  pwm_can=(BASIC_PITCH_ANGLE_CAN - 1.0*(width-(mid+2))/(max-(mid+2))*2047);
+		  pwm_can=(0 - 1.0*(width-(mid+2))/(max-(mid+2))*2047);
 	   else if(width<=(mid-2))
-	    pwm_can=(BASIC_PITCH_ANGLE_CAN + 1.0*((mid-2)-width)/((mid-2)-min)*1023);
+	    pwm_can=(0 + 1.0*((mid-2)-width)/((mid-2)-min)*1023);
 	   else
-		  pwm_can=BASIC_PITCH_ANGLE_CAN;		
+		  pwm_can=0;		
 		 
 		 break;
 		 default:break;
@@ -208,13 +404,13 @@ static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 		 break;
 		 
 		 case(gimbal_can_mode):
-		  pwm_can=BASIC_YAW_ANGLE_CAN;
+		  pwm_can=0;
 		 if(width>=(mid+2))
-		  pwm_can=(BASIC_YAW_ANGLE_CAN - 1.0*(width-(mid+2))/(max-(mid+2))*4095);
+		  pwm_can=(0 - 1.0*(width-(mid+2))/(max-(mid+2))*4095);
 	   else if(width<=(mid-2))
-	    pwm_can=(BASIC_YAW_ANGLE_CAN + 1.0*((mid-2)-width)/((mid-2)-min)*4095);
+	    pwm_can=(0 + 1.0*((mid-2)-width)/((mid-2)-min)*4095);
 	   else
-		  pwm_can=BASIC_YAW_ANGLE_CAN;
+		  pwm_can=0;
 		 
 		 break;
 		 default:break;

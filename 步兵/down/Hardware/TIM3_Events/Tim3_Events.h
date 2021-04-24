@@ -18,6 +18,7 @@
 #include "json.h"
 #include "angle_pid.h"
 #include "mode.h"
+#include "steering_engine.h"
 
 void Robo_Move(void);							//机器人运动控制
 void Debug_Key(void);							//调试按键
@@ -46,7 +47,7 @@ void Debug_Key(void);							//调试按键
 
 /***** 拨弹轮控制量 *****/
 #define Trigger_Speed Kinematics.trigger.target_angular
-
+#define Trigger_Angle Kinematics.trigger.target_angle
 /***** 摩擦轮控制量 *****/
 #define FRIC_Speed Kinematics.fric.target_angular
 
@@ -62,6 +63,10 @@ void Debug_Key(void);							//调试按键
 #define v_trigger_p  pid_t.trigger_pid.speed_loop.kp  
 #define v_trigger_i  pid_t.trigger_pid.speed_loop.ki  
 #define v_trigger_d  pid_t.trigger_pid.speed_loop.kd  
+
+#define a_trigger_p  pid_t.trigger_pid.position_loop.kp  
+#define a_trigger_i  pid_t.trigger_pid.position_loop.ki  
+#define a_trigger_d  pid_t.trigger_pid.position_loop.kd  
 
 #define a_yaw_p      pid_t.yaw_pid.position_loop.kp   
 #define a_yaw_i      pid_t.yaw_pid.position_loop.ki
@@ -79,7 +84,7 @@ void Debug_Key(void);							//调试按键
 /***** 功能使能 *****/
 #define CHASSIS_BREAK_EN 0    // 启动时底盘刹住 1使能，0失能
 #define GIMBAL_POS_EN    1    // 启动云台位置环，1使能，0失能
-
+#define TRIGGER_POS_EN   1    // 启动拨弹轮位置环，1使能，0失能
 
 #endif
 

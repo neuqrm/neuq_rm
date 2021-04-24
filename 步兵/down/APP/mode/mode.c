@@ -13,12 +13,14 @@
 #include "json.h" 
 #include "mode.h"
 #include "motor.h"
-
+#include "kinematic.h"
 enum chassis_mode_t chassis_modes;
 enum gimbal_mode_t gimbal_modes;
 enum fric_mode_t fric_modes;
 enum control_mode_t  control_mode;
-
+enum control_mode_t  aim_mode;
+enum gimbal_loop_t   gimbal_loop;
+enum gimbal_loop_t   trigger_mode;
 void chassis_behavior(void)
 {
 
@@ -105,13 +107,14 @@ void mode_init()
 {
 	//通信模式选择
 	control_mode = DJi_Remote_Control;  //	auto_control 上位机控制模式  DJi_Remote_Control  DJI遥控器控制
-
+  aim_mode     = DJi_Remote_Control;  //瞄准模式，默认遥控控制，若改成auto_control则开始自动瞄准    auto_control  DJi_Remote_Control
 
 	//云台模式选择
   gimbal_modes = gimbal_can_mode;   //	gimbal_pwm_mode 云台使用6020pwm模式控制  gimbal_can_mode 6020can模式控制
-	
+	gimbal_loop  = position_loop;     //  position_loop speed_loop
+	trigger_mode = speed_loop;
 	//底盘模式选择
 	
 	//摩擦轮模式选择
-	
+	Kinematics.fric.target_angular=1000;
 }

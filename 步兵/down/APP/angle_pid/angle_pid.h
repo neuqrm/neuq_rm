@@ -1,6 +1,8 @@
 #ifndef _ANGLE_PID_H
 #define _ANGLE_PID_H
-#define aPID_OUT_MAX          100		//即最大速度
+#define aPID_OUT_MAX          65		//即最大速度
+#define a_PITCH_PID_OUT_MAX   30
+#define TRIGGER_PID_OUT_MAX   50000
 
 #define set_trigger_motor_angle(motor5_angle) \
         do{ \
@@ -22,5 +24,6 @@
 void APID_Init_All(void);			//电机机械角度PID参数初始化
 void apid_chassis_realize(float kp,float ki,float kd);			//电机机械角度pid实现
 void apid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,float kd_p);
-
+void apid_trigeer_realize(float kp,float ki,float kd);
+		
 #endif

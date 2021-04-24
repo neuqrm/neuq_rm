@@ -200,7 +200,7 @@ u8 mbox;
 
 u8 CAN1_Send_GIMBAL_Msg(u8* msg)
 {
-u8 mbox;
+  u8 mbox;
   u16 i=0;
   CanTxMsg TxMessage;
   TxMessage.StdId=0x2FF;	 

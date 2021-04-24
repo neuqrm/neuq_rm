@@ -3,6 +3,7 @@
 #include "stm32f4xx.h"
 #include "kinematic.h"
 #include "motor.h"
+#include "encoder.h"
 
 extern Kinematics_t Kinematics;
 void fric_PWM_configuration(void) //
@@ -86,6 +87,26 @@ void fric1_on(uint16_t cmd)
 void fric2_on(uint16_t cmd)
 {
     TIM_SetCompare4(TIM1, cmd);
+}
+//lzx
+//此函数用于求占空比对应的脉冲数
+//由测试得到
+u32 get_encoder(u32 speed)
+{
+	return speed;
+}
+/**
+摩擦轮闭环控制
+**/
+void fric_control(void)
+{
+	u32 left_speed=get_left_encoder_speed();
+	u32 right_speed=get_right_encoder_speed();
+	u32 left_err=FRIC_Speed-left_speed;
+	u32 right_err=FRIC_Speed-right_speed;
+	
+	fric1_on(FRIC_Speed);
+	fric2_on(FRIC_Speed);
 }
 
 void auto_fire(void)

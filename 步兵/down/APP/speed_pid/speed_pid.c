@@ -10,13 +10,19 @@
   ******************************************************************************
 */
 #include "speed_pid.h"
-
-int errr[AVERAGE]={0};
+#include "remote_code.h" 
+#include "referee.h"
+int errr_yaw[AVERAGE]={0};                           //云台yaw轴pid err数组
+int err_pitch[AVERAGE]={0};                          //云台pitch轴pid
 int average = AVERAGE;
+extern float fric_angular;
+extern float trigger_angle;
 PID_t pid_t;
-//int vpid_out_max=vPID_OUT_MAX;
 enum switch_flag_t switch_flag; //不同模块的枚举类型
 
+int fric_count_flag=0;
+int fric_count=0;
+int chassis_vpid_max=9000;
 /**
   * @breif 电机转速pid参数初始化
 	* @attention 内部函数，无需调用
@@ -34,6 +40,7 @@ void VPID_Init(VPID_t *vpid)
 	vpid->PID_OUT=0;
 	vpid->pid_count=0;
 	vpid->average_err=0;
+	vpid->last_average_err=0; 
 }
 
 /**
@@ -53,6 +60,8 @@ void VPID_Init_All()
   * @breif 速度环pid计算公式，微分项一般不需要
   * @attention 内部函数用户无需调用
   */
+
+int flag_pitch=0;
 void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 {
 		vpid->err = vpid->target_speed - vpid->actual_speed;
@@ -72,10 +81,10 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 	  vpid->I_OUT = ki * vpid->err_integration;		//I项
 		
 		//输出限幅
-		if((vpid->P_OUT + vpid->I_OUT )> CHASSIS_vPID_max) 
-		vpid->PID_OUT = CHASSIS_vPID_max;
-	  else if((vpid->P_OUT + vpid->I_OUT ) < -CHASSIS_vPID_max) 
-		vpid->PID_OUT = -CHASSIS_vPID_max;
+		if((vpid->P_OUT + vpid->I_OUT )> chassis_vpid_max) 
+		vpid->PID_OUT = chassis_vpid_max;
+	  else if((vpid->P_OUT + vpid->I_OUT ) < -chassis_vpid_max) 
+		vpid->PID_OUT = -chassis_vpid_max;
 	  else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
    }
@@ -97,20 +106,37 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 		vpid->PID_OUT = TRIGGER_vPID_max;
 	  else if((vpid->P_OUT + vpid->I_OUT ) < -TRIGGER_vPID_max) 
 		vpid->PID_OUT = -TRIGGER_vPID_max;
-	  else
-		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
-	 }
+	  			else
+			{
+				vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+				if(fric_count_flag>0)
+				{
+					fric_count++;
+					if(fric_count==1200)
+					{
+						fric_angular=1000;
+						fric_shoot_assignment();
+						fric_count=0;
+						fric_count_flag=0;
+					}
+				}
+				if(abs(vpid->PID_OUT)>5000)
+				{
+					fric_count_flag++;
+					fric_count=0;
+				}
+			}
+		 }
 		break;
-	 case(GIMBAL):
+	 case(YAW):
 	 {
-		 
 		if(vpid->pid_count>=average)
 		vpid->pid_count=0;
-		errr[vpid->pid_count] = 0.5*(vpid->err+vpid->last_err);
+		errr_yaw[vpid->pid_count] = 0.5*(vpid->err+vpid->last_err);
 		vpid->pid_count++;
 		for(int i=0;i<=(average-1);i++)
-		vpid->average_err += (errr[i]);  
-
+		vpid->average_err += (errr_yaw[i]);
+	  	
 	 	if(abs(vpid->err) <= GIMBAL_IntegralSeparation)		//积分分离
 		vpid->err_integration += vpid->average_err;
 	  if(vpid->err_integration > GIMBAL_Integral_max)		//抗积分饱和
@@ -121,8 +147,9 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 		
 	  vpid->P_OUT = 0.1f*kp*vpid->average_err;								//P项
 	  vpid->I_OUT = ki * vpid->err_integration;		//I项
-	  vpid->D_OUT = kd * (vpid->err-vpid->last_err);//D项
+	  vpid->D_OUT = kd * (vpid->average_err-vpid->last_average_err);//D项
 	  vpid->last_err=vpid->err;
+		vpid->last_average_err =  vpid->average_err;
 	  //输出限幅 
 	  if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> GIMBAL_vPID_max) 
 		vpid->PID_OUT = GIMBAL_vPID_max;
@@ -130,8 +157,43 @@ void vpid_realize(VPID_t *vpid,float kp,float ki,float kd)
 		vpid->PID_OUT = -GIMBAL_vPID_max;
 	  else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
+		
+		errr_yaw[(vpid->pid_count-1)] = 0;
 	 }
 	  break;
+	 	case(PITCH):
+	 {
+		if(vpid->pid_count>=average)
+		{vpid->pid_count=0;flag_pitch=1;}
+		
+		err_pitch[vpid->pid_count] = 0.5*(vpid->err+vpid->last_err);
+		vpid->pid_count++;
+		for(int i=0;i<=(average-1);i++)
+		vpid->average_err += (err_pitch[i]);
+	 	if(abs(vpid->err) <= GIMBAL_IntegralSeparation)		//积分分离
+		vpid->err_integration += vpid->average_err;
+	  if(vpid->err_integration > GIMBAL_Integral_max)		//抗积分饱和
+		vpid->err_integration = GIMBAL_Integral_max;
+	  else if(vpid->err_integration < -GIMBAL_Integral_max)
+		vpid->err_integration = -GIMBAL_Integral_max;
+	
+	  vpid->P_OUT = 0.1f*kp*vpid->average_err;								//P项
+	  vpid->I_OUT = ki * vpid->err_integration;		//I项
+	  vpid->D_OUT = kd * (vpid->average_err-vpid->last_average_err);//D项
+	  vpid->last_err=vpid->err;
+		vpid->last_average_err =  vpid->average_err;
+	  //输出限幅 
+	  if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> GIMBAL_vPID_max) 
+		vpid->PID_OUT = GIMBAL_vPID_max;
+	  else if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT) < -GIMBAL_vPID_max) 
+		vpid->PID_OUT = -GIMBAL_vPID_max;
+	  else
+		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
+		
+		err_pitch[(vpid->pid_count-1)] = 0;
+	 }
+	  break;
+
 		default:break;
   }		
 }
@@ -143,10 +205,12 @@ void vpid_chassis_realize(float kp,float ki,float kd)
 {
 	//读取电机当前转速
 	motor1.vpid.actual_speed = motor1.actual_speed;
+//dddw = motor1.actual_speed;
 	motor2.vpid.actual_speed = motor2.actual_speed;
 	motor3.vpid.actual_speed = motor3.actual_speed;
 	motor4.vpid.actual_speed = motor4.actual_speed;
 	
+	//chassis_limit();
 	switch_flag = CHASSIS;
 	//计算输出值
 	vpid_realize(&motor1.vpid,kp,ki,kd);
@@ -178,13 +242,12 @@ void vpid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,
 {
 	//读取电机当前转速
 	gimbal_y.vpid.actual_speed = gimbal_y.actual_speed;
-	gimbal_y.vpid.actual_speed = gimbal_y.actual_speed;
+	gimbal_p.vpid.actual_speed = gimbal_p.actual_speed;
 	
-	switch_flag = GIMBAL;
-	
+	switch_flag = YAW;
 	vpid_realize(&gimbal_y.vpid,kp_y,ki_y,kd_y);  //开始pid计算
+	switch_flag = PITCH;
 	vpid_realize(&gimbal_p.vpid,kp_p,ki_p,kd_p);
-	
 	switch_flag = NUL;
 }
 
@@ -241,4 +304,15 @@ int pid_pc(void)
 a=4096-gimbal_y.actual_angle;
 a=a*0.0347624*3;
   return a;
+}
+int limit=90;
+void chassis_limit()
+{
+if(Get_Chassis_Power()>=43)
+	chassis_vpid_max-=limit;
+if(Get_Chassis_Power()<=25)
+	chassis_vpid_max+=limit;
+else if(chassis_vpid_max>=6000)
+	chassis_vpid_max=6000;
+	
 }

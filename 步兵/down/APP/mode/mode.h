@@ -34,11 +34,20 @@ typedef enum gimbal_mode_t
 	DJi_Remote_Control=1,
 }control_mode_t;
 
+ typedef enum  gimbal_loop_t
+{ 
+	position_loop=1,
+	speed_loop=0,
+}gimbal_loop_t;
+
 
 extern enum  chassis_mode_t  chassis_modes;
 extern enum  gimbal_mode_t   gimbal_modes;
 extern enum  fric_mode_t     fric_modes;
 extern enum  control_mode_t  control_mode;
+extern enum  control_mode_t  aim_mode;
+extern enum  gimbal_loop_t   gimbal_loop;
+extern enum gimbal_loop_t   trigger_mode;
 
 void  chassis_behavior(void);
 void  gimbal_behavior(void);

@@ -15,8 +15,8 @@
 #include "gimbal.h"
 #include "imuReader.h"
 #include "stm32f4xx_conf.h"
-
-
+#include "shoot.h"
+#include "power_limitation.h"
 
 /************Õ®–≈”√flag****************/
 extern uint8_t flag_command_recieved;

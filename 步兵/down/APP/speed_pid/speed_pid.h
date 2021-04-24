@@ -47,8 +47,8 @@
 #define pid_init() \
 				do{ \
 					/*底盘速度环*/                        \
-					pid_t.chassis_pid.speed_loop.kp = 2; \
-					pid_t.chassis_pid.speed_loop.ki = 0.05; \
+					pid_t.chassis_pid.speed_loop.kp = 10; \
+					pid_t.chassis_pid.speed_loop.ki = 0.8; \
 					pid_t.chassis_pid.speed_loop.kd = 0; \
 					                                     \
 					/*底盘位置环*/                        \
@@ -57,29 +57,32 @@
 					pid_t.chassis_pid.position_loop.kd = 0; \
                                                \
 					/*拨弹轮速度环*/                      \
-					pid_t.trigger_pid.speed_loop.kp = 2.5; \
-					pid_t.trigger_pid.speed_loop.ki = 0.05; \
-					pid_t.trigger_pid.speed_loop.kd = 0; \
-                                               \
+					pid_t.trigger_pid.speed_loop.kp = 7; \
+					pid_t.trigger_pid.speed_loop.ki = 3; \
+					pid_t.trigger_pid.speed_loop.kd = 5; \
+					/*拨弹轮位置环*/    \
+					pid_t.trigger_pid.position_loop.kp=0.3; \
+					pid_t.trigger_pid.position_loop.ki=0.1; \
+					pid_t.trigger_pid.position_loop.kd=0.25; \
 					/*云台yaw位置环*/                    \
-					pid_t.yaw_pid.position_loop.kp = 1; \
+					pid_t.yaw_pid.position_loop.kp = 0.085; \
 					pid_t.yaw_pid.position_loop.ki = 0; \
-					pid_t.yaw_pid.position_loop.kd = 0; \
+					pid_t.yaw_pid.position_loop.kd = 0.6; \
 					                                    \
 					/*云台yaw速度环*/                    \
-				  pid_t.yaw_pid.speed_loop.kp = 220; \
+				  pid_t.yaw_pid.speed_loop.kp = 210; \
 				  pid_t.yaw_pid.speed_loop.ki = 0; \
-				  pid_t.yaw_pid.speed_loop.kd = 0; \
+				  pid_t.yaw_pid.speed_loop.kd = 450; \
 					                                 \
 					/*云台pitch位置环*/                    \
-					pid_t.pitch_pid.position_loop.kp = 0; \
+					pid_t.pitch_pid.position_loop.kp = 0.16; \
 					pid_t.pitch_pid.position_loop.ki = 0; \
-					pid_t.pitch_pid.position_loop.kd = 0; \
+					pid_t.pitch_pid.position_loop.kd = 0.27; \
 					                                      \
 					/*云台pitch速度环*/                    \
-				  pid_t.pitch_pid.speed_loop.kp = 0; \
+				  pid_t.pitch_pid.speed_loop.kp = 160; \
 				  pid_t.pitch_pid.speed_loop.ki = 0; \
-				  pid_t.pitch_pid.speed_loop.kd = 0; \
+				  pid_t.pitch_pid.speed_loop.kd = 350; \
 				}while(0)                            \
 				
 typedef enum switch_flag_t
@@ -88,6 +91,8 @@ typedef enum switch_flag_t
 	CHASSIS = 1,
 	TRIGGER = 2,
 	GIMBAL  = 3,
+	YAW     = 4,
+	PITCH   = 5,
 	NUL=0,
 }switch_flag_t;
 
@@ -122,6 +127,7 @@ void VPID_Init_All(void);			//电机转速PID参数初始化
 void vpid_chassis_realize(float kp,float ki,float kd);				//电机转速PID实现
 void vpid_trigger_realize(float kp,float ki,float kd);      //拨弹
 void vpid_gimbal_realize(float kp_y,float ki_y,float kd_y,float kp_p,float ki_p,float kd_p); //云台速度环
+void chassis_limit(void);
 
 int abs(int input);				//求绝对值函数
 int pid_auto(void);

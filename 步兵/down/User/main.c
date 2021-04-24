@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    Project/USER/main.c 
-  * @author  Siyuan Qiao&Junyu Luo
+  * @author  Siyuan Qiao&Junyu Luo&Zixuan Li
   * @version V1.0.0
   * @date    1.2021
   * @brief   
@@ -13,16 +13,43 @@
   ...........革命尚未成功，同志仍需努力...........
 */  
 #include "My_Init.h"
+#include "stm32f4xx_it.h"
+#include "bsp_supercap_usart.h"
+#include "referee.h"
 /**
   *@brief  主函数初始化，进入循环等待中断
   */
+	char cap_level='5';
+	
 int main()
 {
+	//uint8_t robot_level;            //
 	mode_init();                      //初始化机器人模式控制
- 	All_Init();												//机器人硬件及结构体初始化
 	pid_init();                       //初始化pid各项参数的值
+	All_Init();												//机器人硬件及结构体初始化
+
+	//CAP_USART_Config();
+	//CAP_SendByte(cap_level);
 	while(1)                          //进入循环
 	{
+//		robot_level=Get_Robot_Stats();
+//		if(robot_level== 1) 
+//		{
+//			cap_level='6';
+//			CAP_SendByte(cap_level);
+//		}
+//		else if(robot_level==2)
+//		{
+//			cap_level='8';
+//			CAP_SendByte(cap_level);
+//		}
+//		else if(robot_level==3)
+//		{
+//			cap_level='A';
+//			CAP_SendByte(cap_level);
+//		}
+
+		
 		LED0=!LED0;
 		delay_ms(500);
 	}
@@ -40,10 +67,10 @@ void TIM3_IRQHandler(void)
 		
 		/*****   遥控器控制    ******/
 		if(control_mode == DJi_Remote_Control) //判断是否为遥控模式
-		Remote_Control();				//遥控器控制代码
-		
+	//	Remote_Control();				//遥控器控制代码
+		remote_control_test();
 		/****  ROS上位机控制  *****/
-		if(control_mode == auto_control) //判断是否为自动控制模式
+		if(aim_mode == auto_control) //判断是否为自动控制模式
 	{
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令，若标识符为一说明对应指令待解析，下述同理
 		{
@@ -81,6 +108,11 @@ void TIM3_IRQHandler(void)
 				resolve_json_gimbal_speed_command();
 			  flag_command_recieved5 = 0;	
 		}
+			if(flag_command_recieved6 == 1)	
+		{
+				resolve_json_trigger_shoot_command();
+				flag_command_recieved6 = 0;	
+		}
 	}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
@@ -99,7 +131,11 @@ void TIM3_IRQHandler(void)
 		}
 		
 		if(time_count%4 == 0)		//4ms  测速
-			Get_Base_Velocities();		//计算底盘中心实际速度
+		  Get_Base_Velocities();		//计算底盘中心实际速度
+		  Get_Gimbal_Angle();       //计算云台实时角度
+		  read_power();
+		if(time_count%5 ==0)      //5ms 测试摩擦轮
+			
 		
 		/****    向上位机发送数据   *****/
 		if(MSG_SEND_EN)

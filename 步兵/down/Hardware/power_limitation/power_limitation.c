@@ -1,7 +1,7 @@
 #include "power_limitation.h"
 #include "motor.h"
-
-
+#include "referee.h"
+extern ext_power_heat_data 			Power_Heat_Data;
 MOTOR_POWER power;
 
 void power_limitation_init()
@@ -14,6 +14,7 @@ void power_limitation_init()
   power.motor3_p = 0;
   power.motor4_p = 0;
   power.all_motor_current = 0;
+	power.P_now = 0;
 }
 
 void power_limitation_caculation() //这个函数可以近似计算小车启动时的瞬时功率，可用作测试实验验证
@@ -58,11 +59,12 @@ void power_limitation_coefficient()
 void power_limitation_scale()
 {
   if(power.P_now >= power.P_max_feasible)
-    motor1.target_speed = motor1.target_speed * (power.P_max_feasible/power.P_now);
+	{
+		motor1.target_speed = motor1.target_speed * (power.P_max_feasible/power.P_now);
     motor2.target_speed = motor2.target_speed * (power.P_max_feasible/power.P_now);
     motor3.target_speed = motor3.target_speed * (power.P_max_feasible/power.P_now);
     motor4.target_speed = motor4.target_speed * (power.P_max_feasible/power.P_now);
-
+	}
 }
 
 void power_limitation_out()
@@ -75,8 +77,8 @@ void power_limitation_out()
 }
 void read_power()  //This function is to get information from the referee system.
 {
-
-
+  power.buffer=Power_Heat_Data.chassis_power_buffer;
+  power.P_now =Power_Heat_Data.chassis_power;
 }
 
 float abs1(float temp)

@@ -19,12 +19,10 @@
 #include "algorithm.h"
 MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal_y,gimbal_p;
 LOOPBACK loopback;
-int Q=0.01;
-int R=0.01;
-
+	
 int max_motor_speed=MAX_MOTOR_SPEED;		//电机最大线速度
-float max_base_linear_speed=MAX_BASE_LINEAR_SPEED;  //底盘中心最大线速度 
-float max_base_rotational_speed=MAX_BASE_ROTATIONAL_SPEED;  //地盘中心最大角速度
+float max_base_linear_speed=NORMAL_LINEAR_SPEED;  //底盘中心最大线速度 
+float max_base_rotational_speed=NORMAL_ROTATIONAL_SPEED;  //地盘中心最大角速度
 int callback_flag=1;
 
 /**
@@ -32,24 +30,44 @@ int callback_flag=1;
 	*/
 void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current)
 {
-	motor->last_angle = motor->actual_angle;
-	motor->actual_angle = angle;
-	motor->actual_speed = 0.5*(speed + motor->last_speed);
-	//motor->actual_speed = KalmanFilter(speed,Q,R);
-	motor->last_speed = speed;
-	motor->actual_current = current;
-	//motor1.temp = temp;
-	if(motor->start_angle_flag==0)
+		if(motor->start_angle_flag==0)
 	{
 		motor->start_angle = angle;
 		motor->start_angle_flag++;	//只在启动时记录一次初始角度
 	}
+	
+	motor->actual_angle = angle;
+	motor->actual_speed = 0.5*(speed + motor->last_speed);
+	//motor->actual_speed = KalmanFilter(speed,Q,R);
+	motor->last_speed = speed;
+	motor->last_angle = motor->actual_angle;
+	motor->actual_current = current;
+	//motor1.temp = temp;
 	
 	if(motor->actual_angle - motor->last_angle > 4096)
 		motor->round_cnt --;
 	else if (motor->actual_angle - motor->last_angle < -4096)
 		motor->round_cnt ++;
 	motor->total_angle = motor->round_cnt * 8192 + motor->actual_angle;// - motor->start_angle;
+}
+
+void record_trigger_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current)
+{
+	motor->last_angle = motor->actual_angle;
+	motor->actual_angle = angle;
+	motor->actual_speed = 0.5*(speed + motor->last_speed);
+	motor->last_speed = speed;
+	motor->actual_current = current;
+	if(motor->start_angle_flag==0)
+	{
+		motor->start_angle = angle;
+		motor->start_angle_flag++;	
+	}
+	if(motor->actual_angle - motor->last_angle > 4096)
+		motor->round_cnt --;
+	else if (motor->actual_angle - motor->last_angle < -4096)
+		motor->round_cnt ++;
+	motor->total_angle = motor->round_cnt * 8191 + motor->actual_angle;
 }
 /**********************三值滤波****************************/
 /*  @function name:record_gimbal_callback()
@@ -201,8 +219,8 @@ void set_trigger_current()
 	motor5.target_current = motor5.vpid.PID_OUT;//
 	
 	//can总线通信协议，参照电调说明书
-	current_msg[0] =motor5.target_current >> 8;			//1号电机电流高8位
-	current_msg[1] = motor5.target_current & 0xff;		//1号电机电流低8位
+	current_msg[4] = motor5.target_current >> 8;			//1号电机电流高8位
+	current_msg[5] = motor5.target_current & 0xff;		//1号电机电流低8位
 	//can发送数据帧
 	CAN1_Send_Trigger_Msg(current_msg);
 }
@@ -217,10 +235,10 @@ void set_gimbal_current()
   gimbal_p.target_current = gimbal_p.vpid.PID_OUT;
 	
 	//can总线通信协议，参照电调说明书
-	current_msg[2] =gimbal_y.target_current >> 8;			//1号电机电流高8位
-	current_msg[3] =gimbal_y.target_current & 0xff;		//1号电机电流低8位
-	current_msg[4] =gimbal_p.target_current >> 8;			//2号电机电流高8位
-	current_msg[5] =gimbal_p.target_current & 0xff;		//2号电机电流低8位
+	current_msg[0] =gimbal_y.target_current >> 8;			//1号电机电流高8位
+	current_msg[1] =gimbal_y.target_current & 0xff;		//1号电机电流低8位
+	current_msg[2] =gimbal_p.target_current >> 8;			//2号电机电流高8位
+	current_msg[3] =gimbal_p.target_current & 0xff;		//2号电机电流低8位
 	
 	CAN1_Send_GIMBAL_Msg(current_msg);
 

@@ -103,7 +103,7 @@ uint8_t flag_command_recieved2 = 0;
 uint8_t flag_command_recieved3 = 0;
 uint8_t flag_command_recieved4 = 0;
 uint8_t flag_command_recieved5 = 0;
-
+uint8_t flag_command_recieved6 = 0;
 
 void JSON_USART_IRQHandler(void)
 {
@@ -140,7 +140,7 @@ void JSON_USART_IRQHandler(void)
 			flag_json_recieve |= flag_json_stop; //结束标志置一
 			flag_json_recieve &= flag_json_start_mask;	//开始标志置零
 			//printf("%s",receiveBuffer);
-			memset(json_Buffer, 0, sizeof(json_Buffer));	//清空缓冲区，防止上一次的数据剩余导致乱码
+			memset(json_Buffer, 0, sizeof(json_Buffer));	//清空缓冲区，防止上一次的数据剩余导致乱码 
 			strcpy(json_Buffer,receiveBuffer);	//接收缓冲区给json缓冲区
 			memset(receiveBuffer, 0, sizeof(receiveBuffer)); //清空接收缓冲区
 			
@@ -249,7 +249,7 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 			record_motor_callback(&motor4, angle, speed, current);
 		break;
 		case(CAN_TRIGGER_ID):
-			record_motor_callback(&motor5, angle, speed, current);
+			record_trigger_callback(&motor5, angle, speed, current);
 		break;
 		case(CAN_GIMBAL_Y_ID):
 		  record_motor_callback(&gimbal_y, angle, speed, current);
@@ -352,7 +352,7 @@ void UsageFault_Handler(void)
 void DebugMon_Handler(void)
 {}
 extern IMU_DATA imu_data;
-void IMU_USART_IRQHandler(void){
+/*void IMU_USART_IRQHandler(void){
 	
 	static unsigned char ucRxBuffer[250];
 	static unsigned char ucRxCnt = 0;	
@@ -392,7 +392,7 @@ void IMU_USART_IRQHandler(void){
 		}
 	
 
-}
+}8*/
 
 ///**
 //  * @brief  This function handles SVCall exception.

@@ -44,6 +44,7 @@ extern uint8_t flag_command_recieved2;
 extern uint8_t flag_command_recieved3;
 extern uint8_t flag_command_recieved4;
 extern uint8_t flag_command_recieved5;
+extern uint8_t flag_command_recieved6;
 
 	 
 void NMI_Handler(void);
