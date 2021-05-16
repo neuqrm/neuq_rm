@@ -21,7 +21,7 @@
 #define set_trigger_speed(motor5_speed) \
 				do{                                   \
 						motor5.vpid.target_speed = motor5_speed; \
-	          motor5.target_speed = motor5_speed;	     \ 
+	          motor5.target_speed = motor5_speed;	     \
         }while(0)                                    \
 
 #define set_gimbal_y_motor_speed(gimbal_y_speed) \

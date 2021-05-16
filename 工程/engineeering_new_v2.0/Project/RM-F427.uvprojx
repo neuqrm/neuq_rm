@@ -337,7 +337,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F427_437xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\FS_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader;..\User\sys;..\User\algorithm;..\Hardware\steering_engine;..\Hardware\stepper_motor;..\APP\referee;..\APP\remote;..\APP\bsp_dbus;..\APP\bsp_led;..\Hardware\limit_switch;..\User\flag</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\APP\judge;..\Hardware\imuReader;..\User\sys;..\User\algorithm;..\Hardware\steering_engine;..\Hardware\stepper_motor;..\APP\referee;..\APP\remote;..\APP\bsp_dbus;..\APP\bsp_led;..\Hardware\limit_switch;..\User\flag</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
