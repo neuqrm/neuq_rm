@@ -147,8 +147,6 @@ void TIM3_IRQHandler(void)
 			Get_referee_info();
 
 
-
-		
 		if(time_count>=1000)			//清除计数标志    1s
 			time_count=1;
 		

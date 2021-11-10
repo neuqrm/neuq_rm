@@ -488,7 +488,7 @@ void PC_Remote_Action(void)
 		}
 	}
 	if (Fric_flag%2)
-		temp_Frpm = FRICRPM_LOW;
+		temp_Frpm =1700;
 	else
 		temp_Frpm = FRICRPM_RESET;
 	if (PC_Press_Ctrl==0&&PC_Press_S==0)

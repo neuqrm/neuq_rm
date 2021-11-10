@@ -31,7 +31,7 @@ RCC_ClocksTypeDef get_rcc_clock;		//系统时钟结构体
 // 输出：无
 void All_Init()
 {
-	Stm32_Clock_Init(360,12,2,8);				//设置时钟,180Mhz = 12M / 25 * 350 / 2
+	//Stm32_Clock_Init(360,12,2,8);				//设置时钟,180Mhz = 12M / 25 * 350 / 2
 	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置系统中断优先级分组2
 	
