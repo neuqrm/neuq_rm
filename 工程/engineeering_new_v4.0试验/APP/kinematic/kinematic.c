@@ -142,10 +142,10 @@ void handle_angle_control(float yaw_angle,float pitch_angle)
 	set_handle_angle(yaw_angle,pitch_angle);
 }
 
-void handle_current_control()
-		{
-			 motor6.vpid.PID_OUT=
-		}
+//void handle_current_control()
+//		{
+//			 motor6.vpid.PID_OUT=
+//		}
 void chassic_test()
 {
 if(test_flag==0)
